@@ -1,4 +1,2 @@
-i own a oxygen tank
-
-GMT+05, usually active in 12am (morning) to 2pm, 5pm to 7pm, 9pm to 11pm (night)
-details "https://safeswing.github.io/safeswing/" 
+aSBvd24gYSBveHlnZW4gdGFuawoKR01UKzA1LCB1c3VhbGx5IGFjdGl2ZSBpbiAxMmFtIChtb3JuaW5nKSB0byAycG0sIDVwbSB0byA3cG0sIDlwbSB0byAxMXBtIChuaWdodCkKZGV0YWlscyA=
+"https://safeswing.github.io/safeswing/" 
