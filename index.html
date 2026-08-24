@@ -1,2 +1,251 @@
-## i own a oxygen tank
-GMT+05, usually active in 12am (morning) to 2pm, 5pm to 7pm, 9pm to 11pm (night)
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600&display=swap');
+
+  .itch-profile-wrapper {
+    background: #0b0d15;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+  }
+
+  .glass-panel {
+    position: relative;
+    max-width: 720px;
+    width: 100%;
+    padding: 2.8rem 2.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px) saturate(180%);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    border-radius: 3.5rem 1.5rem 3.5rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  .glass-panel::before {
+    content: '';
+    position: absolute;
+    inset: -50% -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.35) 0%, transparent 60%),
+                radial-gradient(circle at 80% 70%, rgba(180, 220, 255, 0.25) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 4px, transparent 4px, transparent 12px);
+    background-blend-mode: overlay, soft-light, normal;
+    pointer-events: none;
+    z-index: 0;
+    animation: liquidGlass 18s infinite alternate ease-in-out;
+    transform-origin: center;
+    filter: blur(2px) brightness(1.1);
+  }
+
+  @keyframes liquidGlass {
+    0% { transform: translate(-5%, -8%) rotate(-4deg) scale(1.1); }
+    25% { transform: translate(8%, 2%) rotate(3deg) scale(1.2); }
+    50% { transform: translate(-2%, 12%) rotate(-2deg) scale(1.0); }
+    75% { transform: translate(10%, -5%) rotate(5deg) scale(1.15); }
+    100% { transform: translate(-6%, 6%) rotate(-6deg) scale(1.08); }
+  }
+
+  .glass-panel::after {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: floatGlow 12s infinite alternate ease-in-out;
+    filter: blur(30px);
+  }
+
+  @keyframes floatGlow {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+    100% { transform: translate(40px, 30px) scale(1.6); opacity: 0.9; }
+  }
+
+  .content {
+    position: relative;
+    z-index: 3;
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .content h1 {
+    font-size: 2.8rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    background: linear-gradient(130deg, #ffffff, #b0d4ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0.4rem;
+    display: inline-block;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 6px;
+  }
+
+  .subhead {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+
+  .subhead span {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.2rem 1rem;
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.9rem;
+  }
+
+  .info-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2rem;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(8px);
+    padding: 1.4rem 1.8rem;
+    border-radius: 2.5rem 1rem 2.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 1.8rem 0 2rem 0;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .info-item strong {
+    font-weight: 600;
+    color: white;
+  }
+
+  .badge {
+    background: rgba(100, 180, 255, 0.15);
+    padding: 0.3rem 0.9rem;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 0.85rem;
+    color: #b6d6ff;
+  }
+
+  .tag {
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.2rem 0.8rem;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .discord-btn {
+    background: rgba(88, 101, 242, 0.2);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0.5rem 1.8rem;
+    border-radius: 60px;
+    font-weight: 500;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+
+  .discord-btn:hover {
+    background: rgba(88, 101, 242, 0.4);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.02);
+  }
+
+  .languages {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+  }
+
+  .lang-pill {
+    background: rgba(255, 255, 255, 0.04);
+    padding: 0.3rem 1.2rem;
+    border-radius: 60px;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .lang-pill.cpp { background: rgba(0, 120, 255, 0.08); border-color: rgba(0, 150, 255, 0.1); }
+  .lang-pill.cs { background: rgba(156, 39, 176, 0.08); border-color: rgba(180, 70, 200, 0.1); }
+
+  @media (max-width: 500px) {
+    .glass-panel { padding: 1.8rem 1.2rem; }
+    .content h1 { font-size: 2.2rem; }
+    .info-grid { flex-direction: column; gap: 0.8rem; }
+  }
+</style>
+
+<div class="itch-profile-wrapper">
+  <div class="glass-panel">
+    <div class="content">
+      <h1>✦ About Me</h1>
+      <div class="subhead">
+        <span>🌍 GMT +05</span>
+        <span>🇹🇲 Turkmenistan</span>
+        <span>🎂 16</span>
+        <span class="badge">@nitcoin</span>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <strong>⏳ timezone</strong> 
+          <span class="tag">GMT +05</span>
+        </div>
+        <div class="info-item">
+          <strong>📍 born</strong> 
+          <span class="tag">Turkmenistan</span>
+        </div>
+        <div class="info-item">
+          <strong>🧑‍💻 age</strong> 
+          <span class="tag">16</span>
+        </div>
+        <div class="info-item" style="flex:1; min-width:140px;">
+          <strong>📬 contact</strong> 
+          <span style="background:rgba(255,255,255,0.04); padding:0.1rem 0.8rem; border-radius:40px; border:1px solid rgba(255,255,255,0.05);">@nitcoin</span>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.2rem;">
+        <div>
+          <div style="font-size:0.8rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.3); margin-bottom: 4px;">⚡ languages</div>
+          <div class="languages">
+            <span class="lang-pill cpp">C++</span>
+            <span class="lang-pill cs">C#</span>
+            <span class="lang-pill" style="background: rgba(255,215,0,0.06); border-color: rgba(255,215,0,0.08);">HTML/CSS</span>
+          </div>
+        </div>
+        <a href="https://discord.com" target="_blank" rel="noopener" class="discord-btn">
+          <i>🛠️</i> Itch.io
+        </a>
+      </div>
+
+      <div style="margin-top: 1.6rem; font-size: 0.8rem; color: rgba(255,255,255,0.25); text-align: right; letter-spacing: 0.5px; border-top: 1px solid rgba(255,255,255,0.03); padding-top: 0.8rem;">
+        <span style="background: rgba(255,255,255,0.02); padding: 0.2rem 1.2rem; border-radius: 60px;">💧HTML · C++ / C#</span>
+      </div>
+    </div>
+  </div>
+</div>
