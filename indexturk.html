@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>profile · safeswing</title>
+    <title>01110000 01110010 01101111 01100110 01101001 01101100 01100101 00100000 00101101 00100000 01110011 01100001 01100110 01100101 01110011 01110111 01101001 01101110 01100111</title>
 
     <style>
         #loading-screen {
@@ -40,9 +40,10 @@
             100% { transform: rotate(360deg); }
         }
         .loading-text {
-            font-size: 1rem;
-            letter-spacing: 2px;
+            font-size: 0.6rem;
+            letter-spacing: 1px;
             opacity: 0.6;
+            word-break: break-all;
         }
         .loading-dots::after {
             content: '';
@@ -61,7 +62,7 @@
 
     <div id="loading-screen">
         <div class="loader"></div>
-        <div class="loading-text">Loading Libraries<span class="loading-dots"></span></div>
+        <div class="loading-text">01001100 01101111 01100001 01100100 01101001 01101110 01100111 00100000 01001100 01101001 01100010 01110010 01100001 01110010 01101001 01100101 01110011</div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
@@ -79,7 +80,7 @@
         body {
             min-height: 100vh;
             background: #0b0d15;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', monospace, sans-serif;
             padding: 1.5rem;
             position: relative;
             overflow-x: hidden;
@@ -128,7 +129,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', monospace, sans-serif;
             padding: 1.5rem;
             border-radius: 1.5rem;
             width: 100%;
@@ -194,6 +195,7 @@
             white-space: nowrap;
             text-decoration: none;
             display: inline-block;
+            font-family: 'Inter', sans-serif;
         }
 
         .lang-btn:hover {
@@ -280,7 +282,7 @@
         }
 
         .settings-panel .panel-title {
-            font-size: 0.75rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: rgba(255, 255, 255, 0.5);
@@ -288,6 +290,7 @@
             padding-bottom: 0.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             font-weight: 600;
+            word-break: break-all;
         }
 
         .settings-panel .setting-item {
@@ -295,9 +298,10 @@
             align-items: center;
             justify-content: space-between;
             padding: 0.5rem 0;
-            gap: 1.5rem;
+            gap: 1rem;
             color: rgba(255, 255, 255, 0.85);
-            font-size: 0.85rem;
+            font-size: 0.5rem;
+            word-break: break-all;
         }
 
         .toggle-switch {
@@ -438,8 +442,10 @@
             align-items: center;
             gap: 0.8rem;
             font-weight: 600;
-            font-size: 1.05rem;
+            font-size: 0.6rem;
             color: #ffffff;
+            word-break: break-all;
+            flex-wrap: wrap;
         }
         .accordion-header .header-left .icon {
             font-size: 1.2rem;
@@ -460,7 +466,7 @@
             transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .accordion-section.open .accordion-body {
-            max-height: 3000px;
+            max-height: 4000px;
         }
         .accordion-body-inner {
             padding: 0 1.5rem 1.5rem 1.5rem;
@@ -469,7 +475,7 @@
         }
 
         .accordion-section.about-expanded .accordion-body {
-            max-height: 3000px;
+            max-height: 4000px;
         }
         .accordion-section.about-expanded .toggle-icon {
             transform: rotate(180deg);
@@ -487,11 +493,12 @@
             padding: 0.3rem 1rem;
             border-radius: 40px;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            font-size: 0.85rem;
+            font-size: 0.5rem;
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
             color: rgba(255, 255, 255, 0.85);
+            word-break: break-all;
         }
         .live-clock {
             background: rgba(56, 189, 248, 0.12) !important;
@@ -509,6 +516,7 @@
             border: 1px solid rgba(255, 215, 0, 0.4) !important;
             border-radius: 40px;
             background-color: rgba(255, 215, 0, 0.1) !important;
+            font-size: 0.5rem;
         }
         .languages-list {
             display: flex;
@@ -541,13 +549,14 @@
             align-items: center;
             padding: 0.2rem 0.8rem;
             border-radius: 30px;
-            font-size: 0.75rem;
+            font-size: 0.5rem;
             font-weight: 600;
             letter-spacing: 0.3px;
             text-transform: uppercase;
             border: 1px solid rgba(255, 255, 255, 0.1);
             background: rgba(255, 255, 255, 0.05);
             color: rgba(255, 255, 255, 0.8);
+            word-break: break-all;
         }
         .skill-level-card.junior,
         .skill-level-card.expert {
@@ -559,9 +568,10 @@
             color: rgba(255, 255, 255, 0.5);
         }
         .small-note {
-            font-size: 0.75rem;
+            font-size: 0.5rem;
             color: #94A3B8;
             margin-left: 0.5rem;
+            word-break: break-all;
         }
         .status-list {
             display: flex;
@@ -575,17 +585,18 @@
             align-items: center;
             padding: 0.6rem 1rem;
             border-radius: 30px;
-            font-size: 0.85rem;
+            font-size: 0.5rem;
             font-weight: 500;
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             color: #E2E8F0;
+            word-break: break-all;
         }
         .status-card.green { background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.25); }
         .status-card.red { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.25); }
         .status-card.yellow { background: rgba(234, 179, 8, 0.15); border-color: rgba(234, 179, 8, 0.25); }
         .section-label {
-            font-size: 0.75rem;
+            font-size: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             color: rgba(255, 255, 255, 0.4);
@@ -593,6 +604,7 @@
             margin-top: 1rem;
             padding: 0 0.2rem;
             font-weight: 600;
+            word-break: break-all;
         }
         .tools-grid {
             display: flex;
@@ -663,12 +675,13 @@
             border: 1px solid rgba(56, 189, 248, 0.25);
             padding: 0.2rem 0.8rem;
             border-radius: 40px;
-            font-size: 0.65rem;
+            font-size: 0.5rem;
             font-weight: 600;
             letter-spacing: 0.4px;
             text-transform: uppercase;
             color: #38BDF8;
             white-space: nowrap;
+            word-break: break-all;
         }
         .music-controls {
             display: flex;
@@ -740,18 +753,20 @@
         }
         .music-placeholder-note {
             text-align: center;
-            font-size: 0.7rem;
+            font-size: 0.5rem;
             color: rgba(255, 255, 255, 0.4);
             letter-spacing: 0.3px;
             padding-top: 0.3rem;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
+            word-break: break-all;
         }
         .device-group { margin-bottom: 0.8rem; padding: 0 0.2rem; }
         .device-group-label {
-            font-size: 0.85rem;
+            font-size: 0.5rem;
             font-weight: 600;
             color: rgba(255, 255, 255, 0.6);
             margin-bottom: 0.4rem;
+            word-break: break-all;
         }
         .device-specs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .device-spec {
@@ -773,10 +788,11 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 1rem 0.6rem 1rem 0.6rem;
             padding: 1.2rem;
-            font-size: 0.85rem;
+            font-size: 0.5rem;
             line-height: 1.6;
             color: rgba(255, 255, 255, 0.8);
             margin-top: 0.5rem;
+            word-break: break-all;
         }
         .links-grid {
             display: flex;
@@ -810,7 +826,7 @@
         .link-btn.gitlab { border-color: rgba(252, 109, 38, 0.3); color: #fc6d26; }
         .footer-tag {
             margin-top: 1.6rem;
-            font-size: 0.75rem;
+            font-size: 0.5rem;
             color: rgba(255, 255, 255, 0.3);
             text-align: right;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -843,15 +859,17 @@
             align-items: center;
             gap: 0.6rem;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.5rem;
             color: #fff;
+            word-break: break-all;
         }
         .party-mode-label .party-icon { font-size: 1.2rem; }
         .party-mode-label .party-text {
-            font-size: 0.7rem;
+            font-size: 0.4rem;
             color: rgba(255, 255, 255, 0.5);
             display: block;
             font-weight: 400;
+            word-break: break-all;
         }
         .party-toggle-switch {
             position: relative;
@@ -932,23 +950,26 @@
             0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 100, 100, 0.5)); }
             50% { transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(255, 100, 100, 0.9)); }
         }
-        .party-modal .modal-title { font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
-        .party-modal .modal-text { font-size: 0.85rem; line-height: 1.6; color: rgba(255, 255, 255, 0.7); margin-bottom: 0.8rem; }
+        .party-modal .modal-title { font-size: 0.7rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; word-break: break-all; }
+        .party-modal .modal-text { font-size: 0.5rem; line-height: 1.6; color: rgba(255, 255, 255, 0.7); margin-bottom: 0.8rem; word-break: break-all; }
         .party-modal .modal-warning-text {
-            font-size: 0.75rem; color: #ff6b6b; font-weight: 600;
+            font-size: 0.45rem; color: #ff6b6b; font-weight: 600;
             letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 1.2rem;
+            word-break: break-all;
         }
         .party-modal .modal-disclaimer {
-            font-size: 0.7rem; color: rgba(255, 255, 255, 0.35); line-height: 1.4;
+            font-size: 0.4rem; color: rgba(255, 255, 255, 0.35); line-height: 1.4;
             margin-bottom: 1.5rem; padding: 0.8rem;
             background: rgba(255, 0, 0, 0.05); border-radius: 1rem;
             border: 1px solid rgba(255, 0, 0, 0.1);
+            word-break: break-all;
         }
         .party-modal-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
         .party-modal-buttons button {
             padding: 0.7rem 1.8rem; border-radius: 60px; font-weight: 600;
-            font-size: 0.85rem; cursor: pointer; transition: all 0.25s ease;
+            font-size: 0.5rem; cursor: pointer; transition: all 0.25s ease;
             border: 1px solid; letter-spacing: 0.3px;
+            word-break: break-all;
         }
         .party-modal-buttons .btn-no { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); }
         .party-modal-buttons .btn-no:hover { background: rgba(255,255,255,0.12); color:#fff; border-color: rgba(255,255,255,0.3); }
@@ -999,10 +1020,11 @@
             z-index: 9996; padding: 0.6rem 1.8rem; border-radius: 60px;
             background: linear-gradient(135deg, rgba(255, 0, 128, 0.3), rgba(121, 40, 202, 0.3));
             border: 1px solid rgba(255, 100, 150, 0.5); color: #fff;
-            font-weight: 700; font-size: 0.85rem; letter-spacing: 1px;
+            font-weight: 700; font-size: 0.5rem; letter-spacing: 1px;
             text-transform: uppercase; cursor: pointer; opacity: 0; visibility: hidden;
             transition: all 0.4s ease; box-shadow: 0 5px 30px rgba(255, 0, 128, 0.3);
             animation: none; user-select: none; white-space: nowrap;
+            word-break: break-all;
         }
         .party-indicator.active { opacity: 1; visibility: visible; animation: party-indicator-pulse 0.5s infinite; }
         @keyframes party-indicator-pulse {
@@ -1045,7 +1067,7 @@
             .party-toggle-switch { width: 48px; height: 26px; }
             .party-toggle-slider::before { height: 18px; width: 18px; }
             .party-toggle-switch input:checked+.party-toggle-slider::before { transform: translateX(22px); }
-            .party-indicator { font-size: 0.7rem; padding: 0.5rem 1.2rem; bottom: 1rem; }
+            .party-indicator { font-size: 0.4rem; padding: 0.5rem 1.2rem; bottom: 1rem; }
         }
     </style>
 </head>
@@ -1058,10 +1080,10 @@
 
             <div class="settings-wrapper">
                 <div class="lang-selector">
-                    <a href="index.html" class="lang-btn active" title="English">English</a>
+                    <a href="index.html" class="lang-btn" title="English">English</a>
                     <a href="indexrus.html" class="lang-btn" title="Russian">Russian</a>
                     <a href="index64.html" class="lang-btn" title="Base64">Base64</a>
-                    <a href="indexturk.html" class="lang-btn" title="Binary">Binary</a>
+                    <a href="indexASM.html" class="lang-btn active" title="Binary">01000010 01101001 01101110 01100001 01110010 01111001</a>
                     <a href="indexis.html" class="lang-btn" title="Israeli">Israeli</a>
                 </div>
                 <div class="settings-icon" id="settingsToggle" title="Settings">
@@ -1071,9 +1093,9 @@
                     </svg>
                 </div>
                 <div class="settings-panel" id="settingsPanel">
-                    <div class="panel-title">Settings</div>
+                    <div class="panel-title">01010011 01100101 01110100 01110100 01101001 01101110 01100111 01110011</div>
                     <div class="setting-item">
-                        <span>Disable 3D Tilt</span>
+                        <span>01000100 01101001 01110011 01100001 01100010 01101100 01100101 00100000 00110011 01000100 00100000 01010100 01101001 01101100 01110100</span>
                         <label class="toggle-switch">
                             <input type="checkbox" id="tiltToggle">
                             <span class="toggle-slider"></span>
@@ -1088,7 +1110,7 @@
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="header-left">
                             <span class="icon">//</span>
-                            <span>About Me</span>
+                            <span>01000001 01100010 01101111 01110101 01110100 00100000 01001101 01100101</span>
                         </div>
                         <span class="toggle-icon">v</span>
                     </div>
@@ -1097,37 +1119,37 @@
                             <div class="subhead-about">
                                 <span>GMT +05</span>
                                 <span class="live-clock"><span id="liveTime">--:--:--</span></span>
-                                <span>Turkmenistan</span>
-                                <span>Age: 16</span>
+                                <span>01010100 01110101 01110010 01101011 01101101 01100101 01101110 01101001 01110011 01110100 01100001 01101110</span>
+                                <span>01000001 01100111 01100101 00111010 00100000 00110001 00110110</span>
                                 <span>176cm</span>
-                                <span>Male</span>
-                                <span class="username-gold">@safeswing</span>
-                                <span>Born: 15th February</span>
+                                <span>01001101 01100001 01101100 01100101</span>
+                                <span class="username-gold">01000000 01110011 01100001 01100110 01100101 01110011 01110111 01101001 01101110 01100111</span>
+                                <span>01000010 01101111 01110010 01101110 00111010 00100000 00110001 00110101 01110100 01101000 00100000 01000110 01100101 01100010 01110010 01110101 01100001 01110010 01111001</span>
                             </div>
 
-                            <div class="section-label">Languages</div>
+                            <div class="section-label">01001100 01100001 01101110 01100111 01110101 01100001 01100111 01100101 01110011</div>
                             <div class="languages-list">
                                 <div class="lang-row">
                                     <span class="lang-pill cpp">C++</span>
-                                    <span class="skill-level-card junior">Junior</span>
+                                    <span class="skill-level-card junior">01001010 01110101 01101110 01101001 01101111 01110010</span>
                                 </div>
                                 <div class="lang-row">
                                     <span class="lang-pill cs">C#</span>
-                                    <span class="skill-level-card undefined">Undefined</span>
+                                    <span class="skill-level-card undefined">01010101 01101110 01100100 01100101 01100110 01101001 01101110 01100101 01100100</span>
                                 </div>
                                 <div class="lang-row">
                                     <span class="lang-pill">HTML/CSS</span>
-                                    <span class="skill-level-card expert">Expert</span>
-                                    <span class="small-note">i know HTML is not a coding language</span>
+                                    <span class="skill-level-card expert">01000101 01111000 01110000 01100101 01110010 01110100</span>
+                                    <span class="small-note">01101001 00100000 01101011 01101110 01101111 01110111 00100000 01001000 01010100 01001101 01001100 00100000 01101001 01110011 00100000 01101110 01101111 01110100 00100000 01100001 00100000 01100011 01101111 01100100 01101001 01101110 01100111 00100000 01101100 01100001 01101110 01100111 01110101 01100001 01100111 01100101</span>
                                 </div>
                             </div>
 
-                            <div class="section-label">Status</div>
+                            <div class="section-label">01010011 01110100 01100001 01110100 01110101 01110011</div>
                             <div class="status-list">
-                                <div class="status-card green">Currently development of Unity Game (HDRP)</div>
-                                <div class="status-card red">Frozen Development for XM3</div>
-                                <div class="status-card red">Frozen/Slow development for Blitz3D 2028 Overhaul</div>
-                                <div class="status-card yellow">Planning on Unity URP project in 2028.</div>
+                                <div class="status-card green">01000011 01110101 01110010 01110010 01100101 01101110 01110100 01101100 01111001 00100000 01100100 01100101 01110110 01100101 01101100 01101111 01110000 01101101 01100101 01101110 01110100 00100000 01101111 01100110 00100000 01010101 01101110 01101001 01110100 01111001 00100000 01000111 01100001 01101101 01100101 00100000 00101000 01001000 01000100 01010010 01010000 00101001</div>
+                                <div class="status-card red">01000110 01110010 01101111 01111010 01100101 01101110 00100000 01000100 01100101 01110110 01100101 01101100 01101111 01110000 01101101 01100101 01101110 01110100 00100000 01100110 01101111 01110010 00100000 01011000 01001101 00110011</div>
+                                <div class="status-card red">01000110 01110010 01101111 01111010 01100101 01101110 00101111 01010011 01101100 01101111 01110111 00100000 01100100 01100101 01110110 01100101 01101100 01101111 01110000 01101101 01100101 01101110 01110100 00100000 01100110 01101111 01110010 00100000 01000010 01101100 01101001 01110100 01111010 00110011 01000100 00100000 00110010 00110000 00110010 00111000 00100000 01001111 01110110 01100101 01110010 01101000 01100001 01110101 01101100</div>
+                                <div class="status-card yellow">01010000 01101100 01100001 01101110 01101110 01101001 01101110 01100111 00100000 01101111 01101110 00100000 01010101 01101110 01101001 01110100 01111001 00100000 01010101 01010010 01010000 00100000 01110000 01110010 01101111 01101010 01100101 01100011 01110100 00100000 01101001 01101110 00100000 00110010 00110000 00110010 00111000 00101110</div>
                             </div>
                         </div>
                     </div>
@@ -1137,7 +1159,7 @@
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="header-left">
                             <span class="icon">[]</span>
-                            <span>My Tools</span>
+                            <span>01001101 01111001 00100000 01010100 01101111 01101111 01101100 01110011</span>
                         </div>
                         <span class="toggle-icon">v</span>
                     </div>
@@ -1159,7 +1181,7 @@
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="header-left">
                             <span class="icon">~</span>
-                            <span>Music</span>
+                            <span>01001101 01110101 01110011 01101001 01100011</span>
                         </div>
                         <span class="toggle-icon">v</span>
                     </div>
@@ -1172,7 +1194,7 @@
                                         <div class="track-name">Basshunter - Dota</div>
                                         <div class="track-artist">Basshunter</div>
                                     </div>
-                                    <span class="music-badge">stopped</span>
+                                    <span class="music-badge">01110011 01110100 01101111 01110000 01110000 01100101 01100100</span>
                                 </div>
                                 <div class="music-controls">
                                     <span class="ctrl-btn">|&lt;</span>
@@ -1187,14 +1209,14 @@
                                     <span class="time-label">0:00</span>
                                 </div>
                                 <audio id="myAudio" src="basshunterdota.mp3" preload="metadata"></audio>
-                                <div class="music-placeholder-note">press play to listen</div>
+                                <div class="music-placeholder-note">01110000 01110010 01100101 01110011 01110011 00100000 01110000 01101100 01100001 01111001 00100000 01110100 01101111 00100000 01101100 01101001 01110011 01110100 01100101 01101110</div>
                             </div>
 
                             <div class="party-mode-container" id="partyModeContainer">
                                 <div class="party-mode-label">
                                     <span class="party-icon">P</span>
-                                    <span>Party Mode
-                                        <span class="party-text">strobe lights · loud audio · screen shake</span>
+                                    <span>01010000 01100001 01110010 01110100 01111001 00100000 01001101 01101111 01100100 01100101
+                                        <span class="party-text">01110011 01110100 01110010 01101111 01100010 01100101 00100000 01101100 01101001 01100111 01101000 01110100 01110011 00100000 00101101 00100000 01101100 01101111 01110101 01100100 00100000 01100001 01110101 01100100 01101001 01101111 00100000 00101101 00100000 01110011 01100011 01110010 01100101 01100101 01101110 00100000 01110011 01101000 01100001 01101011 01100101</span>
                                     </span>
                                 </div>
                                 <label class="party-toggle-switch">
@@ -1210,14 +1232,14 @@
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="header-left">
                             <span class="icon">&gt;_</span>
-                            <span>About my devices</span>
+                            <span>01000001 01100010 01101111 01110101 01110100 00100000 01101101 01111001 00100000 01100100 01100101 01110110 01101001 01100011 01100101 01110011</span>
                         </div>
                         <span class="toggle-icon">v</span>
                     </div>
                     <div class="accordion-body">
                         <div class="accordion-body-inner">
                             <div class="device-group">
-                                <div class="device-group-label">Laptop:</div>
+                                <div class="device-group-label">01001100 01100001 01110000 01110100 01101111 01110000 00111010</div>
                                 <div class="device-specs">
                                     <span class="device-spec blue">32GB LPDDR5X</span>
                                     <span class="device-spec purple">iGPU: Intel Arc v140</span>
@@ -1226,7 +1248,7 @@
                                 </div>
                             </div>
                             <div class="device-group">
-                                <div class="device-group-label">Phones:</div>
+                                <div class="device-group-label">01010000 01101000 01101111 01101110 01100101 01110011 00111010</div>
                                 <div class="device-specs">
                                     <span class="device-spec desert">IPhone 16 Pro</span>
                                     <span class="device-spec huawei">Pura 70 Base</span>
@@ -1240,14 +1262,14 @@
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="header-left">
                             <span class="icon">$</span>
-                            <span>Support me / Paid Plannings</span>
+                            <span>01010011 01110101 01110000 01110000 01101111 01110010 01110100 00100000 01101101 01100101 00100000 00101111 00100000 01010000 01100001 01101001 01100100 00100000 01010000 01101100 01100001 01101110 01101110 01101001 01101110 01100111 01110011</span>
                         </div>
                         <span class="toggle-icon">v</span>
                     </div>
                     <div class="accordion-body">
                         <div class="accordion-body-inner">
                             <div class="support-content">
-                                Unfortunately, I cannot receive payments through services like PayPal, Visa, or similar platforms. I also cannot publish on Steam, hire developers, or be hired for work because my country does not accept these payment methods. This situation is not permanent — I expect to be free from these limitations when I turn 20 or older. I didn't want to explain this further earlier, as it's a long-term situation. Stay tuned for more information in the future.
+                                01010101 01101110 01100110 01101111 01110010 01110100 01110101 01101110 01100001 01110100 01100101 01101100 01111001 00101100 00100000 01001001 00100000 01100011 01100001 01101110 01101110 01101111 01110100 00100000 01110010 01100101 01100011 01100101 01101001 01110110 01100101 00100000 01110000 01100001 01111001 01101101 01100101 01101110 01110100 01110011 00100000 01110100 01101000 01110010 01101111 01110101 01100111 01101000 00100000 01110011 01100101 01110010 01110110 01101001 01100011 01100101 01110011 00100000 01101100 01101001 01101011 01100101 00100000 01010000 01100001 01111001 01010000 01100001 01101100 00101100 00100000 01010110 01101001 01110011 01100001 00101100 00100000 01101111 01110010 00100000 01110011 01101001 01101101 01101001 01101100 01100001 01110010 00100000 01110000 01101100 01100001 01110100 01100110 01101111 01110010 01101101 01110011 00101110 00100000 01001001 00100000 01100001 01101100 01110011 01101111 00100000 01100011 01100001 01101110 01101110 01101111 01110100 00100000 01110000 01110101 01100010 01101100 01101001 01110011 01101000 00100000 01101111 01101110 00100000 01010011 01110100 01100101 01100001 01101101 00101100 00100000 01101000 01101001 01110010 01100101 00100000 01100100 01100101 01110110 01100101 01101100 01101111 01110000 01100101 01110010 01110011 00101100 00100000 01101111 01110010 00100000 01100010 01100101 00100000 01101000 01101001 01110010 01100101 01100100 00100000 01100110 01101111 01110010 00100000 01110111 01101111 01110010 01101011 00100000 01100010 01100101 01100011 01100001 01110101 01110011 01100101 00100000 01101101 01111001 00100000 01100011 01101111 01110101 01101110 01110100 01110010 01111001 00100000 01100100 01101111 01100101 01110011 00100000 01101110 01101111 01110100 00100000 01100001 01100011 01100011 01100101 01110000 01110100 00100000 01110100 01101000 01100101 01110011 01100101 00100000 01110000 01100001 01111001 01101101 01100101 01101110 01110100 00100000 01101101 01100101 01110100 01101000 01101111 01100100 01110011 00101110 00100000 01010100 01101000 01101001 01110011 00100000 01110011 01101001 01110100 01110101 01100001 01110100 01101001 01101111 01101110 00100000 01101001 01110011 00100000 01101110 01101111 01110100 00100000 01110000 01100101 01110010 01101101 01100001 01101110 01100101 01101110 01110100 00100000 00101101 00101101 00100000 01001001 00100000 01100101 01111000 01110000 01100101 01100011 01110100 00100000 01110100 01101111 00100000 01100010 01100101 00100000 01100110 01110010 01100101 01100101 00100000 01100110 01110010 01101111 01101101 00100000 01110100 01101000 01100101 01110011 01100101 00100000 01101100 01101001 01101101 01101001 01110100 01100001 01110100 01101001 01101111 01101110 01110011 00100000 01110111 01101000 01100101 01101110 00100000 01001001 00100000 01110100 01110101 01110010 01101110 00100000 00110010 00110000 00100000 01101111 01110010 00100000 01101111 01101100 01100100 01100101 01110010 00101110 00100000 01001001 00100000 01100100 01101001 01100100 01101110 00100111 01110100 00100000 01110111 01100001 01101110 01110100 00100000 01110100 01101111 00100000 01100101 01111000 01110000 01101100 01100001 01101001 01101110 00100000 01110100 01101000 01101001 01110011 00100000 01100110 01110101 01110010 01110100 01101000 01100101 01110010 00100000 01100101 01100001 01110010 01101100 01101001 01100101 01110010 00101100 00100000 01100001 01110011 00100000 01101001 01110100 00100111 01110011 00100000 01100001 00100000 01101100 01101111 01101110 01100111 00101101 01110100 01100101 01110010 01101101 00100000 01110011 01101001 01110100 01110101 01100001 01110100 01101001 01101111 01101110 00101110 00100000 01010011 01110100 01100001 01111001 00100000 01110100 01110101 01101110 01100101 01100100 00100000 01100110 01101111 01110010 00100000 01101101 01101111 01110010 01100101 00100000 01101001 01101110 01100110 01101111 01110010 01101101 01100001 01110100 01101001 01101111 01101110 00100000 01101001 01101110 00100000 01110100 01101000 01100101 00100000 01100110 01110101 01110100 01110101 01110010 01100101 00101110
                             </div>
                         </div>
                     </div>
@@ -1257,7 +1279,7 @@
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="header-left">
                             <span class="icon">@</span>
-                            <span>My links</span>
+                            <span>01001101 01111001 00100000 01101100 01101001 01101110 01101011 01110011</span>
                         </div>
                         <span class="toggle-icon">v</span>
                     </div>
@@ -1286,15 +1308,15 @@
     <div class="party-modal-overlay" id="partyModal">
         <div class="party-modal">
             <div class="warning-icon">!</div>
-            <div class="modal-title">PARTY MODE</div>
-            <div class="modal-text">You are about to enter <strong>Party Mode</strong>.</div>
-            <div class="modal-warning-text">Not advised for people that are easily shocked from rapid lightning, loud noises, or extreme visual stimulation.</div>
+            <div class="modal-title">01010000 01000001 01010010 01010100 01011001 00100000 01001101 01001111 01000100 01000101</div>
+            <div class="modal-text">01011001 01101111 01110101 00100000 01100001 01110010 01100101 00100000 01100001 01100010 01101111 01110101 01110100 00100000 01110100 01101111 00100000 01100101 01101110 01110100 01100101 01110010 00100000 01010000 01100001 01110010 01110100 01111001 00100000 01001101 01101111 01100100 01100101 00101110</div>
+            <div class="modal-warning-text">01001110 01101111 01110100 00100000 01100001 01100100 01110110 01101001 01110011 01100101 01100100 00100000 01100110 01101111 01110010 00100000 01110000 01100101 01101111 01110000 01101100 01100101 00100000 01110100 01101000 01100001 01110100 00100000 01100001 01110010 01100101 00100000 01100101 01100001 01110011 01101001 01101100 01111001 00100000 01110011 01101000 01101111 01100011 01101011 01100101 01100100 00100000 01100110 01110010 01101111 01101101 00100000 01110010 01100001 01110000 01101001 01100100 00100000 01101100 01101001 01100111 01101000 01110100 01101110 01101001 01101110 01100111 00101100 00100000 01101100 01101111 01110101 01100100 00100000 01101110 01101111 01101001 01110011 01100101 01110011 00101100 00100000 01101111 01110010 00100000 01100101 01111000 01110100 01110010 01100101 01101101 01100101 00100000 01110110 01101001 01110011 01110101 01100001 01101100 00100000 01110011 01110100 01101001 01101101 01110101 01101100 01100001 01110100 01101001 01101111 01101110 00101110</div>
             <div class="modal-disclaimer">
-                This mode will activate: rapid strobing lights, intense screen shaking, extremely loud audio, layout chaos, elusive buttons, cursor trails, exploding snow, bass-driven zoom, and pitch chaos. If you experience discomfort, photosensitivity, or seizures, exit immediately. Party Mode is for entertainment purposes only. We are not liable for any damage to your eyes, ears, or sanity. You have been warned.
+                01010100 01101000 01101001 01110011 00100000 01101101 01101111 01100100 01100101 00100000 01110111 01101001 01101100 01101100 00100000 01100001 01100011 01110100 01101001 01110110 01100001 01110100 01100101 00111010 00100000 01110010 01100001 01110000 01101001 01100100 00100000 01110011 01110100 01110010 01101111 01100010 01101001 01101110 01100111 00100000 01101100 01101001 01100111 01101000 01110100 01110011 00101100 00100000 01101001 01101110 01110100 01100101 01101110 01110011 01100101 00100000 01110011 01100011 01110010 01100101 01100101 01101110 00100000 01110011 01101000 01100001 01101011 01101001 01101110 01100111 00101100 00100000 01100101 01111000 01110100 01110010 01100101 01101101 01100101 01101100 01111001 00100000 01101100 01101111 01110101 01100100 00100000 01100001 01110101 01100100 01101001 01101111 00101100 00100000 01101100 01100001 01111001 01101111 01110101 01110100 00100000 01100011 01101000 01100001 01101111 01110011 00101100 00100000 01100101 01101100 01110101 01110011 01101001 01110110 01100101 00100000 01100010 01110101 01110100 01110100 01101111 01101110 01110011 00101100 00100000 01100011 01110101 01110010 01110011 01101111 01110010 00100000 01110100 01110010 01100001 01101001 01101100 01110011 00101100 00100000 01100101 01111000 01110000 01101100 01101111 01100100 01101001 01101110 01100111 00100000 01110011 01101110 01101111 01110111 00101100 00100000 01100010 01100001 01110011 01110011 00101101 01100100 01110010 01101001 01110110 01100101 01101110 00100000 01111010 01101111 01101111 01101101 00101100 00100000 01100001 01101110 01100100 00100000 01110000 01101001 01110100 01100011 01101000 00100000 01100011 01101000 01100001 01101111 01110011 00101110 00100000 01001001 01100110 00100000 01111001 01101111 01110101 00100000 01100101 01111000 01110000 01100101 01110010 01101001 01100101 01101110 01100011 01100101 00100000 01100100 01101001 01110011 01100011 01101111 01101101 01100110 01101111 01110010 01110100 00101100 00100000 01110000 01101000 01101111 01110100 01101111 01110011 01100101 01101110 01110011 01101001 01110100 01101001 01110110 01101001 01110100 01111001 00101100 00100000 01101111 01110010 00100000 01110011 01100101 01101001 01111010 01110101 01110010 01100101 01110011 00101100 00100000 01100101 01111000 01101001 01110100 00100000 01101001 01101101 01101101 01100101 01100100 01101001 01100001 01110100 01100101 01101100 01111001 00101110 00100000 01010000 01100001 01110010 01110100 01111001 00100000 01001101 01101111 01100100 01100101 00100000 01101001 01110011 00100000 01100110 01101111 01110010 00100000 01100101 01101110 01110100 01100101 01110010 01110100 01100001 01101001 01101110 01101101 01100101 01101110 01110100 00100000 01110000 01110101 01110010 01110000 01101111 01110011 01100101 01110011 00100000 01101111 01101110 01101100 01111001 00101110 00100000 01010111 01100101 00100000 01100001 01110010 01100101 00100000 01101110 01101111 01110100 00100000 01101100 01101001 01100001 01100010 01101100 01100101 00100000 01100110 01101111 01110010 00100000 01100001 01101110 01111001 00100000 01100100 01100001 01101101 01100001 01100111 01100101 00100000 01110100 01101111 00100000 01111001 01101111 01110101 01110010 00100000 01100101 01111001 01100101 01110011 00101100 00100000 01100101 01100001 01110010 01110011 00101100 00100000 01101111 01110010 00100000 01110011 01100001 01101110 01101001 01110100 01111001 00101110 00100000 01011001 01101111 01110101 00100000 01101000 01100001 01110110 01100101 00100000 01100010 01100101 01100101 01101110 00100000 01110111 01100001 01110010 01101110 01100101 01100100 00101110
             </div>
             <div class="party-modal-buttons">
-                <button class="btn-no" id="partyModalNo">No, cancel</button>
-                <button class="btn-yes" id="partyModalYes">YES, LET'S PARTY!</button>
+                <button class="btn-no" id="partyModalNo">01001110 01101111 00101100 00100000 01100011 01100001 01101110 01100011 01100101 01101100</button>
+                <button class="btn-yes" id="partyModalYes">01011001 01000101 01010011 00101100 00100000 01001100 01000101 01010100 00100111 01010011 00100000 01010000 01000001 01010010 01010100 01011001 00100001</button>
             </div>
         </div>
     </div>
@@ -1303,7 +1325,7 @@
     <div class="strobe-overlay" id="strobeOverlay"></div>
 
     <!-- PARTY MODE INDICATOR -->
-    <div class="party-indicator" id="partyIndicator">PARTY MODE ACTIVE — CLICK TO STOP</div>
+    <div class="party-indicator" id="partyIndicator">01010000 01000001 01010010 01010100 01011001 00100000 01001101 01001111 01000100 01000101 00100000 01000001 01000011 01010100 01001001 01010110 01000101 00100000 00101101 00101101 00100000 01000011 01001100 01001001 01000011 01001011 00100000 01010100 01001111 00100000 01010011 01010100 01001111 01010000</div>
 
     <!-- CURSOR TRAIL CONTAINER -->
     <div class="cursor-trail-container" id="cursorTrailContainer"></div>
@@ -1596,15 +1618,15 @@
                 if (isPlaying) {
                     audio.pause();
                     playBtn.textContent = '>';
-                    if (musicBadge) musicBadge.textContent = 'paused';
-                    if (placeholderNote && !window.__partyModeActive) placeholderNote.textContent = 'paused';
+                    if (musicBadge) musicBadge.textContent = '01110000 01100001 01110101 01110011 01100101 01100100';
+                    if (placeholderNote && !window.__partyModeActive) placeholderNote.textContent = '01110000 01100001 01110101 01110011 01100101 01100100';
                 } else {
                     setupAudioContext();
                     if (audioContext && audioContext.state === 'suspended') audioContext.resume();
-                    audio.play().catch(err => { console.error('Playback failed:', err); if(placeholderNote){ placeholderNote.textContent='Cannot play. Check console.'; placeholderNote.style.color='#f87171'; }});
+                    audio.play().catch(err => { console.error('Playback failed:', err); if(placeholderNote){ placeholderNote.textContent='01000011 01100001 01101110 01101110 01101111 01110100 00100000 01110000 01101100 01100001 01111001 00101110 00100000 01000011 01101000 01100101 01100011 01101011 00100000 01100011 01101111 01101110 01110011 01101111 01101100 01100101 00101110'; placeholderNote.style.color='#f87171'; }});
                     playBtn.textContent = '| |';
-                    if (musicBadge) musicBadge.textContent = 'playing';
-                    if (placeholderNote && !window.__partyModeActive) placeholderNote.textContent = 'now playing: Basshunter - Dota';
+                    if (musicBadge) musicBadge.textContent = '01110000 01101100 01100001 01111001 01101001 01101110 01100111';
+                    if (placeholderNote && !window.__partyModeActive) placeholderNote.textContent = '01101110 01101111 01110111 00100000 01110000 01101100 01100001 01111001 01101001 01101110 01100111 00111010 00100000 01000010 01100001 01110011 01110011 01101000 01110101 01101110 01110100 01100101 01110010 00100000 00101101 00100000 01000100 01101111 01110100 01100001';
                 }
                 isPlaying = !isPlaying;
             });
@@ -1631,11 +1653,11 @@
             audio.addEventListener('ended', () => {
                 playBtn.textContent = '>'; isPlaying = false; progressFill.style.width = '0%';
                 if(timeLabels[0]) timeLabels[0].textContent = '0:00';
-                if(musicBadge) musicBadge.textContent = 'ended';
-                if(placeholderNote && !window.__partyModeActive) placeholderNote.textContent = 'song ended';
+                if(musicBadge) musicBadge.textContent = '01100101 01101110 01100100 01100101 01100100';
+                if(placeholderNote && !window.__partyModeActive) placeholderNote.textContent = '01110011 01101111 01101110 01100111 00100000 01100101 01101110 01100100 01100101 01100100';
             });
             audio.addEventListener('error', () => {
-                if(placeholderNote){ placeholderNote.textContent='Audio file not found. Make sure basshunterdota.mp3 is in the same folder.'; placeholderNote.style.color='#f87171'; }
+                if(placeholderNote){ placeholderNote.textContent='01000001 01110101 01100100 01101001 01101111 00100000 01100110 01101001 01101100 01100101 00100000 01101110 01101111 01110100 00100000 01100110 01101111 01110101 01101110 01100100 00101110 00100000 01001101 01100001 01101011 01100101 00100000 01110011 01110101 01110010 01100101 00100000 01100010 01100001 01110011 01110011 01101000 01110101 01101110 01110100 01100101 01110010 01100100 01101111 01110100 01100001 00101110 01101101 01110000 00110011 00100000 01101001 01110011 00100000 01101001 01101110 00100000 01110100 01101000 01100101 00100000 01110011 01100001 01101101 01100101 00100000 01100110 01101111 01101100 01100100 01100101 01110010 00101110'; placeholderNote.style.color='#f87171'; }
             });
             window.__audioControls = {
                 play: () => { audio.play().catch(() => {}); },
@@ -1746,11 +1768,11 @@
                 if (window.__snowControls) window.__snowControls.setPartyMode(true);
                 if (window.__audioControls) { window.__audioControls.setVolume(1.0); window.__audioControls.play(); }
                 startCursorTrail(); startElusive(); startPitchChaos();
-                if (musicBadge) musicBadge.textContent = 'PARTY MODE';
-                if (placeholderNote) { placeholderNote.textContent = 'PARTY MODE ACTIVE!'; placeholderNote.style.color = '#ff6b6b'; }
+                if (musicBadge) musicBadge.textContent = '01010000 01000001 01010010 01010100 01011001 00100000 01001101 01001111 01000100 01000101';
+                if (placeholderNote) { placeholderNote.textContent = '01010000 01000001 01010010 01010100 01011001 00100000 01001101 01001111 01000100 01000101 00100000 01000001 01000011 01010100 01001001 01010110 01000101 00100001'; placeholderNote.style.color = '#ff6b6b'; }
                 if (playBtn) playBtn.textContent = '| |';
                 tiltEnabled = false; document.getElementById('tiltToggle').checked = true;
-                document.title = 'PARTY MODE';
+                document.title = '01010000 01000001 01010010 01010100 01011001 00100000 01001101 01001111 01000100 01000101';
             }
             function stopPartyMode() {
                 window.__partyModeActive = false;
@@ -1760,11 +1782,11 @@
                 if (window.__snowControls) window.__snowControls.setPartyMode(false);
                 if (window.__audioControls) window.__audioControls.pause();
                 stopCursorTrail(); stopElusive(); stopPitchChaos();
-                if (musicBadge) musicBadge.textContent = 'stopped';
-                if (placeholderNote) { placeholderNote.textContent = 'press play to listen'; placeholderNote.style.color = 'rgba(255, 255, 255, 0.4)'; }
+                if (musicBadge) musicBadge.textContent = '01110011 01110100 01101111 01110000 01110000 01100101 01100100';
+                if (placeholderNote) { placeholderNote.textContent = '01110000 01110010 01100101 01110011 01110011 00100000 01110000 01101100 01100001 01111001 00100000 01110100 01101111 00100000 01101100 01101001 01110011 01110100 01100101 01101110'; placeholderNote.style.color = 'rgba(255, 255, 255, 0.4)'; }
                 if (playBtn) playBtn.textContent = '>';
                 if (!document.getElementById('tiltToggle').checked) tiltEnabled = true;
-                document.title = 'profile · safeswing';
+                document.title = '01110000 01110010 01101111 01100110 01101001 01101100 01100101 00100000 00101101 00100000 01110011 01100001 01100110 01100101 01110011 01110111 01101001 01101110 01100111';
             }
 
             partyToggle.addEventListener('change', (e) => {
