@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>01110000 01110010 01101111 01100110 01101001 01101100 01100101 00100000 00101101 00100000 01110011 01100001 01100110 01100101 01110011 01110111 01101001 01101110 01100111</title>
+
+    <style>
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0b0d15;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            font-family: 'Inter', sans-serif;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(56, 189, 248, 0.1);
+            border-top: 3px solid #38BDF8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text {
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+            opacity: 0.6;
+            word-break: break-all;
+        }
+        .loading-dots::after {
+            content: '';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+        @keyframes dots {
+            0% { content: ''; }
+            25% { content: '.'; }
+            50% { content: '..'; }
+            75% { content: '...'; }
+            100% { content: ''; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <div class="loading-text">01001100 01101111 01100001 01100100 01101001 01101110 01100111 00100000 01001100 01101001 01100010 01110010 01100001 01110010 01101001 01100101 01110011</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0b0d15;
+            font-family: 'Inter', monospace, sans-serif;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+            margin: 0;
+            transition: filter 0.3s ease;
+        }
+
+        body.party-active {
+            cursor: crosshair;
+        }
+
+        body.party-layout-chaos {
+            animation: layoutChaos 2.5s infinite cubic-bezier(0.5, 0, 0.5, 1);
+            transform-origin: center center;
+            will-change: transform;
+        }
+        @keyframes layoutChaos {
+            0% { transform: rotate(0deg) skewX(0deg) scale(1) translate(0, 0); }
+            12% { transform: rotate(4deg) skewX(2deg) scale(1.02) translate(-0.5%, 0.2%); }
+            25% { transform: rotate(-3deg) skewX(-1deg) scale(0.98) translate(0.3%, -0.4%); }
+            37% { transform: rotate(6deg) skewX(3deg) scale(1.05) translate(0.8%, 0.5%); }
+            50% { transform: rotate(-7deg) skewX(-2deg) scale(0.96) translate(-0.7%, 0.6%); }
+            62% { transform: rotate(5deg) skewX(1.5deg) scale(1.03) translate(0.4%, -0.3%); }
+            75% { transform: rotate(-4deg) skewX(-1.5deg) scale(1.0) translate(-0.2%, 0.1%); }
+            87% { transform: rotate(2deg) skewX(0.5deg) scale(0.99) translate(0.1%, -0.1%); }
+            100% { transform: rotate(0deg) skewX(0deg) scale(1) translate(0, 0); }
+        }
+
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        #three-canvas canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .itch-profile-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            font-family: 'Inter', monospace, sans-serif;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            perspective: 1200px;
+        }
+
+        .glass-panel {
+            position: relative;
+            max-width: 720px;
+            width: 100%;
+            padding: 2.8rem 2.5rem;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(14px) saturate(180%);
+            -webkit-backdrop-filter: blur(14px) saturate(180%);
+            border-radius: 3.5rem 1.5rem 3.5rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+            transition: transform 0.1s ease, box-shadow 0.3s ease;
+            overflow: visible;
+            z-index: 2;
+            transform-style: preserve-3d;
+            --mouse-x: 50%;
+            --mouse-y: 50%;
+        }
+
+        .settings-wrapper {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.8rem;
+            z-index: 50;
+            transform: translateZ(40px);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .lang-selector {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.4rem 0.6rem;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            white-space: nowrap;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 0.25rem 0.7rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+        }
+
+        .lang-btn.active {
+            background: rgba(56, 189, 248, 0.2);
+            color: #38BDF8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .settings-icon {
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            animation: pulse-gear 2.5s ease-in-out infinite;
+            backdrop-filter: blur(4px);
+            will-change: transform;
+            flex-shrink: 0;
+        }
+
+        .settings-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: #38BDF8;
+            transition: transform 0.3s ease;
+        }
+
+        @keyframes pulse-gear {
+            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); transform: rotate(0deg); }
+            25% { transform: rotate(15deg); }
+            50% { box-shadow: 0 0 20px 5px rgba(56, 189, 248, 0.2); transform: rotate(0deg); }
+            75% { transform: rotate(-15deg); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); transform: rotate(0deg); }
+        }
+
+        .settings-icon:hover {
+            color: #ffffff;
+            background: rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.5);
+            animation: none;
+            box-shadow: 0 0 30px 10px rgba(56, 189, 248, 0.3);
+        }
+        .settings-icon:hover svg {
+            transform: rotate(90deg);
+        }
+
+        .settings-panel {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: rgba(20, 22, 36, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1.2rem 0.6rem 1.2rem 0.6rem;
+            padding: 1.2rem 1.5rem;
+            min-width: 230px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.95);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top right;
+            z-index: 60;
+        }
+
+        .settings-panel.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .settings-panel .panel-title {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        .settings-panel .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            gap: 1rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.5rem;
+            word-break: break-all;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 40px;
+            height: 22px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 34px;
+            transition: 0.3s;
+        }
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .toggle-switch input:checked+.toggle-slider {
+            background: #38BDF8;
+        }
+        .toggle-switch input:checked+.toggle-slider::before {
+            transform: translateX(18px);
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 3.6rem 1.6rem 3.6rem 1.6rem;
+            padding: 2px;
+            background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(56, 189, 248, 0.35), transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+            transform: translateZ(-1px);
+        }
+
+        .glass-panel.glow-active::before {
+            opacity: 1;
+        }
+
+        .glass-panel::after {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 70%;
+            height: 70%;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(30px);
+            transform: translateZ(-1px);
+        }
+
+        .content {
+            position: relative;
+            z-index: 3;
+            color: rgba(255, 255, 255, 0.92);
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            transform: translateZ(20px);
+            transform-style: preserve-3d;
+        }
+
+        .accordion-section {
+            margin-bottom: 1.2rem;
+            border-radius: 1.5rem 0.8rem 1.5rem 0.8rem;
+            background: rgba(15, 18, 30, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: border-color 0.3s ease, background 0.3s ease;
+            position: relative;
+            transform: translateZ(0);
+        }
+
+        .accordion-section::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 1.6rem 0.9rem 1.6rem 0.9rem;
+            background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(56, 189, 248, 0.25), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .accordion-section.glow-active::before {
+            opacity: 1;
+        }
+        .accordion-section:hover {
+            border-color: rgba(56, 189, 248, 0.25);
+            background: rgba(20, 25, 42, 0.65);
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.1rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s ease, transform 0.05s ease;
+            gap: 1rem;
+            position: relative;
+            z-index: 2;
+            will-change: transform;
+        }
+        .accordion-header:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .accordion-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 600;
+            font-size: 0.6rem;
+            color: #ffffff;
+            word-break: break-all;
+            flex-wrap: wrap;
+        }
+        .accordion-header .header-left .icon {
+            font-size: 1.2rem;
+        }
+        .accordion-header .toggle-icon {
+            font-size: 1.2rem;
+            color: #38BDF8;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+        .accordion-section.open .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .accordion-section.open .accordion-body {
+            max-height: 4000px;
+        }
+        .accordion-body-inner {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .accordion-section.about-expanded .accordion-body {
+            max-height: 4000px;
+        }
+        .accordion-section.about-expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .subhead-about {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 0.8rem;
+            margin-bottom: 1.2rem;
+            padding: 0 0.2rem;
+        }
+        .subhead-about span {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: rgba(255, 255, 255, 0.85);
+            word-break: break-all;
+        }
+        .live-clock {
+            background: rgba(56, 189, 248, 0.12) !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+            color: #38BDF8 !important;
+            font-weight: 600;
+        }
+        .username-gold {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent !important;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border: 1px solid rgba(255, 215, 0, 0.4) !important;
+            border-radius: 40px;
+            background-color: rgba(255, 215, 0, 0.1) !important;
+            font-size: 0.5rem;
+        }
+        .languages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+            padding: 0 0.2rem;
+        }
+        .lang-row {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .lang-pill {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+            display: inline-block;
+        }
+        .lang-pill.cpp,
+        .lang-pill.cs {
+            border-color: rgba(56, 189, 248, 0.25);
+        }
+        .skill-level-card {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.8);
+            word-break: break-all;
+        }
+        .skill-level-card.junior,
+        .skill-level-card.expert {
+            border-color: rgba(56, 189, 248, 0.3);
+            color: #38BDF8;
+        }
+        .skill-level-card.undefined {
+            border-color: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+        }
+        .small-note {
+            font-size: 0.5rem;
+            color: #94A3B8;
+            margin-left: 0.5rem;
+            word-break: break-all;
+        }
+        .status-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            padding: 0 0.2rem;
+        }
+        .status-card {
+            display: flex;
+            align-items: center;
+            padding: 0.6rem 1rem;
+            border-radius: 30px;
+            font-size: 0.5rem;
+            font-weight: 500;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #E2E8F0;
+            word-break: break-all;
+        }
+        .status-card.green { background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.25); }
+        .status-card.red { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.25); }
+        .status-card.yellow { background: rgba(234, 179, 8, 0.15); border-color: rgba(234, 179, 8, 0.25); }
+        .section-label {
+            font-size: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 0.5rem;
+            margin-top: 1rem;
+            padding: 0 0.2rem;
+            font-weight: 600;
+            word-break: break-all;
+        }
+        .tools-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+            padding: 0 0.2rem;
+        }
+        .tool-card {
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.9);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(56, 189, 248, 0.5);
+            background: rgba(56, 189, 248, 0.1);
+        }
+        .music-player {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 1.5rem 0.8rem 1.5rem 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        .music-top {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .music-art {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            color: #38BDF8;
+        }
+        .music-info { flex: 1; min-width: 0; }
+        .music-info .track-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .music-info .track-artist {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2px;
+        }
+        .music-badge {
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            color: #38BDF8;
+            white-space: nowrap;
+            word-break: break-all;
+        }
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            justify-content: center;
+        }
+        .music-controls .ctrl-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .music-controls .ctrl-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(56, 189, 248, 0.3);
+            transform: scale(1.05);
+            color: #ffffff;
+        }
+        .music-controls .ctrl-btn.play-btn {
+            width: 44px;
+            height: 44px;
+            background: rgba(56, 189, 248, 0.15);
+            border-color: rgba(56, 189, 248, 0.3);
+            font-size: 1.2rem;
+            color: #38BDF8;
+        }
+        .music-controls .ctrl-btn.play-btn:hover {
+            background: rgba(56, 189, 248, 0.25);
+            border-color: rgba(56, 189, 248, 0.5);
+            transform: scale(1.08);
+            color: #7dd3fc;
+        }
+        .music-progress {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .music-progress .time-label {
+            font-size: 0.7rem;
+            font-variant-numeric: tabular-nums;
+            color: rgba(255, 255, 255, 0.4);
+            min-width: 32px;
+        }
+        .progress-track {
+            flex: 1;
+            height: 4px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-track .progress-fill {
+            width: 0%;
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #38BDF8, #34D399);
+            opacity: 0.8;
+            transition: width 0.1s linear;
+        }
+        .music-placeholder-note {
+            text-align: center;
+            font-size: 0.5rem;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 0.3px;
+            padding-top: 0.3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            word-break: break-all;
+        }
+        .device-group { margin-bottom: 0.8rem; padding: 0 0.2rem; }
+        .device-group-label {
+            font-size: 0.5rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.4rem;
+            word-break: break-all;
+        }
+        .device-specs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .device-spec {
+            padding: 0.4rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.85);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .device-spec:hover {
+            transform: translateY(-2px);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+        .support-content {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem 0.6rem 1rem 0.6rem;
+            padding: 1.2rem;
+            font-size: 0.5rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 0.5rem;
+            word-break: break-all;
+        }
+        .links-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+            padding: 0 0.2rem;
+        }
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.85);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+        .link-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(56, 189, 248, 0.3);
+            transform: scale(1.05);
+            color: #ffffff;
+        }
+        .link-btn.moddb { border-color: rgba(255, 107, 53, 0.3); color: #ff8c42; }
+        .link-btn.itch { border-color: rgba(250, 92, 92, 0.3); color: #fa5c5c; }
+        .link-btn.gitlab { border-color: rgba(252, 109, 38, 0.3); color: #fc6d26; }
+        .footer-tag {
+            margin-top: 1.6rem;
+            font-size: 0.5rem;
+            color: rgba(255, 255, 255, 0.3);
+            text-align: right;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 0.8rem;
+        }
+        .footer-tag span {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.2rem 1.2rem;
+            border-radius: 60px;
+        }
+
+        .party-mode-container {
+            margin-top: 1rem;
+            padding: 0.9rem 1.2rem;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 1rem 0.6rem 1rem 0.6rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+        .party-mode-container:hover {
+            border-color: rgba(255, 100, 150, 0.3);
+            background: rgba(20, 10, 20, 0.5);
+        }
+        .party-mode-label {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 600;
+            font-size: 0.5rem;
+            color: #fff;
+            word-break: break-all;
+        }
+        .party-mode-label .party-icon { font-size: 1.2rem; }
+        .party-mode-label .party-text {
+            font-size: 0.4rem;
+            color: rgba(255, 255, 255, 0.5);
+            display: block;
+            font-weight: 400;
+            word-break: break-all;
+        }
+        .party-toggle-switch {
+            position: relative;
+            width: 52px;
+            height: 28px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .party-toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .party-toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 34px;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .party-toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .party-toggle-switch input:checked+.party-toggle-slider {
+            background: linear-gradient(135deg, #ff6b6b, #ff0080, #7928ca);
+            border-color: rgba(255, 100, 150, 0.5);
+            box-shadow: 0 0 20px rgba(255, 0, 128, 0.4);
+        }
+        .party-toggle-switch input:checked+.party-toggle-slider::before {
+            transform: translateX(24px);
+            background: #fff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        .party-toggle-switch input:checked+.party-toggle-slider { animation: party-toggle-pulse 0.6s infinite; }
+        @keyframes party-toggle-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 128, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(255, 0, 128, 0.8), 0 0 60px rgba(121, 40, 202, 0.4); }
+        }
+
+        .party-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 9998;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .party-modal-overlay.active { opacity: 1; visibility: visible; }
+        .party-modal {
+            background: rgba(20, 22, 36, 0.98);
+            border: 1px solid rgba(255, 100, 150, 0.3);
+            border-radius: 2rem 1rem 2rem 1rem;
+            padding: 2.2rem 2rem;
+            max-width: 430px; width: 90%;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(255, 0, 128, 0.15), 0 10px 30px rgba(0, 0, 0, 0.8);
+            transform: scale(0.9) translateY(10px);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .party-modal-overlay.active .party-modal { transform: scale(1) translateY(0); }
+        .party-modal .warning-icon {
+            font-size: 3.5rem; margin-bottom: 1rem;
+            animation: warning-pulse 1s ease-in-out infinite;
+        }
+        @keyframes warning-pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 100, 100, 0.5)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(255, 100, 100, 0.9)); }
+        }
+        .party-modal .modal-title { font-size: 0.7rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; word-break: break-all; }
+        .party-modal .modal-text { font-size: 0.5rem; line-height: 1.6; color: rgba(255, 255, 255, 0.7); margin-bottom: 0.8rem; word-break: break-all; }
+        .party-modal .modal-warning-text {
+            font-size: 0.45rem; color: #ff6b6b; font-weight: 600;
+            letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 1.2rem;
+            word-break: break-all;
+        }
+        .party-modal .modal-disclaimer {
+            font-size: 0.4rem; color: rgba(255, 255, 255, 0.35); line-height: 1.4;
+            margin-bottom: 1.5rem; padding: 0.8rem;
+            background: rgba(255, 0, 0, 0.05); border-radius: 1rem;
+            border: 1px solid rgba(255, 0, 0, 0.1);
+            word-break: break-all;
+        }
+        .party-modal-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .party-modal-buttons button {
+            padding: 0.7rem 1.8rem; border-radius: 60px; font-weight: 600;
+            font-size: 0.5rem; cursor: pointer; transition: all 0.25s ease;
+            border: 1px solid; letter-spacing: 0.3px;
+            word-break: break-all;
+        }
+        .party-modal-buttons .btn-no { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); }
+        .party-modal-buttons .btn-no:hover { background: rgba(255,255,255,0.12); color:#fff; border-color: rgba(255,255,255,0.3); }
+        .party-modal-buttons .btn-yes {
+            background: linear-gradient(135deg, #ff6b6b, #ff0080);
+            border-color: rgba(255, 0, 128, 0.5); color: #fff;
+            box-shadow: 0 5px 20px rgba(255, 0, 128, 0.3);
+        }
+        .party-modal-buttons .btn-yes:hover {
+            background: linear-gradient(135deg, #ff8585, #ff3399);
+            box-shadow: 0 5px 30px rgba(255, 0, 128, 0.6); transform: scale(1.05);
+        }
+
+        .strobe-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            pointer-events: none; z-index: 9995;
+            opacity:0; visibility:hidden; mix-blend-mode: screen;
+            animation:none; transition: opacity 0.3s ease;
+        }
+        .strobe-overlay.active { opacity:1; visibility:visible; animation: strobe-flash 0.35s infinite; }
+        @keyframes strobe-flash {
+            0% { background: rgba(255, 0, 50, 0.35); } 8% { background: rgba(0, 255, 100, 0.45); }
+            16% { background: rgba(0, 50, 255, 0.3); } 25% { background: rgba(255, 255, 0, 0.5); }
+            33% { background: rgba(255, 0, 255, 0.4); } 41% { background: rgba(0, 255, 255, 0.5); }
+            50% { background: rgba(255, 100, 0, 0.45); } 58% { background: rgba(150, 255, 0, 0.35); }
+            66% { background: rgba(0, 150, 255, 0.4); } 75% { background: rgba(255, 0, 150, 0.45); }
+            83% { background: rgba(255, 255, 255, 0.5); } 91% { background: rgba(0, 0, 0, 0.35); }
+            100% { background: rgba(255, 0, 50, 0.35); }
+        }
+
+        .party-shake-active .itch-profile-wrapper { animation: party-shake 0.25s infinite; will-change: transform; }
+        @keyframes party-shake {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            10% { transform: translate(-12px, -6px) rotate(-0.8deg) scale(1.01); }
+            20% { transform: translate(12px, 8px) rotate(0.8deg) scale(0.99); }
+            30% { transform: translate(-10px, 12px) rotate(-0.5deg) scale(1.02); }
+            40% { transform: translate(10px, -12px) rotate(0.5deg) scale(0.98); }
+            50% { transform: translate(-8px, 14px) rotate(-0.7deg) scale(1.01); }
+            60% { transform: translate(8px, -14px) rotate(0.7deg) scale(0.99); }
+            70% { transform: translate(-14px, 4px) rotate(-0.4deg) scale(1.02); }
+            80% { transform: translate(14px, -4px) rotate(0.4deg) scale(0.98); }
+            90% { transform: translate(-6px, -8px) rotate(0deg) scale(1.01); }
+            100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+        }
+
+        .party-indicator {
+            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+            z-index: 9996; padding: 0.6rem 1.8rem; border-radius: 60px;
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.3), rgba(121, 40, 202, 0.3));
+            border: 1px solid rgba(255, 100, 150, 0.5); color: #fff;
+            font-weight: 700; font-size: 0.5rem; letter-spacing: 1px;
+            text-transform: uppercase; cursor: pointer; opacity: 0; visibility: hidden;
+            transition: all 0.4s ease; box-shadow: 0 5px 30px rgba(255, 0, 128, 0.3);
+            animation: none; user-select: none; white-space: nowrap;
+            word-break: break-all;
+        }
+        .party-indicator.active { opacity: 1; visibility: visible; animation: party-indicator-pulse 0.5s infinite; }
+        @keyframes party-indicator-pulse {
+            0%, 100% { box-shadow: 0 5px 30px rgba(255, 0, 128, 0.3); transform: translateX(-50%) scale(1); }
+            50% { box-shadow: 0 5px 60px rgba(255, 0, 128, 0.7), 0 5px 80px rgba(121, 40, 202, 0.5); transform: translateX(-50%) scale(1.05); }
+        }
+        .party-indicator:hover { animation: none; transform: translateX(-50%) scale(1.1); box-shadow: 0 5px 60px rgba(255, 0, 128, 0.8); }
+
+        .cursor-trail-container {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            pointer-events: none; z-index: 9997; overflow: hidden;
+        }
+        .cursor-trail-particle {
+            position: fixed; pointer-events: none; font-size: 22px;
+            z-index: 9997; animation: trail-fade 0.8s forwards; will-change: transform, opacity;
+        }
+        .cursor-trail-spark {
+            position: fixed; pointer-events: none; width: 8px; height: 8px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 10px #fff, 0 0 20px #ff00ff, 0 0 30px #00ffff;
+            z-index: 9997; animation: trail-fade 0.6s forwards; will-change: transform, opacity;
+        }
+        @keyframes trail-fade {
+            0% { opacity: 1; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.3); }
+        }
+
+        @media (max-width: 500px) {
+            .glass-panel { padding: 1.8rem 1rem; }
+            .settings-wrapper { top: 1rem; right: 1rem; gap: 0.4rem; }
+            .lang-selector { padding: 0.3rem 0.4rem; gap: 0.3rem; }
+            .lang-btn { font-size: 0.6rem; padding: 0.2rem 0.5rem; }
+            .settings-icon { width: 36px; height: 36px; }
+            .settings-icon svg { width: 18px; height: 18px; }
+            .settings-panel { min-width: 200px; padding: 1rem; right: -0.5rem; }
+            .accordion-header { padding: 0.9rem 1rem; }
+            .accordion-body-inner { padding: 0 1rem 1rem 1rem; }
+            .party-modal { padding: 1.5rem 1rem; border-radius: 1.5rem 0.8rem 1.5rem 0.8rem; }
+            .party-mode-container { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+            .party-toggle-switch { width: 48px; height: 26px; }
+            .party-toggle-slider::before { height: 18px; width: 18px; }
+            .party-toggle-switch input:checked+.party-toggle-slider::before { transform: translateX(22px); }
+            .party-indicator { font-size: 0.4rem; padding: 0.5rem 1.2rem; bottom: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="three-canvas"></div>
+
+    <div class="itch-profile-wrapper">
+        <div class="glass-panel" id="mainCard">
+
+            <div class="settings-wrapper">
+                <div class="lang-selector">
+                    <a href="index.html" class="lang-btn" title="English">English</a>
+                    <a href="indexrus.html" class="lang-btn" title="Russian">Russian</a>
+                    <a href="index64.html" class="lang-btn" title="Base64">Base64</a>
+                    <a href="indexASM.html" class="lang-btn active" title="Binary">01000010 01101001 01101110 01100001 01110010 01111001</a>
+                    <a href="indexis.html" class="lang-btn" title="Israeli">Israeli</a>
+                </div>
+                <div class="settings-icon" id="settingsToggle" title="Settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                </div>
+                <div class="settings-panel" id="settingsPanel">
+                    <div class="panel-title">01010011 01100101 01110100 01110100 01101001 01101110 01100111 01110011</div>
+                    <div class="setting-item">
+                        <span>01000100 01101001 01110011 01100001 01100010 01101100 01100101 00100000 00110011 01000100 00100000 01010100 01101001 01101100 01110100</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="tiltToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content">
+
+                <div class="accordion-section about-expanded" id="aboutSection">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="header-left">
+                            <span class="icon">//</span>
+                            <span>01000001 01100010 01101111 01110101 01110100 00100000 01001101 01100101</span>
+                        </div>
+                        <span class="toggle-icon">v</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">
+                            <div class="subhead-about">
+                                <span>GMT +05</span>
+                                <span class="live-clock"><span id="liveTime">--:--:--</span></span>
+                                <span>01010100 01110101 01110010 01101011 01101101 01100101 01101110 01101001 01110011 01110100 01100001 01101110</span>
+                                <span>01000001 01100111 01100101 00111010 00100000 00110001 00110110</span>
+                                <span>176cm</span>
+                                <span>01001101 01100001 01101100 01100101</span>
+                                <span class="username-gold">01000000 01110011 01100001 01100110 01100101 01110011 01110111 01101001 01101110 01100111</span>
+                                <span>01000010 01101111 01110010 01101110 00111010 00100000 00110001 00110101 01110100 01101000 00100000 01000110 01100101 01100010 01110010 01110101 01100001 01110010 01111001</span>
+                            </div>
+
+                            <div class="section-label">01001100 01100001 01101110 01100111 01110101 01100001 01100111 01100101 01110011</div>
+                            <div class="languages-list">
+                                <div class="lang-row">
+                                    <span class="lang-pill cpp">C++</span>
+                                    <span class="skill-level-card junior">01001010 01110101 01101110 01101001 01101111 01110010</span>
+                                </div>
+                                <div class="lang-row">
+                                    <span class="lang-pill cs">C#</span>
+                                    <span class="skill-level-card undefined">01010101 01101110 01100100 01100101 01100110 01101001 01101110 01100101 01100100</span>
+                                </div>
+                                <div class="lang-row">
+                                    <span class="lang-pill">HTML/CSS</span>
+                                    <span class="skill-level-card expert">01000101 01111000 01110000 01100101 01110010 01110100</span>
+                                    <span class="small-note">01101001 00100000 01101011 01101110 01101111 01110111 00100000 01001000 01010100 01001101 01001100 00100000 01101001 01110011 00100000 01101110 01101111 01110100 00100000 01100001 00100000 01100011 01101111 01100100 01101001 01101110 01100111 00100000 01101100 01100001 01101110 01100111 01110101 01100001 01100111 01100101</span>
+                                </div>
+                            </div>
+
+                            <div class="section-label">01010011 01110100 01100001 01110100 01110101 01110011</div>
+                            <div class="status-list">
+                                <div class="status-card green">01000011 01110101 01110010 01110010 01100101 01101110 01110100 01101100 01111001 00100000 01100100 01100101 01110110 01100101 01101100 01101111 01110000 01101101 01100101 01101110 01110100 00100000 01101111 01100110 00100000 01010101 01101110 01101001 01110100 01111001 00100000 01000111 01100001 01101101 01100101 00100000 00101000 01001000 01000100 01010010 01010000 00101001</div>
+                                <div class="status-card red">01000110 01110010 01101111 01111010 01100101 01101110 00100000 01000100 01100101 01110110 01100101 01101100 01101111 01110000 01101101 01100101 01101110 01110100 00100000 01100110 01101111 01110010 00100000 01011000 01001101 00110011</div>
+                                <div class="status-card red">01000110 01110010 01101111 01111010 01100101 01101110 00101111 01010011 01101100 01101111 01110111 00100000 01100100 01100101 01110110 01100101 01101100 01101111 01110000 01101101 01100101 01101110 01110100 00100000 01100110 01101111 01110010 00100000 01000010 01101100 01101001 01110100 01111010 00110011 01000100 00100000 00110010 00110000 00110010 00111000 00100000 01001111 01110110 01100101 01110010 01101000 01100001 01110101 01101100</div>
+                                <div class="status-card yellow">01010000 01101100 01100001 01101110 01101110 01101001 01101110 01100111 00100000 01101111 01101110 00100000 01010101 01101110 01101001 01110100 01111001 00100000 01010101 01010010 01010000 00100000 01110000 01110010 01101111 01101010 01100101 01100011 01110100 00100000 01101001 01101110 00100000 00110010 00110000 00110010 00111000 00101110</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-section" id="toolsSection">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="header-left">
+                            <span class="icon">[]</span>
+                            <span>01001101 01111001 00100000 01010100 01101111 01101111 01101100 01110011</span>
+                        </div>
+                        <span class="toggle-icon">v</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">
+                            <div class="tools-grid">
+                                <span class="tool-card android-studio">Android Studio</span>
+                                <span class="tool-card xcode">Xcode</span>
+                                <span class="tool-card vs2026">Visual Studio 2026 Community</span>
+                                <span class="tool-card vscode">VS Code</span>
+                                <span class="tool-card photoshop">Adobe Photoshop 2026</span>
+                                <span class="tool-card premiere">Adobe Premiere Pro 2024</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-section" id="musicSection">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="header-left">
+                            <span class="icon">~</span>
+                            <span>01001101 01110101 01110011 01101001 01100011</span>
+                        </div>
+                        <span class="toggle-icon">v</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">
+                            <div class="music-player">
+                                <div class="music-top">
+                                    <div class="music-art">M</div>
+                                    <div class="music-info">
+                                        <div class="track-name">Basshunter - Dota</div>
+                                        <div class="track-artist">Basshunter</div>
+                                    </div>
+                                    <span class="music-badge">01110011 01110100 01101111 01110000 01110000 01100101 01100100</span>
+                                </div>
+                                <div class="music-controls">
+                                    <span class="ctrl-btn">|&lt;</span>
+                                    <span class="ctrl-btn play-btn">&gt;</span>
+                                    <span class="ctrl-btn">&gt;|</span>
+                                    <span class="ctrl-btn">R</span>
+                                    <span class="ctrl-btn">S</span>
+                                </div>
+                                <div class="music-progress">
+                                    <span class="time-label">0:00</span>
+                                    <div class="progress-track"><div class="progress-fill" style="width:0%;"></div></div>
+                                    <span class="time-label">0:00</span>
+                                </div>
+                                <audio id="myAudio" src="basshunterdota.mp3" preload="metadata"></audio>
+                                <div class="music-placeholder-note">01110000 01110010 01100101 01110011 01110011 00100000 01110000 01101100 01100001 01111001 00100000 01110100 01101111 00100000 01101100 01101001 01110011 01110100 01100101 01101110</div>
+                            </div>
+
+                            <div class="party-mode-container" id="partyModeContainer">
+                                <div class="party-mode-label">
+                                    <span class="party-icon">P</span>
+                                    <span>01010000 01100001 01110010 01110100 01111001 00100000 01001101 01101111 01100100 01100101
+                                        <span class="party-text">01110011 01110100 01110010 01101111 01100010 01100101 00100000 01101100 01101001 01100111 01101000 01110100 01110011 00100000 00101101 00100000 01101100 01101111 01110101 01100100 00100000 01100001 01110101 01100100 01101001 01101111 00100000 00101101 00100000 01110011 01100011 01110010 01100101 01100101 01101110 00100000 01110011 01101000 01100001 01101011 01100101</span>
+                                    </span>
+                                </div>
+                                <label class="party-toggle-switch">
+                                    <input type="checkbox" id="partyModeToggle">
+                                    <span class="party-toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-section" id="devicesSection">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="header-left">
+                            <span class="icon">&gt;_</span>
+                            <span>01000001 01100010 01101111 01110101 01110100 00100000 01101101 01111001 00100000 01100100 01100101 01110110 01101001 01100011 01100101 01110011</span>
+                        </div>
+                        <span class="toggle-icon">v</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">
+                            <div class="device-group">
+                                <div class="device-group-label">01001100 01100001 01110000 01110100 01101111 01110000 00111010</div>
+                                <div class="device-specs">
+                                    <span class="device-spec blue">32GB LPDDR5X</span>
+                                    <span class="device-spec purple">iGPU: Intel Arc v140</span>
+                                    <span class="device-spec blue">Intel Ultra 7 258v</span>
+                                    <span class="device-spec gray">1TB SSD + External 1TB SSD + External 1TB HDD</span>
+                                </div>
+                            </div>
+                            <div class="device-group">
+                                <div class="device-group-label">01010000 01101000 01101111 01101110 01100101 01110011 00111010</div>
+                                <div class="device-specs">
+                                    <span class="device-spec desert">IPhone 16 Pro</span>
+                                    <span class="device-spec huawei">Pura 70 Base</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-section" id="supportSection">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="header-left">
+                            <span class="icon">$</span>
+                            <span>01010011 01110101 01110000 01110000 01101111 01110010 01110100 00100000 01101101 01100101 00100000 00101111 00100000 01010000 01100001 01101001 01100100 00100000 01010000 01101100 01100001 01101110 01101110 01101001 01101110 01100111 01110011</span>
+                        </div>
+                        <span class="toggle-icon">v</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">
+                            <div class="support-content">
+                                01010101 01101110 01100110 01101111 01110010 01110100 01110101 01101110 01100001 01110100 01100101 01101100 01111001 00101100 00100000 01001001 00100000 01100011 01100001 01101110 01101110 01101111 01110100 00100000 01110010 01100101 01100011 01100101 01101001 01110110 01100101 00100000 01110000 01100001 01111001 01101101 01100101 01101110 01110100 01110011 00100000 01110100 01101000 01110010 01101111 01110101 01100111 01101000 00100000 01110011 01100101 01110010 01110110 01101001 01100011 01100101 01110011 00100000 01101100 01101001 01101011 01100101 00100000 01010000 01100001 01111001 01010000 01100001 01101100 00101100 00100000 01010110 01101001 01110011 01100001 00101100 00100000 01101111 01110010 00100000 01110011 01101001 01101101 01101001 01101100 01100001 01110010 00100000 01110000 01101100 01100001 01110100 01100110 01101111 01110010 01101101 01110011 00101110 00100000 01001001 00100000 01100001 01101100 01110011 01101111 00100000 01100011 01100001 01101110 01101110 01101111 01110100 00100000 01110000 01110101 01100010 01101100 01101001 01110011 01101000 00100000 01101111 01101110 00100000 01010011 01110100 01100101 01100001 01101101 00101100 00100000 01101000 01101001 01110010 01100101 00100000 01100100 01100101 01110110 01100101 01101100 01101111 01110000 01100101 01110010 01110011 00101100 00100000 01101111 01110010 00100000 01100010 01100101 00100000 01101000 01101001 01110010 01100101 01100100 00100000 01100110 01101111 01110010 00100000 01110111 01101111 01110010 01101011 00100000 01100010 01100101 01100011 01100001 01110101 01110011 01100101 00100000 01101101 01111001 00100000 01100011 01101111 01110101 01101110 01110100 01110010 01111001 00100000 01100100 01101111 01100101 01110011 00100000 01101110 01101111 01110100 00100000 01100001 01100011 01100011 01100101 01110000 01110100 00100000 01110100 01101000 01100101 01110011 01100101 00100000 01110000 01100001 01111001 01101101 01100101 01101110 01110100 00100000 01101101 01100101 01110100 01101000 01101111 01100100 01110011 00101110 00100000 01010100 01101000 01101001 01110011 00100000 01110011 01101001 01110100 01110101 01100001 01110100 01101001 01101111 01101110 00100000 01101001 01110011 00100000 01101110 01101111 01110100 00100000 01110000 01100101 01110010 01101101 01100001 01101110 01100101 01101110 01110100 00100000 00101101 00101101 00100000 01001001 00100000 01100101 01111000 01110000 01100101 01100011 01110100 00100000 01110100 01101111 00100000 01100010 01100101 00100000 01100110 01110010 01100101 01100101 00100000 01100110 01110010 01101111 01101101 00100000 01110100 01101000 01100101 01110011 01100101 00100000 01101100 01101001 01101101 01101001 01110100 01100001 01110100 01101001 01101111 01101110 01110011 00100000 01110111 01101000 01100101 01101110 00100000 01001001 00100000 01110100 01110101 01110010 01101110 00100000 00110010 00110000 00100000 01101111 01110010 00100000 01101111 01101100 01100100 01100101 01110010 00101110 00100000 01001001 00100000 01100100 01101001 01100100 01101110 00100111 01110100 00100000 01110111 01100001 01101110 01110100 00100000 01110100 01101111 00100000 01100101 01111000 01110000 01101100 01100001 01101001 01101110 00100000 01110100 01101000 01101001 01110011 00100000 01100110 01110101 01110010 01110100 01101000 01100101 01110010 00100000 01100101 01100001 01110010 01101100 01101001 01100101 01110010 00101100 00100000 01100001 01110011 00100000 01101001 01110100 00100111 01110011 00100000 01100001 00100000 01101100 01101111 01101110 01100111 00101101 01110100 01100101 01110010 01101101 00100000 01110011 01101001 01110100 01110101 01100001 01110100 01101001 01101111 01101110 00101110 00100000 01010011 01110100 01100001 01111001 00100000 01110100 01110101 01101110 01100101 01100100 00100000 01100110 01101111 01110010 00100000 01101101 01101111 01110010 01100101 00100000 01101001 01101110 01100110 01101111 01110010 01101101 01100001 01110100 01101001 01101111 01101110 00100000 01101001 01101110 00100000 01110100 01101000 01100101 00100000 01100110 01110101 01110100 01110101 01110010 01100101 00101110
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-section" id="linksSection">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="header-left">
+                            <span class="icon">@</span>
+                            <span>01001101 01111001 00100000 01101100 01101001 01101110 01101011 01110011</span>
+                        </div>
+                        <span class="toggle-icon">v</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">
+                            <div class="links-grid">
+                                <a href="https://www.tiktok.com/@safeswing5" target="_blank" rel="noopener noreferrer" class="link-btn tiktok">TikTok</a>
+                                <a href="https://www.moddb.com/members/safeswing" target="_blank" rel="noopener noreferrer" class="link-btn moddb">ModDB</a>
+                                <a href="https://safeswing.itch.io/" target="_blank" rel="noopener noreferrer" class="link-btn itch">Itch.io</a>
+                                <a href="https://github.com/safeswing" target="_blank" rel="noopener noreferrer" class="link-btn github">GitHub</a>
+                                <a href="https://gitlab.com/safe22183" target="_blank" rel="noopener noreferrer" class="link-btn gitlab">GitLab</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-tag">
+                    <span>HTML · C++ / C#</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- PARTY MODE WARNING MODAL -->
+    <div class="party-modal-overlay" id="partyModal">
+        <div class="party-modal">
+            <div class="warning-icon">!</div>
+            <div class="modal-title">01010000 01000001 01010010 01010100 01011001 00100000 01001101 01001111 01000100 01000101</div>
+            <div class="modal-text">01011001 01101111 01110101 00100000 01100001 01110010 01100101 00100000 01100001 01100010 01101111 01110101 01110100 00100000 01110100 01101111 00100000 01100101 01101110 01110100 01100101 01110010 00100000 01010000 01100001 01110010 01110100 01111001 00100000 01001101 01101111 01100100 01100101 00101110</div>
+            <div class="modal-warning-text">01001110 01101111 01110100 00100000 01100001 01100100 01110110 01101001 01110011 01100101 01100100 00100000 01100110 01101111 01110010 00100000 01110000 01100101 01101111 01110000 01101100 01100101 00100000 01110100 01101000 01100001 01110100 00100000 01100001 01110010 01100101 00100000 01100101 01100001 01110011 01101001 01101100 01111001 00100000 01110011 01101000 01101111 01100011 01101011 01100101 01100100 00100000 01100110 01110010 01101111 01101101 00100000 01110010 01100001 01110000 01101001 01100100 00100000 01101100 01101001 01100111 01101000 01110100 01101110 01101001 01101110 01100111 00101100 00100000 01101100 01101111 01110101 01100100 00100000 01101110 01101111 01101001 01110011 01100101 01110011 00101100 00100000 01101111 01110010 00100000 01100101 01111000 01110100 01110010 01100101 01101101 01100101 00100000 01110110 01101001 01110011 01110101 01100001 01101100 00100000 01110011 01110100 01101001 01101101 01110101 01101100 01100001 01110100 01101001 01101111 01101110 00101110</div>
+            <div class="modal-disclaimer">
+                01010100 01101000 01101001 01110011 00100000 01101101 01101111 01100100 01100101 00100000 01110111 01101001 01101100 01101100 00100000 01100001 01100011 01110100 01101001 01110110 01100001 01110100 01100101 00111010 00100000 01110010 01100001 01110000 01101001 01100100 00100000 01110011 01110100 01110010 01101111 01100010 01101001 01101110 01100111 00100000 01101100 01101001 01100111 01101000 01110100 01110011 00101100 00100000 01101001 01101110 01110100 01100101 01101110 01110011 01100101 00100000 01110011 01100011 01110010 01100101 01100101 01101110 00100000 01110011 01101000 01100001 01101011 01101001 01101110 01100111 00101100 00100000 01100101 01111000 01110100 01110010 01100101 01101101 01100101 01101100 01111001 00100000 01101100 01101111 01110101 01100100 00100000 01100001 01110101 01100100 01101001 01101111 00101100 00100000 01101100 01100001 01111001 01101111 01110101 01110100 00100000 01100011 01101000 01100001 01101111 01110011 00101100 00100000 01100101 01101100 01110101 01110011 01101001 01110110 01100101 00100000 01100010 01110101 01110100 01110100 01101111 01101110 01110011 00101100 00100000 01100011 01110101 01110010 01110011 01101111 01110010 00100000 01110100 01110010 01100001 01101001 01101100 01110011 00101100 00100000 01100101 01111000 01110000 01101100 01101111 01100100 01101001 01101110 01100111 00100000 01110011 01101110 01101111 01110111 00101100 00100000 01100010 01100001 01110011 01110011 00101101 01100100 01110010 01101001 01110110 01100101 01101110 00100000 01111010 01101111 01101111 01101101 00101100 00100000 01100001 01101110 01100100 00100000 01110000 01101001 01110100 01100011 01101000 00100000 01100011 01101000 01100001 01101111 01110011 00101110 00100000 01001001 01100110 00100000 01111001 01101111 01110101 00100000 01100101 01111000 01110000 01100101 01110010 01101001 01100101 01101110 01100011 01100101 00100000 01100100 01101001 01110011 01100011 01101111 01101101 01100110 01101111 01110010 01110100 00101100 00100000 01110000 01101000 01101111 01110100 01101111 01110011 01100101 01101110 01110011 01101001 01110100 01101001 01110110 01101001 01110100 01111001 00101100 00100000 01101111 01110010 00100000 01110011 01100101 01101001 01111010 01110101 01110010 01100101 01110011 00101100 00100000 01100101 01111000 01101001 01110100 00100000 01101001 01101101 01101101 01100101 01100100 01101001 01100001 01110100 01100101 01101100 01111001 00101110 00100000 01010000 01100001 01110010 01110100 01111001 00100000 01001101 01101111 01100100 01100101 00100000 01101001 01110011 00100000 01100110 01101111 01110010 00100000 01100101 01101110 01110100 01100101 01110010 01110100 01100001 01101001 01101110 01101101 01100101 01101110 01110100 00100000 01110000 01110101 01110010 01110000 01101111 01110011 01100101 01110011 00100000 01101111 01101110 01101100 01111001 00101110 00100000 01010111 01100101 00100000 01100001 01110010 01100101 00100000 01101110 01101111 01110100 00100000 01101100 01101001 01100001 01100010 01101100 01100101 00100000 01100110 01101111 01110010 00100000 01100001 01101110 01111001 00100000 01100100 01100001 01101101 01100001 01100111 01100101 00100000 01110100 01101111 00100000 01111001 01101111 01110101 01110010 00100000 01100101 01111001 01100101 01110011 00101100 00100000 01100101 01100001 01110010 01110011 00101100 00100000 01101111 01110010 00100000 01110011 01100001 01101110 01101001 01110100 01111001 00101110 00100000 01011001 01101111 01110101 00100000 01101000 01100001 01110110 01100101 00100000 01100010 01100101 01100101 01101110 00100000 01110111 01100001 01110010 01101110 01100101 01100100 00101110
+            </div>
+            <div class="party-modal-buttons">
+                <button class="btn-no" id="partyModalNo">01001110 01101111 00101100 00100000 01100011 01100001 01101110 01100011 01100101 01101100</button>
+                <button class="btn-yes" id="partyModalYes">01011001 01000101 01010011 00101100 00100000 01001100 01000101 01010100 00100111 01010011 00100000 01010000 01000001 01010010 01010100 01011001 00100001</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STROBE OVERLAY -->
+    <div class="strobe-overlay" id="strobeOverlay"></div>
+
+    <!-- PARTY MODE INDICATOR -->
+    <div class="party-indicator" id="partyIndicator">01010000 01000001 01010010 01010100 01011001 00100000 01001101 01001111 01000100 01000101 00100000 01000001 01000011 01010100 01001001 01010110 01000101 00100000 00101101 00101101 00100000 01000011 01001100 01001001 01000011 01001011 00100000 01010100 01001111 00100000 01010011 01010100 01001111 01010000</div>
+
+    <!-- CURSOR TRAIL CONTAINER -->
+    <div class="cursor-trail-container" id="cursorTrailContainer"></div>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loading-screen').classList.add('hidden');
+            }, 800);
+        });
+
+        (function initSnow() {
+            const container = document.getElementById('three-canvas');
+            if (typeof THREE === 'undefined') { console.error('Three.js not loaded'); return; }
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.domElement.style.position = 'fixed';
+            renderer.domElement.style.top = '0';
+            renderer.domElement.style.left = '0';
+            renderer.domElement.style.width = '100%';
+            renderer.domElement.style.height = '100%';
+            renderer.domElement.style.pointerEvents = 'none';
+            renderer.domElement.style.zIndex = '0';
+            container.appendChild(renderer.domElement);
+
+            const count = 2000;
+            const positions = new Float32Array(count * 3);
+            const velocities = new Float32Array(count * 3);
+            const initialRadii = new Float32Array(count);
+            for (let i = 0; i < count; i++) {
+                const i3 = i * 3;
+                positions[i3] = (Math.random() - 0.5) * 60;
+                positions[i3 + 1] = (Math.random() - 0.5) * 40;
+                positions[i3 + 2] = (Math.random() - 0.5) * 40;
+                velocities[i3] = (Math.random() - 0.5) * 0.02;
+                velocities[i3 + 1] = -(0.01 + Math.random() * 0.03);
+                velocities[i3 + 2] = (Math.random() - 0.5) * 0.02;
+                initialRadii[i] = Math.sqrt(positions[i3] ** 2 + positions[i3+1] ** 2 + positions[i3+2] ** 2);
+            }
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            const canvas = document.createElement('canvas');
+            canvas.width = 32; canvas.height = 32;
+            const ctx = canvas.getContext('2d');
+            const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+            gradient.addColorStop(0, 'rgba(255,255,255,1)');
+            gradient.addColorStop(0.5, 'rgba(255,255,255,0.8)');
+            gradient.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 32, 32);
+            const texture = new THREE.CanvasTexture(canvas);
+            const material = new THREE.PointsMaterial({
+                color: 0xffffff, size: 0.15, transparent: true, opacity: 0.8,
+                map: texture, blending: THREE.AdditiveBlending, depthWrite: false,
+            });
+            const snow = new THREE.Points(geometry, material);
+            scene.add(snow);
+            camera.position.z = 18;
+
+            let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            let partyModeActive = false;
+            let snowSpeedBoost = 1;
+            let partyColorMode = false;
+            let explosionMode = false;
+            const originalSnowColor = 0xffffff;
+            const partyColors = [0xff0066, 0x00ff88, 0x0066ff, 0xffff00, 0xff00ff, 0x00ffff, 0xff6600, 0x8800ff];
+            let colorIndex = 0;
+            let colorChangeCounter = 0;
+            let bassIntensity = 0;
+            let targetCameraZ = 18;
+            let currentCameraZ = 18;
+
+            function setPartyMode(active) {
+                partyModeActive = active;
+                if (active) {
+                    snowSpeedBoost = 4;
+                    partyColorMode = true;
+                    explosionMode = true;
+                    for (let i = 0; i < count; i++) {
+                        const i3 = i * 3;
+                        positions[i3] = (Math.random() - 0.5) * 5;
+                        positions[i3 + 1] = (Math.random() - 0.5) * 5;
+                        positions[i3 + 2] = (Math.random() - 0.5) * 5;
+                        const speed = 0.1 + Math.random() * 0.3;
+                        const dx = positions[i3]; const dy = positions[i3+1]; const dz = positions[i3+2];
+                        const len = Math.sqrt(dx*dx + dy*dy + dz*dz) || 1;
+                        velocities[i3] = (dx / len) * speed;
+                        velocities[i3+1] = (dy / len) * speed;
+                        velocities[i3+2] = (dz / len) * speed;
+                    }
+                } else {
+                    snowSpeedBoost = 1;
+                    partyColorMode = false;
+                    explosionMode = false;
+                    material.color.setHex(originalSnowColor);
+                    for (let i = 0; i < count; i++) {
+                        const i3 = i * 3;
+                        velocities[i3] = (Math.random() - 0.5) * 0.02;
+                        velocities[i3+1] = -(0.01 + Math.random() * 0.03);
+                        velocities[i3+2] = (Math.random() - 0.5) * 0.02;
+                    }
+                }
+            }
+            function setBassIntensity(value) { bassIntensity = value; targetCameraZ = 18 + bassIntensity * 8; }
+
+            function animateSnow() {
+                requestAnimationFrame(animateSnow);
+                currentCameraZ += (targetCameraZ - currentCameraZ) * 0.1;
+                camera.position.z = currentCameraZ;
+                targetX += (mouseX - targetX) * 0.05;
+                targetY += (mouseY - targetY) * 0.05;
+                snow.rotation.x += 0.0005 + targetY * 0.0003;
+                snow.rotation.y += 0.0005 + targetX * 0.0003;
+                if (partyColorMode) {
+                    colorChangeCounter++;
+                    if (colorChangeCounter > 4) {
+                        colorChangeCounter = 0;
+                        colorIndex = (colorIndex + 1) % partyColors.length;
+                        material.color.setHex(partyColors[colorIndex]);
+                    }
+                }
+                const positionsAttr = geometry.attributes.position;
+                const posArray = positionsAttr.array;
+                const speedFactor = snowSpeedBoost;
+                for (let i = 0; i < count; i++) {
+                    const i3 = i * 3;
+                    if (explosionMode) {
+                        posArray[i3] += velocities[i3] * speedFactor;
+                        posArray[i3+1] += velocities[i3+1] * speedFactor;
+                        posArray[i3+2] += velocities[i3+2] * speedFactor;
+                        const dist = Math.sqrt(posArray[i3]**2 + posArray[i3+1]**2 + posArray[i3+2]**2);
+                        if (dist > 30) {
+                            posArray[i3] = (Math.random() - 0.5) * 5;
+                            posArray[i3+1] = (Math.random() - 0.5) * 5;
+                            posArray[i3+2] = (Math.random() - 0.5) * 5;
+                            const speed = 0.1 + Math.random() * 0.3;
+                            const dx = posArray[i3]; const dy = posArray[i3+1]; const dz = posArray[i3+2];
+                            const len = Math.sqrt(dx*dx + dy*dy + dz*dz) || 1;
+                            velocities[i3] = (dx/len)*speed; velocities[i3+1] = (dy/len)*speed; velocities[i3+2] = (dz/len)*speed;
+                        }
+                    } else {
+                        posArray[i3] += velocities[i3] * speedFactor + targetX * 0.01 * speedFactor;
+                        posArray[i3+1] += velocities[i3+1] * speedFactor;
+                        posArray[i3+2] += velocities[i3+2] * speedFactor + targetY * 0.01 * speedFactor;
+                        if (posArray[i3+1] < -20) {
+                            posArray[i3+1] = 20;
+                            posArray[i3] = (Math.random() - 0.5) * 60;
+                            posArray[i3+2] = (Math.random() - 0.5) * 40;
+                        }
+                    }
+                }
+                positionsAttr.needsUpdate = true;
+                renderer.render(scene, camera);
+            }
+            animateSnow();
+            window.__snowControls = { setPartyMode, setBassIntensity };
+        })();
+
+        // 3D tilt
+        let tiltEnabled = true;
+        let tiltX = 0, tiltY = 0, currentX = 0, currentY = 0;
+        const card = document.getElementById('mainCard');
+        function initTilt() {
+            card.addEventListener('mousemove', (e) => {
+                if (!tiltEnabled) return;
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const y = (e.clientY - rect.top) / rect.height;
+                tiltX = (y - 0.5) * 8;
+                tiltY = (x - 0.5) * -8;
+            });
+            card.addEventListener('mouseleave', () => { tiltX = 0; tiltY = 0; });
+        }
+        function animateTilt() {
+            requestAnimationFrame(animateTilt);
+            if (tiltEnabled) {
+                currentX += (tiltX - currentX) * 0.08;
+                currentY += (tiltY - currentY) * 0.08;
+                card.style.transform = `perspective(1200px) rotateX(${currentX}deg) rotateY(${currentY}deg)`;
+            } else {
+                currentX = 0; currentY = 0;
+                card.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg)`;
+            }
+        }
+        initTilt();
+        animateTilt();
+        document.getElementById('tiltToggle').addEventListener('change', (e) => {
+            tiltEnabled = !e.target.checked;
+            if (!tiltEnabled) { tiltX = 0; tiltY = 0; }
+        });
+
+        const settingsToggle = document.getElementById('settingsToggle');
+        const settingsPanel = document.getElementById('settingsPanel');
+        ['click', 'touchstart'].forEach(evt =>
+            settingsToggle.addEventListener(evt, (e) => {
+                e.stopPropagation();
+                if (evt === 'touchstart') e.preventDefault();
+                settingsPanel.classList.toggle('open');
+            }, { passive: false })
+        );
+        document.addEventListener('click', (e) => {
+            if (!settingsToggle.contains(e.target) && !settingsPanel.contains(e.target)) {
+                settingsPanel.classList.remove('open');
+            }
+        });
+
+        (function initGlow() {
+            const card = document.getElementById('mainCard');
+            const sections = document.querySelectorAll('.accordion-section');
+            function handleMouseMove(e) {
+                const rect = card.getBoundingClientRect();
+                const relX = ((e.clientX - rect.left) / rect.width) * 100;
+                const relY = ((e.clientY - rect.top) / rect.height) * 100;
+                card.style.setProperty('--mouse-x', relX + '%');
+                card.style.setProperty('--mouse-y', relY + '%');
+                card.classList.add('glow-active');
+                sections.forEach(section => {
+                    const rect2 = section.getBoundingClientRect();
+                    if (e.clientX >= rect2.left && e.clientX <= rect2.right && e.clientY >= rect2.top && e.clientY <= rect2.bottom) {
+                        section.classList.add('glow-active');
+                    } else {
+                        section.classList.remove('glow-active');
+                    }
+                });
+            }
+            function handleMouseLeave() { card.classList.remove('glow-active'); sections.forEach(s => s.classList.remove('glow-active')); }
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseleave', handleMouseLeave);
+        })();
+
+        function toggleAccordion(header) {
+            const section = header.closest('.accordion-section');
+            if (section.classList.contains('about-expanded')) return;
+            if (section.id === 'musicSection' && window.__partyModeActive) return;
+            section.classList.toggle('open');
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const utcHours = now.getUTCHours();
+            const utcMinutes = now.getUTCMinutes();
+            const utcSeconds = now.getUTCSeconds();
+            let gmtPlus5Hours = utcHours + 5;
+            if (gmtPlus5Hours >= 24) gmtPlus5Hours -= 24;
+            const hours = String(gmtPlus5Hours).padStart(2, '0');
+            const minutes = String(utcMinutes).padStart(2, '0');
+            const seconds = String(utcSeconds).padStart(2, '0');
+            const liveTime = document.getElementById('liveTime');
+            if (liveTime) liveTime.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        function initMusicPlayer() {
+            const audio = document.getElementById('myAudio');
+            const playBtn = document.querySelector('.play-btn');
+            const progressFill = document.querySelector('.progress-fill');
+            const timeLabels = document.querySelectorAll('.time-label');
+            const musicBadge = document.querySelector('.music-badge');
+            const placeholderNote = document.querySelector('.music-placeholder-note');
+            let isPlaying = false;
+            let audioContext = null, analyser = null, dataArray = null, source = null;
+            if (!audio || !playBtn) return;
+
+            function setupAudioContext() {
+                if (!audioContext) {
+                    audioContext = new(window.AudioContext || window.webkitAudioContext)();
+                    source = audioContext.createMediaElementSource(audio);
+                    analyser = audioContext.createAnalyser();
+                    analyser.fftSize = 256;
+                    source.connect(analyser);
+                    analyser.connect(audioContext.destination);
+                    dataArray = new Uint8Array(analyser.frequencyBinCount);
+                }
+            }
+            playBtn.addEventListener('click', () => {
+                if (isPlaying) {
+                    audio.pause();
+                    playBtn.textContent = '>';
+                    if (musicBadge) musicBadge.textContent = '01110000 01100001 01110101 01110011 01100101 01100100';
+                    if (placeholderNote && !window.__partyModeActive) placeholderNote.textContent = '01110000 01100001 01110101 01110011 01100101 01100100';
+                } else {
+                    setupAudioContext();
+                    if (audioContext && audioContext.state === 'suspended') audioContext.resume();
+                    audio.play().catch(err => { console.error('Playback failed:', err); if(placeholderNote){ placeholderNote.textContent='01000011 01100001 01101110 01101110 01101111 01110100 00100000 01110000 01101100 01100001 01111001 00101110 00100000 01000011 01101000 01100101 01100011 01101011 00100000 01100011 01101111 01101110 01110011 01101111 01101100 01100101 00101110'; placeholderNote.style.color='#f87171'; }});
+                    playBtn.textContent = '| |';
+                    if (musicBadge) musicBadge.textContent = '01110000 01101100 01100001 01111001 01101001 01101110 01100111';
+                    if (placeholderNote && !window.__partyModeActive) placeholderNote.textContent = '01101110 01101111 01110111 00100000 01110000 01101100 01100001 01111001 01101001 01101110 01100111 00111010 00100000 01000010 01100001 01110011 01110011 01101000 01110101 01101110 01110100 01100101 01110010 00100000 00101101 00100000 01000100 01101111 01110100 01100001';
+                }
+                isPlaying = !isPlaying;
+            });
+            audio.addEventListener('timeupdate', () => {
+                if (audio.duration && !isNaN(audio.duration)) {
+                    const percent = (audio.currentTime / audio.duration) * 100;
+                    progressFill.style.width = percent + '%';
+                    const currentMin = Math.floor(audio.currentTime / 60);
+                    const currentSec = Math.floor(audio.currentTime % 60);
+                    const totalMin = Math.floor(audio.duration / 60);
+                    const totalSec = Math.floor(audio.duration % 60);
+                    if (timeLabels[0]) timeLabels[0].textContent = `${currentMin}:${String(currentSec).padStart(2, '0')}`;
+                    if (timeLabels[1]) timeLabels[1].textContent = `${totalMin}:${String(totalSec).padStart(2, '0')}`;
+                    if (analyser && dataArray) {
+                        analyser.getByteFrequencyData(dataArray);
+                        let sum = 0;
+                        const bassBins = Math.min(20, dataArray.length);
+                        for (let i = 0; i < bassBins; i++) sum += dataArray[i];
+                        const bassAvg = sum / bassBins / 255;
+                        if (window.__snowControls) window.__snowControls.setBassIntensity(bassAvg);
+                    }
+                }
+            });
+            audio.addEventListener('ended', () => {
+                playBtn.textContent = '>'; isPlaying = false; progressFill.style.width = '0%';
+                if(timeLabels[0]) timeLabels[0].textContent = '0:00';
+                if(musicBadge) musicBadge.textContent = '01100101 01101110 01100100 01100101 01100100';
+                if(placeholderNote && !window.__partyModeActive) placeholderNote.textContent = '01110011 01101111 01101110 01100111 00100000 01100101 01101110 01100100 01100101 01100100';
+            });
+            audio.addEventListener('error', () => {
+                if(placeholderNote){ placeholderNote.textContent='01000001 01110101 01100100 01101001 01101111 00100000 01100110 01101001 01101100 01100101 00100000 01101110 01101111 01110100 00100000 01100110 01101111 01110101 01101110 01100100 00101110 00100000 01001101 01100001 01101011 01100101 00100000 01110011 01110101 01110010 01100101 00100000 01100010 01100001 01110011 01110011 01101000 01110101 01101110 01110100 01100101 01110010 01100100 01101111 01110100 01100001 00101110 01101101 01110000 00110011 00100000 01101001 01110011 00100000 01101001 01101110 00100000 01110100 01101000 01100101 00100000 01110011 01100001 01101101 01100101 00100000 01100110 01101111 01101100 01100100 01100101 01110010 00101110'; placeholderNote.style.color='#f87171'; }
+            });
+            window.__audioControls = {
+                play: () => { audio.play().catch(() => {}); },
+                pause: () => { audio.pause(); },
+                setVolume: (v) => { audio.volume = Math.min(v, 1.0); },
+                isPlaying: () => !audio.paused,
+                getAudioContext: () => audioContext,
+                getAnalyser: () => analyser,
+                getDataArray: () => dataArray,
+                getAudioElement: () => audio,
+            };
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initMusicPlayer);
+        else initMusicPlayer();
+
+        (function initPartyMode() {
+            const partyToggle = document.getElementById('partyModeToggle');
+            const partyModal = document.getElementById('partyModal');
+            const partyModalNo = document.getElementById('partyModalNo');
+            const partyModalYes = document.getElementById('partyModalYes');
+            const strobeOverlay = document.getElementById('strobeOverlay');
+            const partyIndicator = document.getElementById('partyIndicator');
+            const musicSection = document.getElementById('musicSection');
+            const musicBadge = document.querySelector('.music-badge');
+            const placeholderNote = document.querySelector('.music-placeholder-note');
+            const playBtn = document.querySelector('.play-btn');
+            const cursorTrailContainer = document.getElementById('cursorTrailContainer');
+            window.__partyModeActive = false;
+
+            const elusiveElements = document.querySelectorAll('.accordion-header, .settings-icon, .party-mode-container');
+            const originalTransforms = new Map();
+            elusiveElements.forEach(el => originalTransforms.set(el, el.style.transform || ''));
+            let elusiveEnabled = false;
+            let pitchChaosInterval = null;
+
+            function spawnTrail(e) {
+                if (!window.__partyModeActive) return;
+                const particleCount = 2;
+                for (let i = 0; i < particleCount; i++) {
+                    const isEmoji = Math.random() > 0.4;
+                    const el = document.createElement('div');
+                    if (isEmoji) {
+                        el.className = 'cursor-trail-particle';
+                        const symbols = ['*', '+', 'x', 'o', '#'];
+                        el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                        el.style.fontSize = (18 + Math.random() * 14) + 'px';
+                    } else {
+                        el.className = 'cursor-trail-spark';
+                        const size = 4 + Math.random() * 8;
+                        el.style.width = size + 'px'; el.style.height = size + 'px';
+                    }
+                    const tx = (Math.random() - 0.5) * 60;
+                    const ty = (Math.random() - 0.5) * 60;
+                    el.style.setProperty('--tx', tx + 'px'); el.style.setProperty('--ty', ty + 'px');
+                    el.style.left = (e.clientX + (Math.random() - 0.5) * 20) + 'px';
+                    el.style.top = (e.clientY + (Math.random() - 0.5) * 20) + 'px';
+                    cursorTrailContainer.appendChild(el);
+                    setTimeout(() => el.remove(), 800);
+                }
+            }
+            function startCursorTrail() { document.addEventListener('mousemove', spawnTrail); }
+            function stopCursorTrail() { document.removeEventListener('mousemove', spawnTrail); cursorTrailContainer.innerHTML = ''; }
+
+            function elusiveMove(e) {
+                if (!elusiveEnabled) return;
+                const mouseX = e.clientX, mouseY = e.clientY;
+                const radius = 120;
+                elusiveElements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    const elX = rect.left + rect.width/2, elY = rect.top + rect.height/2;
+                    const dx = elX - mouseX, dy = elY - mouseY;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < radius) {
+                        const angle = Math.atan2(dy, dx);
+                        const pushDist = (radius - dist) * 0.6;
+                        const moveX = Math.cos(angle) * pushDist * 2;
+                        const moveY = Math.sin(angle) * pushDist * 2;
+                        el.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                    } else {
+                        el.style.transform = originalTransforms.get(el) || '';
+                    }
+                });
+            }
+            function startElusive() { elusiveEnabled = true; document.addEventListener('mousemove', elusiveMove); }
+            function stopElusive() { elusiveEnabled = false; document.removeEventListener('mousemove', elusiveMove); elusiveElements.forEach(el => el.style.transform = originalTransforms.get(el) || ''); }
+
+            function startPitchChaos() {
+                const audio = window.__audioControls?.getAudioElement?.();
+                if (!audio) return;
+                pitchChaosInterval = setInterval(() => {
+                    if (!window.__partyModeActive) return;
+                    audio.playbackRate = 1.0 + Math.random() * 0.5;
+                    if (Math.random() < 0.2) audio.playbackRate = 1.5 + Math.random() * 0.5;
+                }, 200);
+            }
+            function stopPitchChaos() {
+                if (pitchChaosInterval) { clearInterval(pitchChaosInterval); pitchChaosInterval = null; }
+                const audio = window.__audioControls?.getAudioElement?.();
+                if (audio) audio.playbackRate = 1.0;
+            }
+
+            function startPartyMode() {
+                window.__partyModeActive = true;
+                strobeOverlay.classList.add('active');
+                document.body.classList.add('party-active', 'party-shake-active', 'party-layout-chaos');
+                partyIndicator.classList.add('active');
+                musicSection.classList.add('open');
+                if (window.__snowControls) window.__snowControls.setPartyMode(true);
+                if (window.__audioControls) { window.__audioControls.setVolume(1.0); window.__audioControls.play(); }
+                startCursorTrail(); startElusive(); startPitchChaos();
+                if (musicBadge) musicBadge.textContent = '01010000 01000001 01010010 01010100 01011001 00100000 01001101 01001111 01000100 01000101';
+                if (placeholderNote) { placeholderNote.textContent = '01010000 01000001 01010010 01010100 01011001 00100000 01001101 01001111 01000100 01000101 00100000 01000001 01000011 01010100 01001001 01010110 01000101 00100001'; placeholderNote.style.color = '#ff6b6b'; }
+                if (playBtn) playBtn.textContent = '| |';
+                tiltEnabled = false; document.getElementById('tiltToggle').checked = true;
+                document.title = '01010000 01000001 01010010 01010100 01011001 00100000 01001101 01001111 01000100 01000101';
+            }
+            function stopPartyMode() {
+                window.__partyModeActive = false;
+                strobeOverlay.classList.remove('active');
+                document.body.classList.remove('party-active', 'party-shake-active', 'party-layout-chaos');
+                partyIndicator.classList.remove('active');
+                if (window.__snowControls) window.__snowControls.setPartyMode(false);
+                if (window.__audioControls) window.__audioControls.pause();
+                stopCursorTrail(); stopElusive(); stopPitchChaos();
+                if (musicBadge) musicBadge.textContent = '01110011 01110100 01101111 01110000 01110000 01100101 01100100';
+                if (placeholderNote) { placeholderNote.textContent = '01110000 01110010 01100101 01110011 01110011 00100000 01110000 01101100 01100001 01111001 00100000 01110100 01101111 00100000 01101100 01101001 01110011 01110100 01100101 01101110'; placeholderNote.style.color = 'rgba(255, 255, 255, 0.4)'; }
+                if (playBtn) playBtn.textContent = '>';
+                if (!document.getElementById('tiltToggle').checked) tiltEnabled = true;
+                document.title = '01110000 01110010 01101111 01100110 01101001 01101100 01100101 00100000 00101101 00100000 01110011 01100001 01100110 01100101 01110011 01110111 01101001 01101110 01100111';
+            }
+
+            partyToggle.addEventListener('change', (e) => {
+                if (e.target.checked) partyModal.classList.add('active');
+                else stopPartyMode();
+            });
+            partyModalNo.addEventListener('click', () => { partyModal.classList.remove('active'); partyToggle.checked = false; stopPartyMode(); });
+            partyModalYes.addEventListener('click', () => { partyModal.classList.remove('active'); startPartyMode(); });
+            partyModal.addEventListener('click', (e) => { if (e.target === partyModal) { partyModal.classList.remove('active'); partyToggle.checked = false; stopPartyMode(); } });
+            partyIndicator.addEventListener('click', () => { partyToggle.checked = false; stopPartyMode(); });
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && window.__partyModeActive) { partyToggle.checked = false; stopPartyMode(); } });
+        })();
+    </script>
+</body>
+</html>
