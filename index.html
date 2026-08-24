@@ -601,6 +601,20 @@
             padding: 0 0.2rem;
             font-weight: 600;
         }
+        .tool-card.unav {
+    border-color: rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: not-allowed;
+    position: relative;
+    text-decoration: line-through;
+}
+
+.tool-card.unav:hover {
+    border-color: rgba(239, 68, 68, 0.5);
+    background: rgba(239, 68, 68, 0.15);
+    transform: none;
+}
         .tools-grid {
             display: flex;
             flex-wrap: wrap;
@@ -1167,12 +1181,35 @@
                     <div class="accordion-body">
                         <div class="accordion-body-inner">
                             <div class="tools-grid">
-                                <span class="tool-card android-studio">Android Studio</span>
-                                <span class="tool-card xcode">Xcode</span>
-                                <span class="tool-card vs2026">Visual Studio 2026 Community</span>
-                                <span class="tool-card vscode">VS Code</span>
-                                <span class="tool-card photoshop">Adobe Photoshop 2026</span>
-                                <span class="tool-card premiere">Adobe Premiere Pro 2024</span>
+                                <a href="https://developer.android.com/studio" target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
+    Android studio
+</a>
+                                <span class="tool-card vscode unav" title="Unavailable">Xcode (NoMacOS)</span>
+                                  <a href= https://visualstudio.microsoft.com/vs/community/ " target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
+    Visual Studio Community
+</a>
+                               <a href=https://code.visualstudio.com/ " target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
+    VS Code
+</a>
+                               <a href=https://www.adobe.com/products/photoshop-elements/whats-new.html " target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
+    Adobe Photoshop 2026
+</a>
+                               <a href="https://www.adobe.com/products/premiere.html" target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
+    Adobe Premiere Pro 2024 
+</a>
+                                <a href="https://protonvpn.com/pricing" target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
+    Proton VPN
+</a>
+                            <span class="tool-card vscode unav" title="Unavailable">Speed Top</span>
+                               <a href="https://git-scm.com/install/windows" target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
+    Git Bash
+</a>
+                                  <a href="https://docs.unity.com/en-us/hub/install-hub" target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
+    Unity Hub
+</a>
+                              <a href="https://unity.com/releases/unity-6" target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
+    Unity 6
+</a>
                             </div>
                         </div>
                     </div>
@@ -1251,8 +1288,12 @@
                             <div class="device-group">
                                 <div class="device-group-label">Phones:</div>
                                 <div class="device-specs">
-                                    <span class="device-spec desert">IPhone 16 Pro</span>
-                                    <span class="device-spec huawei">Pura 70 Base</span>
+                                   <a href=https://ispace.az/en/product/iphone-16-pro-256-gb-white-titanium-mynj3hx-a " target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
+    Iphone 16 Pro
+</a>
+                                    <a href= https://consumer.huawei.com/sa-en/phones/pura70/specs/ " target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
+    Huawei Pura 70
+</a>
                                 </div>
                             </div>
                         </div>
