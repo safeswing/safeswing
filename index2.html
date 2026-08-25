@@ -1,0 +1,2891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>profile · safeswing</title>
+
+    <style>
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0b0d15;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            font-family: 'Inter', sans-serif;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(56, 189, 248, 0.1);
+            border-top: 3px solid #38BDF8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text {
+            font-size: 1rem;
+            letter-spacing: 2px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <div class="loading-text">Loading Libraries...</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- SETTINGS WRAPPER -->
+    <div class="settings-wrapper">
+        <!-- Language selector -->
+<div class="lang-selector">
+    <a href="#" class="lang-btn active" data-lang="english" title="English">English</a>
+    <a href="#" class="lang-btn" data-lang="russian" title="Russian">Russian</a>
+    <a href="#" class="lang-btn" data-lang="base64" title="Base64">Base64</a>
+    <a href="#" class="lang-btn" data-lang="binary" title="Binary">Binary</a>
+    <a href="#" class="lang-btn" data-lang="hebrew" title="Hebrew">Hebrew</a>
+</div>
+        <div class="settings-icon" id="settingsToggle" title="Settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+        </div>
+        <div class="settings-panel" id="settingsPanel">
+            <div class="panel-title">Settings</div>
+
+            <div class="setting-item">
+                <span>Disable 3D Tilt</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="tiltToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span>Season</span>
+                <div class="season-selector">
+                    <button class="season-btn active" data-season="default">Default</button>
+                    <button class="season-btn" data-season="spring">Spring</button>
+                    <button class="season-btn" data-season="summer">Summer</button>
+                    <button class="season-btn" data-season="autumn">Autumn</button>
+                    <button class="season-btn" data-season="winter">Winter</button>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <span>Particle Effects</span>
+                <select id="particleDensity" class="select-input">
+                    <option value="high">High</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="low">Low</option>
+                    <option value="off">Off</option>
+                </select>
+            </div>
+
+            <div class="setting-item">
+                <span>Force Dark Mode</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="forceDarkToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span>Reduce Motion</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="reduceMotionToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span>Monospace Font</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="monoFontToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span>UI Sound Effects</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="sfxToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span>Accent Color</span>
+                <input type="color" id="accentColorPicker" value="#38BDF8" class="color-input">
+            </div>
+
+            <div class="setting-item">
+                <span>Card Opacity</span>
+                <input type="range" id="cardOpacitySlider" min="0.3" max="1" step="0.05" value="0.8" class="range-input">
+            </div>
+
+            <!-- New: Disable Ads toggle -->
+            <div class="setting-item">
+                <span>Disable ADs</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="disableAdsToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <!-- New: GitHub link button -->
+            <div class="setting-item">
+                <span>Wanna make your own? Click this!</span>
+                <a href="https://github.com/safeswing/About-Safeswing-s-Index-page" target="_blank" rel="noopener noreferrer" class="github-btn">Open GitHub</a>
+            </div>
+
+            <div class="setting-item">
+                <button id="resetSettingsBtn" class="reset-btn">Reset to Default</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+        :root {
+            --text-primary: #ffffff;
+            --text-secondary: #e2e8f0;
+            --text-tertiary: #94a3b8;
+            --bg-color: #0b0d15;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.15);
+            --section-bg: rgba(15, 18, 30, 0.5);
+            --section-border: rgba(255, 255, 255, 0.1);
+            --pill-bg: rgba(255, 255, 255, 0.06);
+            --pill-border: rgba(255, 255, 255, 0.08);
+            --pill-text: rgba(255, 255, 255, 0.85);
+            --accent: #38BDF8;
+            --accent-hover: #7dd3fc;
+            --badge-text: #ffffff;
+            --badge-bg: rgba(255, 255, 255, 0.05);
+            --badge-border: rgba(255, 255, 255, 0.1);
+            --status-text: #e2e8f0;
+            --music-text: #ffffff;
+            --music-secondary: rgba(255, 255, 255, 0.5);
+            --footer-text: rgba(255, 255, 255, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.6);
+            --text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            --card-opacity: 0.8;
+            --blur-amount: 14px;
+        }
+
+        /* Theme-specific variables */
+        body.theme-winter {
+            --text-primary: #e0e7ff;
+            --text-secondary: #b0b8d0;
+            --text-tertiary: #8890a8;
+            --bg-color: #0a0a0f;
+            --card-bg: rgba(15, 20, 30, 0.85);
+            --card-border: #2a3a50;
+            --section-bg: rgba(20, 25, 40, 0.6);
+            --section-border: rgba(100, 140, 180, 0.2);
+            --pill-bg: rgba(255, 255, 255, 0.05);
+            --pill-border: rgba(100, 140, 180, 0.2);
+            --pill-text: #c0d0e0;
+            --accent: #7db8e0;
+            --accent-hover: #a0d0f0;
+            --badge-text: #d0d8e8;
+            --badge-bg: rgba(255, 255, 255, 0.05);
+            --badge-border: rgba(100, 140, 180, 0.2);
+            --status-text: #c0d0e0;
+            --music-text: #e0e7ff;
+            --music-secondary: #8890a8;
+            --footer-text: #667080;
+            --shadow-color: rgba(0, 0, 0, 0.8);
+            --text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            --card-opacity: 0.85;
+            --blur-amount: 12px;
+        }
+
+        body.theme-spring {
+            --text-primary: #4a0e17;
+            --text-secondary: #6b1620;
+            --text-tertiary: #8b3540;
+            --bg-color: #fdf2f4;
+            --card-bg: rgba(255, 228, 240, 0.85);
+            --card-border: #ff69b4;
+            --section-bg: rgba(255, 255, 255, 0.5);
+            --section-border: rgba(255, 105, 180, 0.3);
+            --pill-bg: rgba(255, 255, 255, 0.7);
+            --pill-border: rgba(255, 105, 180, 0.3);
+            --pill-text: #4a0e17;
+            --accent: #db2777;
+            --accent-hover: #be185d;
+            --badge-text: #4a0e17;
+            --badge-bg: rgba(255, 255, 255, 0.7);
+            --badge-border: rgba(255, 105, 180, 0.3);
+            --status-text: #4a0e17;
+            --music-text: #4a0e17;
+            --music-secondary: #8b3540;
+            --footer-text: #8b3540;
+            --shadow-color: rgba(255, 105, 180, 0.2);
+            --text-shadow: none;
+            --card-opacity: 0.85;
+            --blur-amount: 12px;
+        }
+
+        body.theme-summer {
+            --text-primary: #042f2e;
+            --text-secondary: #064e3b;
+            --text-tertiary: #065f46;
+            --bg-color: #d4edda;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-border: #2e8b57;
+            --section-bg: rgba(255, 255, 255, 0.5);
+            --section-border: rgba(46, 139, 87, 0.3);
+            --pill-bg: rgba(255, 255, 255, 0.7);
+            --pill-border: rgba(46, 139, 87, 0.3);
+            --pill-text: #042f2e;
+            --accent: #059669;
+            --accent-hover: #047857;
+            --badge-text: #042f2e;
+            --badge-bg: rgba(255, 255, 255, 0.7);
+            --badge-border: rgba(46, 139, 87, 0.3);
+            --status-text: #042f2e;
+            --music-text: #042f2e;
+            --music-secondary: #065f46;
+            --footer-text: #065f46;
+            --shadow-color: rgba(46, 139, 87, 0.2);
+            --text-shadow: none;
+            --card-opacity: 0.8;
+            --blur-amount: 12px;
+        }
+
+        body.theme-autumn {
+            --text-primary: #ffffff;
+            --text-secondary: #e0d0c0;
+            --text-tertiary: #b8a898;
+            --bg-color: #2b1704;
+            --card-bg: rgba(60, 30, 10, 0.85);
+            --card-border: #d2691e;
+            --section-bg: rgba(80, 40, 15, 0.6);
+            --section-border: rgba(210, 105, 30, 0.3);
+            --pill-bg: rgba(255, 255, 255, 0.1);
+            --pill-border: rgba(210, 105, 30, 0.3);
+            --pill-text: #ffffff;
+            --accent: #fb923c;
+            --accent-hover: #fdba74;
+            --badge-text: #ffffff;
+            --badge-bg: rgba(255, 255, 255, 0.1);
+            --badge-border: rgba(210, 105, 30, 0.3);
+            --status-text: #ffffff;
+            --music-text: #ffffff;
+            --music-secondary: #e0d0c0;
+            --footer-text: #b8a898;
+            --shadow-color: rgba(0, 0, 0, 0.6);
+            --text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            --card-opacity: 0.85;
+            --blur-amount: 12px;
+        }
+
+        /* Force dark mode override */
+        body.force-dark {
+            --text-primary: #ffffff;
+            --text-secondary: #e2e8f0;
+            --text-tertiary: #94a3b8;
+            --bg-color: #0b0d15;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.15);
+            --section-bg: rgba(15, 18, 30, 0.5);
+            --section-border: rgba(255, 255, 255, 0.1);
+            --pill-bg: rgba(255, 255, 255, 0.06);
+            --pill-border: rgba(255, 255, 255, 0.08);
+            --pill-text: rgba(255, 255, 255, 0.85);
+            --accent: var(--accent);
+            --badge-text: #ffffff;
+            --badge-bg: rgba(255, 255, 255, 0.05);
+            --badge-border: rgba(255, 255, 255, 0.1);
+            --status-text: #e2e8f0;
+            --music-text: #ffffff;
+            --music-secondary: rgba(255, 255, 255, 0.5);
+            --footer-text: rgba(255, 255, 255, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.6);
+            --text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            --card-opacity: 0.8;
+            --blur-amount: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+            margin: 0;
+            transition: background 0.5s ease, filter 0.3s ease, font-family 0.3s ease;
+            color: var(--text-primary);
+        }
+
+        body.mono-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        body.reduce-motion * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+
+        body.party-active {
+            cursor: crosshair;
+        }
+
+        body.party-layout-chaos {
+            animation: layoutChaos 2.5s infinite cubic-bezier(0.5, 0, 0.5, 1);
+            transform-origin: center center;
+            will-change: transform;
+        }
+        @keyframes layoutChaos {
+            0% { transform: rotate(0deg) skewX(0deg) scale(1) translate(0, 0); }
+            12% { transform: rotate(4deg) skewX(2deg) scale(1.02) translate(-0.5%, 0.2%); }
+            25% { transform: rotate(-3deg) skewX(-1deg) scale(0.98) translate(0.3%, -0.4%); }
+            37% { transform: rotate(6deg) skewX(3deg) scale(1.05) translate(0.8%, 0.5%); }
+            50% { transform: rotate(-7deg) skewX(-2deg) scale(0.96) translate(-0.7%, 0.6%); }
+            62% { transform: rotate(5deg) skewX(1.5deg) scale(1.03) translate(0.4%, -0.3%); }
+            75% { transform: rotate(-4deg) skewX(-1.5deg) scale(1.0) translate(-0.2%, 0.1%); }
+            87% { transform: rotate(2deg) skewX(0.5deg) scale(0.99) translate(0.1%, -0.1%); }
+            100% { transform: rotate(0deg) skewX(0deg) scale(1) translate(0, 0); }
+        }
+
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        #three-canvas canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .itch-profile-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            font-family: inherit;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            perspective: 1200px;
+        }
+
+        .glass-panel {
+            position: relative;
+            max-width: 1200px;
+            width: 100%;
+            padding: 2.8rem 2.5rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+            -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+            border-radius: 3.5rem 1.5rem 3.5rem 1.5rem;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 30px 50px var(--shadow-color), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+            transition: transform 0.1s ease, box-shadow 0.3s ease, background 0.5s ease, border-color 0.5s ease, backdrop-filter 0.5s ease;
+            overflow: visible;
+            z-index: 2;
+            transform-style: preserve-3d;
+            --mouse-x: 50%;
+            --mouse-y: 50%;
+            opacity: var(--card-opacity);
+        }
+
+        .settings-wrapper {
+            position: fixed; 
+            top: 1.5rem;
+            right: 1.8rem;
+            z-index: 9999; 
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .lang-selector {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--pill-bg);
+            padding: 0.4rem 0.6rem;
+            border-radius: 60px;
+            border: 1px solid var(--pill-border);
+            backdrop-filter: blur(8px);
+            white-space: nowrap;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 0.25rem 0.7rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .lang-btn:hover {
+            background: var(--pill-bg);
+            color: var(--text-primary);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+        }
+
+        .lang-btn.active {
+            background: rgba(56, 189, 248, 0.2);
+            color: var(--accent);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .settings-icon {
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            border-radius: 50%;
+            background: var(--pill-bg);
+            border: 1px solid var(--pill-border);
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            animation: pulse-gear 2.5s ease-in-out infinite;
+            backdrop-filter: blur(4px);
+            will-change: transform;
+            flex-shrink: 0;
+        }
+
+        .settings-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--accent);
+            transition: transform 0.3s ease;
+        }
+
+        @keyframes pulse-gear {
+            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); transform: rotate(0deg); }
+            25% { transform: rotate(15deg); }
+            50% { box-shadow: 0 0 20px 5px rgba(56, 189, 248, 0.2); transform: rotate(0deg); }
+            75% { transform: rotate(-15deg); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); transform: rotate(0deg); }
+        }
+
+        .settings-icon:hover {
+            color: var(--text-primary);
+            background: rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.5);
+            animation: none;
+            box-shadow: 0 0 30px 10px rgba(56, 189, 248, 0.3);
+        }
+        .settings-icon:hover svg {
+            transform: rotate(90deg);
+        }
+
+        .settings-panel {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: rgba(20, 22, 36, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1.2rem 0.6rem 1.2rem 0.6rem;
+            padding: 1.2rem 1.5rem;
+            min-width: 260px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.95);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top right;
+            z-index: 60;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .settings-panel.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .settings-panel .panel-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-weight: 600;
+        }
+
+        .settings-panel .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            gap: 1.5rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+        }
+
+        .select-input {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .color-input {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            background: transparent;
+        }
+        .color-input::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        .color-input::-webkit-color-swatch {
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+        }
+
+        .range-input {
+            width: 100px;
+        }
+
+        .reset-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .reset-btn:hover {
+            background: rgba(239, 68, 68, 0.4);
+            color: #fff;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 40px;
+            height: 22px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 34px;
+            transition: 0.3s;
+        }
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .toggle-switch input:checked+.toggle-slider {
+            background: #38BDF8;
+        }
+        .toggle-switch input:checked+.toggle-slider::before {
+            transform: translateX(18px);
+        }
+
+        /* GitHub button style */
+        .github-btn {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            border: 1px solid #ff3333;
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .github-btn:hover {
+            background: linear-gradient(135deg, #ff3333, #ff0000);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            transform: scale(1.05);
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 3.6rem 1.6rem 3.6rem 1.6rem;
+            padding: 2px;
+            background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(56, 189, 248, 0.35), transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+            transform: translateZ(-1px);
+        }
+
+        .glass-panel.glow-active::before {
+            opacity: 1;
+        }
+
+        .glass-panel::after {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 70%;
+            height: 70%;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(30px);
+            transform: translateZ(-1px);
+        }
+
+        .content {
+            position: relative;
+            z-index: 3;
+            color: var(--text-primary);
+            text-shadow: var(--text-shadow);
+            transform: translateZ(20px);
+            transform-style: preserve-3d;
+            transition: color 0.5s ease, text-shadow 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Grid container for accordion sections */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .accordion-section {
+            border-radius: 1.5rem 0.8rem 1.5rem 0.8rem;
+            background: var(--section-bg);
+            border: 1px solid var(--section-border);
+            overflow: hidden;
+            transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
+            position: relative;
+            transform: translateZ(0);
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
+        }
+
+        /* Full-width sections */
+        .accordion-section.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .accordion-section::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 1.6rem 0.9rem 1.6rem 0.9rem;
+            background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(56, 189, 248, 0.25), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .accordion-section.glow-active::before {
+            opacity: 1;
+        }
+        .accordion-section:hover {
+            border-color: var(--accent);
+            background: var(--section-bg);
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.1rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s ease, transform 0.05s ease, color 0.3s ease;
+            gap: 1rem;
+            position: relative;
+            z-index: 2;
+            will-change: transform;
+        }
+        .accordion-header:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .accordion-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+        .accordion-header .header-left .icon {
+            font-size: 1.2rem;
+        }
+        .accordion-header .toggle-icon {
+            font-size: 1.2rem;
+            color: var(--accent);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+        .accordion-section.open .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .accordion-section.open .accordion-body {
+            max-height: 3000px;
+        }
+        .accordion-body-inner {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .accordion-section.about-expanded .accordion-body {
+            max-height: 3000px;
+        }
+        .accordion-section.about-expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .subhead-about {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 0.8rem;
+            margin-bottom: 1.2rem;
+            padding: 0 0.2rem;
+        }
+        .subhead-about span {
+            background: var(--pill-bg);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            border: 1px solid var(--pill-border);
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--pill-text);
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .live-clock {
+            background: rgba(56, 189, 248, 0.12) !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+            color: var(--accent) !important;
+            font-weight: 600;
+        }
+        .username-gold {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent !important;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border: 1px solid rgba(255, 215, 0, 0.4) !important;
+            border-radius: 40px;
+            background-color: rgba(255, 215, 0, 0.1) !important;
+        }
+        .languages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+            padding: 0 0.2rem;
+        }
+        .lang-row {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .lang-pill {
+            background: var(--pill-bg);
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            border: 1px solid var(--pill-border);
+            color: var(--pill-text);
+            display: inline-block;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .lang-pill.cpp,
+        .lang-pill.cs {
+            border-color: var(--accent);
+        }
+        .skill-level-card {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            border: 1px solid var(--badge-border);
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .skill-level-card.junior,
+        .skill-level-card.expert {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .skill-level-card.undefined {
+            border-color: var(--badge-border);
+            color: var(--text-tertiary);
+        }
+        .small-note {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-left: 0.5rem;
+            transition: color 0.3s ease;
+        }
+        .status-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            padding: 0 0.2rem;
+        }
+        .status-card {
+            display: flex;
+            align-items: center;
+            padding: 0.6rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--badge-border);
+            color: var(--status-text);
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .status-card.green { 
+            background: rgba(34, 197, 94, 0.15); 
+            border-color: rgba(34, 197, 94, 0.25); 
+            color: var(--status-text);
+            font-weight: 600;
+        }
+        .status-card.red { 
+            background: rgba(239, 68, 68, 0.15); 
+            border-color: rgba(239, 68, 68, 0.25); 
+            color: var(--status-text);
+            font-weight: 600;
+        }
+        .status-card.yellow { 
+            background: rgba(234, 179, 8, 0.15); 
+            border-color: rgba(234, 179, 8, 0.25); 
+            color: var(--status-text);
+            font-weight: 600;
+        }
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-tertiary);
+            margin-bottom: 0.5rem;
+            margin-top: 1rem;
+            padding: 0 0.2rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .tools-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+            padding: 0 0.2rem;
+        }
+        .tool-card {
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--badge-border);
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.3s ease, color 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            background: rgba(56, 189, 248, 0.1);
+        }
+        .music-player {
+            background: var(--section-bg);
+            border-radius: 1.5rem 0.8rem 1.5rem 0.8rem;
+            border: 1px solid var(--section-border);
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .music-top {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .music-art {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.05));
+            border: 1px solid var(--section-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            color: var(--accent);
+        }
+        .music-info { flex: 1; min-width: 0; }
+        .music-info .track-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--music-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: color 0.3s ease;
+        }
+        .music-info .track-artist {
+            font-size: 0.75rem;
+            color: var(--music-secondary);
+            margin-top: 2px;
+            transition: color 0.3s ease;
+        }
+        .music-badge {
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            white-space: nowrap;
+        }
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            justify-content: center;
+        }
+        .music-controls .ctrl-btn {
+            background: var(--badge-bg);
+            border: 1px solid var(--badge-border);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .music-controls .ctrl-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--accent);
+            transform: scale(1.05);
+            color: var(--text-primary);
+        }
+        .music-controls .ctrl-btn.play-btn {
+            width: 44px;
+            height: 44px;
+            background: rgba(56, 189, 248, 0.15);
+            border-color: var(--accent);
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+        .music-controls .ctrl-btn.play-btn:hover {
+            background: rgba(56, 189, 248, 0.25);
+            border-color: var(--accent);
+            transform: scale(1.08);
+            color: var(--accent-hover);
+        }
+        .music-progress {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .music-progress .time-label {
+            font-size: 0.7rem;
+            font-variant-numeric: tabular-nums;
+            color: var(--music-secondary);
+            min-width: 32px;
+            transition: color 0.3s ease;
+        }
+        .progress-track {
+            flex: 1;
+            height: 4px;
+            border-radius: 10px;
+            background: var(--badge-bg);
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .progress-track .progress-fill {
+            width: 0%;
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #38BDF8, #34D399);
+            opacity: 0.8;
+            transition: width 0.1s linear;
+        }
+        .music-placeholder-note {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--music-secondary);
+            letter-spacing: 0.3px;
+            padding-top: 0.3rem;
+            border-top: 1px solid var(--section-border);
+            transition: color 0.3s ease;
+        }
+        .device-group { margin-bottom: 0.8rem; padding: 0 0.2rem; }
+        .device-group-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.4rem;
+            transition: color 0.3s ease;
+        }
+        .device-specs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .device-spec {
+            padding: 0.4rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid var(--badge-border);
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.3s ease, color 0.3s ease;
+        }
+        .device-spec:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+        .support-content {
+            background: var(--section-bg);
+            border: 1px solid var(--section-border);
+            border-radius: 1rem 0.6rem 1rem 0.6rem;
+            padding: 1.2rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .links-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+            padding: 0 0.2rem;
+        }
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--badge-bg);
+            border: 1px solid var(--badge-border);
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 500;
+            color: var(--badge-text);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+        .link-btn:hover {
+            background: var(--pill-bg);
+            border-color: var(--accent);
+            transform: scale(1.05);
+            color: var(--text-primary);
+        }
+        .link-btn.moddb { border-color: rgba(255, 107, 53, 0.5); color: #ff8c42; }
+        .link-btn.itch { border-color: rgba(250, 92, 92, 0.5); color: #fa5c5c; }
+        .link-btn.gitlab { border-color: rgba(252, 109, 38, 0.5); color: #fc6d26; }
+        .footer-tag {
+            margin-top: 0;
+            font-size: 0.75rem;
+            color: var(--footer-text);
+            text-align: right;
+            border-top: 1px solid var(--section-border);
+            padding-top: 0.8rem;
+            transition: color 0.3s ease;
+        }
+        .footer-tag span {
+            background: var(--badge-bg);
+            padding: 0.2rem 1.2rem;
+            border-radius: 60px;
+        }
+
+        .party-mode-container {
+            margin-top: 1rem;
+            padding: 0.9rem 1.2rem;
+            background: var(--section-bg);
+            border-radius: 1rem 0.6rem 1rem 0.6rem;
+            border: 1px solid var(--section-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+        .party-mode-container:hover {
+            border-color: rgba(255, 100, 150, 0.3);
+            background: rgba(20, 10, 20, 0.5);
+        }
+        .party-mode-label {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        .party-mode-label .party-icon { font-size: 1.2rem; }
+        .party-mode-label .party-text {
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+            display: block;
+            font-weight: 400;
+        }
+        .party-toggle-switch {
+            position: relative;
+            width: 52px;
+            height: 28px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .party-toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .party-toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--badge-bg);
+            border-radius: 34px;
+            transition: 0.3s;
+            border: 1px solid var(--badge-border);
+        }
+        .party-toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .party-toggle-switch input:checked+.party-toggle-slider {
+            background: linear-gradient(135deg, #ff6b6b, #ff0080, #7928ca);
+            border-color: rgba(255, 100, 150, 0.5);
+            box-shadow: 0 0 20px rgba(255, 0, 128, 0.4);
+        }
+        .party-toggle-switch input:checked+.party-toggle-slider::before {
+            transform: translateX(24px);
+            background: #fff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        .party-toggle-switch input:checked+.party-toggle-slider { animation: party-toggle-pulse 0.6s infinite; }
+        @keyframes party-toggle-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 128, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(255, 0, 128, 0.8), 0 0 60px rgba(121, 40, 202, 0.4); }
+        }
+
+        .party-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 9998;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .party-modal-overlay.active { opacity: 1; visibility: visible; }
+        .party-modal {
+            background: rgba(20, 22, 36, 0.98);
+            border: 1px solid rgba(255, 100, 150, 0.3);
+            border-radius: 2rem 1rem 2rem 1rem;
+            padding: 2.2rem 2rem;
+            max-width: 430px; width: 90%;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(255, 0, 128, 0.15), 0 10px 30px rgba(0, 0, 0, 0.8);
+            transform: scale(0.9) translateY(10px);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .party-modal-overlay.active .party-modal { transform: scale(1) translateY(0); }
+        .party-modal .warning-icon {
+            font-size: 3.5rem; margin-bottom: 1rem;
+            animation: warning-pulse 1s ease-in-out infinite;
+        }
+        @keyframes warning-pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 100, 100, 0.5)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(255, 100, 100, 0.9)); }
+        }
+        .party-modal .modal-title { font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+        .party-modal .modal-text { font-size: 0.85rem; line-height: 1.6; color: rgba(255, 255, 255, 0.7); margin-bottom: 0.8rem; }
+        .party-modal .modal-warning-text {
+            font-size: 0.75rem; color: #ff6b6b; font-weight: 600;
+            letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 1.2rem;
+        }
+        .party-modal .modal-disclaimer {
+            font-size: 0.7rem; color: rgba(255, 255, 255, 0.35); line-height: 1.4;
+            margin-bottom: 1.5rem; padding: 0.8rem;
+            background: rgba(255, 0, 0, 0.05); border-radius: 1rem;
+            border: 1px solid rgba(255, 0, 0, 0.1);
+        }
+        .party-modal-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .party-modal-buttons button {
+            padding: 0.7rem 1.8rem; border-radius: 60px; font-weight: 600;
+            font-size: 0.85rem; cursor: pointer; transition: all 0.25s ease;
+            border: 1px solid; letter-spacing: 0.3px;
+        }
+        .party-modal-buttons .btn-no { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); }
+        .party-modal-buttons .btn-no:hover { background: rgba(255,255,255,0.12); color:#fff; border-color: rgba(255,255,255,0.3); }
+        .party-modal-buttons .btn-yes {
+            background: linear-gradient(135deg, #ff6b6b, #ff0080);
+            border-color: rgba(255, 0, 128, 0.5); color: #fff;
+            box-shadow: 0 5px 20px rgba(255, 0, 128, 0.3);
+        }
+        .party-modal-buttons .btn-yes:hover {
+            background: linear-gradient(135deg, #ff8585, #ff3399);
+            box-shadow: 0 5px 30px rgba(255, 0, 128, 0.6); transform: scale(1.05);
+        }
+
+        .strobe-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            pointer-events: none; z-index: 9995;
+            opacity:0; visibility:hidden; mix-blend-mode: screen;
+            animation:none; transition: opacity 0.3s ease;
+        }
+        .strobe-overlay.active { opacity:1; visibility:visible; animation: strobe-flash 0.35s infinite; }
+        @keyframes strobe-flash {
+            0% { background: rgba(255, 0, 50, 0.35); } 8% { background: rgba(0, 255, 100, 0.45); }
+            16% { background: rgba(0, 50, 255, 0.3); } 25% { background: rgba(255, 255, 0, 0.5); }
+            33% { background: rgba(255, 0, 255, 0.4); } 41% { background: rgba(0, 255, 255, 0.5); }
+            50% { background: rgba(255, 100, 0, 0.45); } 58% { background: rgba(150, 255, 0, 0.35); }
+            66% { background: rgba(0, 150, 255, 0.4); } 75% { background: rgba(255, 0, 150, 0.45); }
+            83% { background: rgba(255, 255, 255, 0.5); } 91% { background: rgba(0, 0, 0, 0.35); }
+            100% { background: rgba(255, 0, 50, 0.35); }
+        }
+
+        .party-shake-active .itch-profile-wrapper { animation: party-shake 0.25s infinite; will-change: transform; }
+        @keyframes party-shake {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            10% { transform: translate(-12px, -6px) rotate(-0.8deg) scale(1.01); }
+            20% { transform: translate(12px, 8px) rotate(0.8deg) scale(0.99); }
+            30% { transform: translate(-10px, 12px) rotate(-0.5deg) scale(1.02); }
+            40% { transform: translate(10px, -12px) rotate(0.5deg) scale(0.98); }
+            50% { transform: translate(-8px, 14px) rotate(-0.7deg) scale(1.01); }
+            60% { transform: translate(8px, -14px) rotate(0.7deg) scale(0.99); }
+            70% { transform: translate(-14px, 4px) rotate(-0.4deg) scale(1.02); }
+            80% { transform: translate(14px, -4px) rotate(0.4deg) scale(0.98); }
+            90% { transform: translate(-6px, -8px) rotate(0deg) scale(1.01); }
+            100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+        }
+
+        .party-indicator {
+            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+            z-index: 9996; padding: 0.6rem 1.8rem; border-radius: 60px;
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.3), rgba(121, 40, 202, 0.3));
+            border: 1px solid rgba(255, 100, 150, 0.5); color: #fff;
+            font-weight: 700; font-size: 0.85rem; letter-spacing: 1px;
+            text-transform: uppercase; cursor: pointer; opacity: 0; visibility: hidden;
+            transition: all 0.4s ease; box-shadow: 0 5px 30px rgba(255, 0, 128, 0.3);
+            animation: none; user-select: none; white-space: nowrap;
+        }
+        .party-indicator.active { opacity: 1; visibility: visible; animation: party-indicator-pulse 0.5s infinite; }
+        @keyframes party-indicator-pulse {
+            0%, 100% { box-shadow: 0 5px 30px rgba(255, 0, 128, 0.3); transform: translateX(-50%) scale(1); }
+            50% { box-shadow: 0 5px 60px rgba(255, 0, 128, 0.7), 0 5px 80px rgba(121, 40, 202, 0.5); transform: translateX(-50%) scale(1.05); }
+        }
+        .party-indicator:hover { animation: none; transform: translateX(-50%) scale(1.1); box-shadow: 0 5px 60px rgba(255, 0, 128, 0.8); }
+
+        .cursor-trail-container {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            pointer-events: none; z-index: 9997; overflow: hidden;
+        }
+        .cursor-trail-spark {
+            position: fixed; pointer-events: none; width: 8px; height: 8px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 10px #fff, 0 0 20px #ff00ff, 0 0 30px #00ffff;
+            z-index: 9997; animation: trail-fade 0.6s forwards; will-change: transform, opacity;
+        }
+        @keyframes trail-fade {
+            0% { opacity: 1; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.3); }
+        }
+
+        /* Season Selector */
+        .season-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .season-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: capitalize;
+        }
+        .season-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+        .season-btn.active {
+            background: rgba(56, 189, 248, 0.3);
+            border-color: rgba(56, 189, 248, 0.5);
+            color: #fff;
+        }
+
+        /* Opera GX Ad Modal Styles */
+        .ad-popup-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .ad-popup-overlay.active { opacity: 1; visibility: visible; }
+        .ad-popup {
+            background: linear-gradient(135deg, #1a0000, #330000);
+            border: 2px solid #ff0000;
+            border-radius: 2rem 0.5rem 2rem 0.5rem;
+            padding: 2rem 2.5rem;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.6), 0 20px 60px rgba(0, 0, 0, 0.8);
+            transform: scale(0.8) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .ad-popup-overlay.active .ad-popup { transform: scale(1) translateY(0); }
+        .ad-popup::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at center, rgba(255,0,0,0.2) 0%, transparent 70%);
+            animation: ad-glow 2s infinite;
+            pointer-events: none;
+        }
+        @keyframes ad-glow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        .ad-popup .ad-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ff0000;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(255,0,0,0.8);
+            position: relative;
+            z-index: 1;
+        }
+        .ad-popup .ad-headline {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .ad-popup .ad-subtext {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        .ad-popup .ad-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        .ad-popup .ad-btn {
+            padding: 0.7rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            border: 2px solid;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .ad-popup .ad-btn-download {
+            background: #ff0000;
+            border-color: #ff0000;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255,0,0,0.5);
+        }
+        .ad-popup .ad-btn-download:hover {
+            background: #ff3333;
+            border-color: #ff3333;
+            box-shadow: 0 0 40px rgba(255,0,0,0.8);
+            transform: scale(1.05);
+        }
+        .ad-popup .ad-btn-decline {
+            background: rgba(0,0,0,0.5);
+            border-color: #ff0000;
+            color: #ff0000;
+        }
+        .ad-popup .ad-btn-decline:hover {
+            background: #ff0000;
+            color: #fff;
+            transform: scale(1.05);
+        }
+        .ad-popup .ad-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: color 0.2s;
+            z-index: 2;
+        }
+        .ad-popup .ad-close:hover { color: #fff; }
+
+        /* Responsive: collapse to single column */
+        @media (max-width: 900px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            .accordion-section.full-width {
+                grid-column: auto;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .glass-panel { padding: 1.8rem 1rem; }
+            .settings-wrapper { top: 1rem; right: 1rem; gap: 0.4rem; }
+            .lang-selector { padding: 0.3rem 0.4rem; gap: 0.3rem; }
+            .lang-btn { font-size: 0.6rem; padding: 0.2rem 0.5rem; }
+            .settings-icon { width: 36px; height: 36px; }
+            .settings-icon svg { width: 18px; height: 18px; }
+            .settings-panel { min-width: 200px; padding: 1rem; right: -0.5rem; }
+            .accordion-header { padding: 0.9rem 1rem; }
+            .accordion-body-inner { padding: 0 1rem 1rem 1rem; }
+            .party-modal { padding: 1.5rem 1rem; border-radius: 1.5rem 0.8rem 1.5rem 0.8rem; }
+            .party-mode-container { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+            .party-toggle-switch { width: 48px; height: 26px; }
+            .party-toggle-slider::before { height: 18px; width: 18px; }
+            .party-toggle-switch input:checked+.party-toggle-slider::before { transform: translateX(22px); }
+            .party-indicator { font-size: 0.7rem; padding: 0.5rem 1.2rem; bottom: 1rem; }
+            .ad-popup { padding: 1.5rem 1rem; border-radius: 1.5rem 0.8rem 1.5rem 0.8rem; }
+            .ad-popup .ad-headline { font-size: 1.1rem; }
+        }
+    </style>
+
+    <div id="three-canvas"></div>
+
+    <div class="itch-profile-wrapper">
+        <div class="glass-panel" id="mainCard">
+
+            <div class="content">
+
+                <!-- Wrap all accordion sections in a grid container -->
+                <div class="grid-container">
+                    <div class="accordion-section about-expanded full-width" id="aboutSection">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                           <div class="header-left">
+        <span class="icon">//</span>
+        <span data-i18n="aboutMe">About Safeswing</span>
+    </div>
+                            <span class="toggle-icon">v</span>
+                        </div>
+                        <div class="accordion-body">
+                            <div class="accordion-body-inner">
+                                <div class="subhead-about">
+                                    <span>GMT +05</span>
+                                    <span class="live-clock"><span id="liveTime">--:--:--</span></span>
+                                    <span>Turkmenistan</span>
+                                    <span>Age: 16</span>
+                                    <span>176cm</span>
+                                    <span>Male</span>
+                                    <span class="username-gold">@safeswing</span>
+                                    <span>Born: 15th February</span>
+                                </div>
+
+                                <div class="section-label">Languages</div>
+                                <div class="languages-list">
+                                    <div class="lang-row">
+                                        <span class="lang-pill cpp">C++</span>
+                                        <span class="skill-level-card junior">Junior</span>
+                                    </div>
+                                    <div class="lang-row">
+                                        <span class="lang-pill cs">C#</span>
+                                        <span class="skill-level-card undefined">Undefined</span>
+                                    </div>
+                                    <div class="lang-row">
+                                        <span class="lang-pill">HTML/CSS</span>
+                                        <span class="skill-level-card expert">Expert</span>
+                                        <span class="small-note">i know HTML is not a coding language</span>
+                                    </div>
+                                    <div class="lang-row">
+                                        <span class="lang-pill">Three.js Java</span>
+                                        <span class="skill-level-card undefined">Undefined</span>
+                                    </div>
+                                </div>
+
+                                <div class="section-label">Status</div>
+                                <div class="status-list">
+                                    <div class="status-card green">Currently development of Unity Game (HDRP)</div>
+                                    <div class="status-card red">Frozen Development for XM3</div>
+                                    <div class="status-card red">Frozen/Slow development for Blitz3D 2028 Overhaul</div>
+                                    <div class="status-card yellow">Planning on Unity URP project in 2028.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-section" id="toolsSection">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="header-left">
+                                <span class="icon">[]</span>
+                                <span>My Tools</span>
+                            </div>
+                            <span class="toggle-icon">v</span>
+                        </div>
+                        <div class="accordion-body">
+                            <div class="accordion-body-inner">
+                                <div class="tools-grid">
+                                    <span class="tool-card android-studio">Android Studio</span>
+                                    <span class="tool-card xcode">Xcode</span>
+                                    <span class="tool-card vs2026">Visual Studio 2026 Community</span>
+                                    <span class="tool-card vscode">VS Code</span>
+                                    <span class="tool-card photoshop">Adobe Photoshop 2026</span>
+                                    <span class="tool-card premiere">Adobe Premiere Pro 2024</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-section" id="musicSection">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="header-left">
+                                <span class="icon">~</span>
+                                <span>Music</span>
+                            </div>
+                            <span class="toggle-icon">v</span>
+                        </div>
+                        <div class="accordion-body">
+                            <div class="accordion-body-inner">
+                                <div class="music-player">
+                                    <div class="music-top">
+                                        <div class="music-art">M</div>
+                                        <div class="music-info">
+                                            <div class="track-name">Basshunter - Dota</div>
+                                            <div class="track-artist">Basshunter</div>
+                                        </div>
+                                        <span class="music-badge">stopped</span>
+                                    </div>
+                                    <div class="music-controls">
+                                        <span class="ctrl-btn">|&lt;</span>
+                                        <span class="ctrl-btn play-btn">&gt;</span>
+                                        <span class="ctrl-btn">&gt;|</span>
+                                        <span class="ctrl-btn">R</span>
+                                        <span class="ctrl-btn">S</span>
+                                    </div>
+                                    <div class="music-progress">
+                                        <span class="time-label">0:00</span>
+                                        <div class="progress-track"><div class="progress-fill"></div></div>
+                                        <span class="time-label">0:00</span>
+                                    </div>
+                                    <audio id="myAudio" src="basshunterdota.mp3" preload="metadata"></audio>
+                                    <div class="music-placeholder-note">press play to listen</div>
+                                </div>
+
+                                <div class="party-mode-container" id="partyModeContainer">
+                                    <div class="party-mode-label">
+                                        <span class="party-icon">P</span>
+                                        <span>Party Mode
+                                            <span class="party-text">strobe lights · loud audio · screen shake</span>
+                                        </span>
+                                    </div>
+                                    <label class="party-toggle-switch">
+                                        <input type="checkbox" id="partyModeToggle">
+                                        <span class="party-toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-section" id="devicesSection">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="header-left">
+                                <span class="icon">&gt;_</span>
+                                <span>About my devices</span>
+                            </div>
+                            <span class="toggle-icon">v</span>
+                        </div>
+                        <div class="accordion-body">
+                            <div class="accordion-body-inner">
+                                <div class="device-group">
+                                    <div class="device-group-label">Laptop:</div>
+                                    <div class="device-specs">
+                                        <span class="device-spec blue">32GB LPDDR5X</span>
+                                        <span class="device-spec purple">iGPU: Intel Arc v140</span>
+                                        <span class="device-spec blue">Intel Ultra 7 258v</span>
+                                        <span class="device-spec gray">1TB SSD + External 1TB SSD + External 1TB HDD</span>
+                                    </div>
+                                </div>
+                                <div class="device-group">
+                                    <div class="device-group-label">Phones:</div>
+                                    <div class="device-specs">
+                                        <span class="device-spec desert">IPhone 16 Pro</span>
+                                        <span class="device-spec huawei">Pura 70 Base</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-section" id="supportSection">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="header-left">
+                                <span class="icon">$</span>
+                                <span>Support me / Paid Plannings</span>
+                            </div>
+                            <span class="toggle-icon">v</span>
+                        </div>
+                        <div class="accordion-body">
+                            <div class="accordion-body-inner">
+                                <div class="support-content">
+                                    Unfortunately, I cannot receive payments through services like PayPal, Visa, or similar platforms. I also cannot publish on Steam, hire developers, or be hired for work because my country does not accept these payment methods. This situation is not permanent — I expect to be free from these limitations when I turn 20 or older. I didn't want to explain this further earlier, as it's a long-term situation. Stay tuned for more information in the future.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-section full-width" id="linksSection">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <div class="header-left">
+                                <span class="icon">@</span>
+                                <span>My links</span>
+                            </div>
+                            <span class="toggle-icon">v</span>
+                        </div>
+                        <div class="accordion-body">
+                            <div class="accordion-body-inner">
+                                <div class="links-grid">
+                                    <a href="https://www.tiktok.com/@safeswing5" target="_blank" rel="noopener noreferrer" class="link-btn tiktok">TikTok</a>
+                                    <a href="https://www.moddb.com/members/safeswing" target="_blank" rel="noopener noreferrer" class="link-btn moddb">ModDB</a>
+                                    <a href="https://safeswing.itch.io/" target="_blank" rel="noopener noreferrer" class="link-btn itch">Itch.io</a>
+                                    <a href="https://github.com/safeswing" target="_blank" rel="noopener noreferrer" class="link-btn github">GitHub</a>
+                                    <a href="https://gitlab.com/safe22183" target="_blank" rel="noopener noreferrer" class="link-btn gitlab">GitLab</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end grid-container -->
+
+                <div class="footer-tag">
+                    <span>Version 8.25.2026</span>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+
+    <!-- PARTY MODE WARNING MODAL -->
+    <div class="party-modal-overlay" id="partyModal">
+        <div class="party-modal">
+            <div class="warning-icon">!</div>
+            <div class="modal-title">PARTY MODE</div>
+            <div class="modal-text">You are about to enter <strong>Party Mode</strong>.</div>
+            <div class="modal-warning-text">Not advised for people that are easily shocked from rapid lightning, loud noises, or extreme visual stimulation.</div>
+            <div class="modal-disclaimer">
+                This mode will activate: rapid strobing lights, intense screen shaking, extremely loud audio, layout chaos, elusive buttons, cursor trails, exploding snow, bass-driven zoom, and pitch chaos. If you experience discomfort, photosensitivity, or seizures, exit immediately. Party Mode is for entertainment purposes only. We are not liable for any damage to your eyes, ears, or sanity. You have been warned.
+            </div>
+            <div class="party-modal-buttons">
+                <button class="btn-no" id="partyModalNo">No, cancel</button>
+                <button class="btn-yes" id="partyModalYes">YES, LET'S PARTY!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- OPERA GX AD MODAL -->
+    <div class="ad-popup-overlay" id="adPopup">
+        <div class="ad-popup">
+            <button class="ad-close" id="adCloseBtn">&times;</button>
+            <div class="ad-logo">OPERA GX</div>
+            <div class="ad-headline">Download Opera GX Right NOW!</div>
+            <div class="ad-subtext">The gaming browser for gamers. Boost your experience.</div>
+            <div class="ad-buttons">
+                <a href="https://www.opera.com/gx" target="_blank" rel="noopener noreferrer" class="ad-btn ad-btn-download" id="adDownloadBtn">Download</a>
+                <button class="ad-btn ad-btn-decline" id="adDeclineBtn">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STROBE OVERLAY -->
+    <div class="strobe-overlay" id="strobeOverlay"></div>
+
+    <!-- PARTY MODE INDICATOR -->
+    <div class="party-indicator" id="partyIndicator">PARTY MODE ACTIVE — CLICK TO STOP</div>
+
+    <!-- CURSOR TRAIL CONTAINER -->
+    <div class="cursor-trail-container" id="cursorTrailContainer"></div>
+
+    <script>
+        // Load preferences from localStorage
+        function loadSettings() {
+            try {
+                return JSON.parse(localStorage.getItem('safeswing-settings')) || {};
+            } catch { return {}; }
+        }
+
+        function saveSettings(settings) {
+            localStorage.setItem('safeswing-settings', JSON.stringify(settings));
+        }
+
+
+// Language System
+const translations = {
+    english: {
+        aboutMe: "About Me",
+        myTools: "My Tools",
+        music: "Music",
+        devices: "About my devices",
+        support: "Support me / Paid Plannings",
+        links: "My links",
+        languages: "Languages",
+        status: "Status",
+        gmt: "GMT +05",
+        turkmenistan: "Turkmenistan",
+        age: "Age: 16",
+        height: "176cm",
+        male: "Male",
+        born: "Born: 15th February",
+        junior: "Junior",
+        undefined: "Undefined",
+        expert: "Expert",
+        htmlNote: "i know HTML is not a coding language",
+        status1: "Currently development of Unity Game (HDRP)",
+        status2: "Frozen Development for XM3",
+        status3: "Frozen/Slow development for Blitz3D 2028 Overhaul",
+        status4: "Planning on Unity URP project in 2028.",
+        laptop: "Laptop:",
+        phones: "Phones:",
+        supportText: "Unfortunately, I cannot receive payments through services like PayPal, Visa, or similar platforms. I also cannot publish on Steam, hire developers, or be hired for work because my country does not accept these payment methods. This situation is not permanent — I expect to be free from these limitations when I turn 20 or older. I didn't want to explain this further earlier, as it's a long-term situation. Stay tuned for more information in the future.",
+        footer: "HTML · C++ / C#",
+        settings: "Settings",
+        disableTilt: "Disable 3D Tilt",
+        season: "Season",
+        particleEffects: "Particle Effects",
+        forceDark: "Force Dark Mode",
+        reduceMotion: "Reduce Motion",
+        monoFont: "Monospace Font",
+        sfx: "UI Sound Effects",
+        accentColor: "Accent Color",
+        cardOpacity: "Card Opacity",
+        reset: "Reset to Default",
+        partyMode: "Party Mode",
+        partyText: "strobe lights · loud audio · screen shake",
+        pressPlay: "press play to listen",
+        trackName: "Basshunter - Dota",
+        trackArtist: "Basshunter",
+        stopped: "stopped",
+        playing: "playing",
+        paused: "paused",
+        high: "High",
+        medium: "Medium",
+        low: "Low",
+        off: "Off",
+        default: "Default",
+        spring: "Spring",
+        summer: "Summer",
+        autumn: "Autumn",
+        winter: "Winter",
+        partyWarning: "PARTY MODE",
+        partyWarningText: "You are about to enter Party Mode.",
+        partyWarningSub: "Not advised for people that are easily shocked from rapid lightning, loud noises, or extreme visual stimulation.",
+        partyDisclaimer: "This mode will activate: rapid strobing lights, intense screen shaking, extremely loud audio, layout chaos, elusive buttons, cursor trails, exploding snow, bass-driven zoom, and pitch chaos. If you experience discomfort, photosensitivity, or seizures, exit immediately. Party Mode is for entertainment purposes only. We are not liable for any damage to your eyes, ears, or sanity. You have been warned.",
+        noCancel: "No, cancel",
+        yesParty: "YES, LET'S PARTY!",
+        partyActive: "PARTY MODE ACTIVE — CLICK TO STOP",
+        disableAds: "Disable ADs",
+        githubBtn: "Open GitHub"
+    },
+    
+    russian: {
+        aboutMe: "Обо мне",
+        myTools: "Мои инструменты",
+        music: "Музыка",
+        devices: "О моих устройствах",
+        support: "Поддержка / Планы",
+        links: "Мои ссылки",
+        languages: "Языки",
+        status: "Статус",
+        gmt: "GMT +05",
+        turkmenistan: "Туркменистан",
+        age: "Возраст: 16",
+        height: "176см",
+        male: "Мужской",
+        born: "Родился: 15 февраля",
+        junior: "Джуниор",
+        undefined: "Не определено",
+        expert: "Эксперт",
+        htmlNote: "я знаю, что HTML не язык программирования",
+        status1: "Разработка Unity игры (HDRP)",
+        status2: "Заморожена разработка XM3",
+        status3: "Заморожена/медленная разработка Blitz3D 2028 Overhaul",
+        status4: "Планирую Unity URP проект в 2028.",
+        laptop: "Ноутбук:",
+        phones: "Телефоны:",
+        supportText: "К сожалению, я не могу получать платежи через такие сервисы, как PayPal, Visa или подобные платформы. Я также не могу публиковаться в Steam, нанимать разработчиков или работать по найму, потому что моя страна не принимает эти способы оплаты. Эта ситуация не постоянна — я ожидаю, что освобожусь от этих ограничений, когда мне исполнится 20 или больше. Я не хотел объяснять это раньше, так как это долгосрочная ситуация. Следите за новостями в будущем.",
+        footer: "HTML · C++ / C#",
+        settings: "Настройки",
+        disableTilt: "Отключить 3D наклон",
+        season: "Сезон",
+        particleEffects: "Эффекты частиц",
+        forceDark: "Принудительный темный режим",
+        reduceMotion: "Уменьшить движение",
+        monoFont: "Моноширинный шрифт",
+        sfx: "Звуковые эффекты UI",
+        accentColor: "Цвет акцента",
+        cardOpacity: "Прозрачность карточки",
+        reset: "Сбросить настройки",
+        partyMode: "Режим вечеринки",
+        partyText: "стробоскоп · громкий звук · тряска экрана",
+        pressPlay: "нажмите play для прослушивания",
+        trackName: "Basshunter - Dota",
+        trackArtist: "Basshunter",
+        stopped: "остановлено",
+        playing: "играет",
+        paused: "пауза",
+        high: "Высокий",
+        medium: "Средний",
+        low: "Низкий",
+        off: "Выкл",
+        default: "По умолчанию",
+        spring: "Весна",
+        summer: "Лето",
+        autumn: "Осень",
+        winter: "Зима",
+        partyWarning: "РЕЖИМ ВЕЧЕРИНКИ",
+        partyWarningText: "Вы собираетесь войти в режим вечеринки.",
+        partyWarningSub: "Не рекомендуется людям, которые легко пугаются быстрых вспышек, громких звуков или интенсивной визуальной стимуляции.",
+        partyDisclaimer: "Этот режим активирует: быстрые стробоскопы, интенсивную тряску экрана, очень громкий звук, хаос в макете, ускользающие кнопки, следы курсора, взрывающийся снег, зум от басов и хаос высоты тона. Если вы испытываете дискомфорт, светочувствительность или судороги, немедленно выйдите. Режим вечеринки предназначен только для развлечения. Мы не несем ответственности за любой ущерб вашим глазам, ушам или рассудку. Вы были предупреждены.",
+        noCancel: "Нет, отмена",
+        yesParty: "ДА, ПОЕХАЛИ!",
+        partyActive: "РЕЖИМ ВЕЧЕРИНКИ АКТИВЕН — НАЖМИТЕ ЧТОБЫ ОСТАНОВИТЬ",
+        disableAds: "Отключить рекламу",
+        githubBtn: "Открыть GitHub"
+    },
+    
+    base64: {
+        aboutMe: "QWJvdXQgTWU=",
+        myTools: "TXkgVG9vbHM=",
+        music: "TXVzaWM=",
+        devices: "QWJvdXQgbXkgZGV2aWNlcw==",
+        support: "U3VwcG9ydCBtZSAvIFBhaWQgUGxhbm5pbmdz",
+        links: "TXkgbGlua3M=",
+        languages: "TGFuZ3VhZ2Vz",
+        status: "U3RhdHVz",
+        gmt: "R01UICswNQ==",
+        turkmenistan: "VHVya21lbmlzdGFu",
+        age: "QWdlOiAxNg==",
+        height: "MTc2Y20=",
+        male: "TWFsZQ==",
+        born: "Qm9ybjogMTV0aCBGZWJydWFyeQ==",
+        junior: "SnVuaW9y",
+        undefined: "VW5kZWZpbmVk",
+        expert: "RXhwZXJ0",
+        htmlNote: "aSBrbm93IEhUTUwgaXMgbm90IGEgY29kaW5nIGxhbmd1YWdl",
+        status1: "Q3VycmVudGx5IGRldmVsb3BtZW50IG9mIFVuaXR5IEdhbWUgKEhEUlAp",
+        status2: "RnJvemVuIERldmVsb3BtZW50IGZvciBYTTM=",
+        status3: "RnJvemVuL1Nsb3cgZGV2ZWxvcG1lbnQgZm9yIEJsaXR6M0QgMjAyOCBPdmVyaGF1bA==",
+        status4: "UGxhbm5pbmcgb24gVW5pdHkgVVJQIHByb2plY3QgaW4gMjAyOC4=",
+        laptop: "TGFwdG9wOg==",
+        phones: "UGhvbmVzOg==",
+        supportText: "VW5mb3J0dW5hdGVseSwgSSBjYW5ub3QgcmVjZWl2ZSBwYXltZW50cyB0aHJvdWdoIHNlcnZpY2VzIGxpa2UgUGF5UGFsLCBWaXNhLCBvciBzaW1pbGFyIHBsYXRmb3Jtcy4=",
+        footer: "SFRNTCDCtyBDKysgLyBDIw==",
+        settings: "U2V0dGluZ3M=",
+        disableTilt: "RGlzYWJsZSAzRCBUaWx0",
+        season: "U2Vhc29u",
+        particleEffects: "UGFydGljbGUgRWZmZWN0cw==",
+        forceDark: "Rm9yY2UgRGFyayBNb2Rl",
+        reduceMotion: "UmVkdWNlIE1vdGlvbg==",
+        monoFont: "TW9ub3NwYWNlIEZvbnQ=",
+        sfx: "VUkgU291bmQgRWZmZWN0cw==",
+        accentColor: "QWNjZW50IENvbG9y",
+        cardOpacity: "Q2FyZCBPcGFjaXR5",
+        reset: "UmVzZXQgdG8gRGVmYXVsdA==",
+        partyMode: "UGFydHkgTW9kZQ==",
+        partyText: "c3Ryb2JlIGxpZ2h0cyDCtyBsb3VkIGF1ZGlvIMK3IHNjcmVlbiBzaGFrZQ==",
+        pressPlay: "cHJlc3MgcGxheSB0byBsaXN0ZW4=",
+        trackName: "QmFzc2h1bnRlciAtIERvdGE=",
+        trackArtist: "QmFzc2h1bnRlcg==",
+        stopped: "c3RvcHBlZA==",
+        playing: "cGxheWluZw==",
+        paused: "cGF1c2Vk",
+        high: "SGlnaA==",
+        medium: "TWVkaXVt",
+        low: "TG93",
+        off: "T2Zm",
+        default: "RGVmYXVsdA==",
+        spring: "U3ByaW5n",
+        summer: "U3VtbWVy",
+        autumn: "QXV0dW1u",
+        winter: "V2ludGVy",
+        partyWarning: "UEFSVFkgTU9ERQ==",
+        partyWarningText: "WW91IGFyZSBhYm91dCB0byBlbnRlciBQYXJ0eSBNb2RlLg==",
+        partyWarningSub: "Tm90IGFkdmlzZWQgZm9yIHBlb3BsZSB0aGF0IGFyZSBlYXNpbHkgc2hvY2tlZCBmcm9tIHJhcGlkIGxpZ2h0bmluZy4=",
+        partyDisclaimer: "VGhpcyBtb2RlIHdpbGwgYWN0aXZhdGU6IHJhcGlkIHN0cm9iaW5nIGxpZ2h0cy4=",
+        noCancel: "Tm8sIGNhbmNlbA==",
+        yesParty: "WUVTLCBMRVQnUyBQQVJUWSE=",
+        partyActive: "UEFSVFkgTU9ERSBBQ1RJVkUg4oCUIENMSUNLIFRPIFNUT1A=",
+        disableAds: "RGlzYWJsZSBBRHM=",
+        githubBtn: "T3BlbiBHaXRIdWI="
+    },
+    
+    binary: {
+        aboutMe: "01000001 01100010 01101111 01110101 01110100 00100000 01001101 01100101",
+        myTools: "01001101 01111001 00100000 01010100 01101111 01101111 01101100 01110011",
+        music: "01001101 01110101 01110011 01101001 01100011",
+        devices: "01000001 01100010 01101111 01110101 01110100 00100000 01101101 01111001 00100000 01100100 01100101 01110110 01101001 01100011 01100101 01110011",
+        support: "01010011 01110101 01110000 01110000 01101111 01110010 01110100 00100000 01101101 01100101 00100000 00101111 00100000 01010000 01100001 01101001 01100100 00100000 01010000 01101100 01100001 01101110 01101110 01101001 01101110 01100111 01110011",
+        links: "01001101 01111001 00100000 01101100 01101001 01101110 01101011 01110011",
+        languages: "01001100 01100001 01101110 01100111 01110101 01100001 01100111 01100101 01110011",
+        status: "01010011 01110100 01100001 01110100 01110101 01110011",
+        gmt: "01000111 01001101 01010100 00100000 00101011 00110000 00110101",
+        turkmenistan: "01010100 01110101 01110010 01101011 01101101 01100101 01101110 01101001 01110011 01110100 01100001 01101110",
+        age: "01000001 01100111 01100101 00111010 00100000 00110001 00110110",
+        height: "00110001 00110111 00110110 01100011 01101101",
+        male: "01001101 01100001 01101100 01100101",
+        born: "01000010 01101111 01110010 01101110 00111010 00100000 00110001 00110101 01110100 01101000 00100000 01000110 01100101 01100010 01110010 01110101 01100001 01110010 01111001",
+        junior: "01001010 01110101 01101110 01101001 01101111 01110010",
+        undefined: "01010101 01101110 01100100 01100101 01100110 01101001 01101110 01100101 01100100",
+        expert: "01000101 01111000 01110000 01100101 01110010 01110100",
+        htmlNote: "01101001 00100000 01101011 01101110 01101111 01110111 00100000 01001000 01010100 01001101 01001100 00100000 01101001 01110011 00100000 01101110 01101111 01110100 00100000 01100001 00100000 01100011 01101111 01100100 01101001 01101110 01100111 00100000 01101100 01100001 01101110 01100111 01110101 01100001 01100111 01100101",
+        status1: "01000011 01110101 01110010 01110010 01100101 01101110 01110100 01101100 01111001 00100000 01100100 01100101 01110110 01100101 01101100 01101111 01110000 01101101 01100101 01101110 01110100 00100000 01101111 01100110 00100000 01010101 01101110 01101001 01110100 01111001 00100000 01000111 01100001 01101101 01100101 00100000 00101000 01001000 01000100 01010010 01010000 00101001",
+        status2: "01000110 01110010 01101111 01111010 01100101 01101110 00100000 01000100 01100101 01110110 01100101 01101100 01101111 01110000 01101101 01100101 01101110 01110100 00100000 01100110 01101111 01110010 00100000 01011000 01001101 00110011",
+        status3: "01000110 01110010 01101111 01111010 01100101 01101110 00101111 01010011 01101100 01101111 01110111 00100000 01100100 01100101 01110110 01100101 01101100 01101111 01110000 01101101 01100101 01101110 01110100 00100000 01100110 01101111 01110010 00100000 01000010 01101100 01101001 01110100 01111010 00110011 01000100 00100000 00110010 00110000 00110010 00111000 00100000 01001111 01110110 01100101 01110010 01101000 01100001 01110101 01101100",
+        status4: "01010000 01101100 01100001 01101110 01101110 01101001 01101110 01100111 00100000 01101111 01101110 00100000 01010101 01101110 01101001 01110100 01111001 00100000 01010101 01010010 01010000 00100000 01110000 01110010 01101111 01101010 01100101 01100011 01110100 00100000 01101001 01101110 00100000 00110010 00110000 00110010 00111000 00101110",
+        laptop: "01001100 01100001 01110000 01110100 01101111 01110000 00111010",
+        phones: "01010000 01101000 01101111 01101110 01100101 01110011 00111010",
+        supportText: "01010101 01101110 01100110 01101111 01110010 01110100 01110101 01101110 01100001 01110100 01100101 01101100 01111001 00101100 00100000 01001001 00100000 01100011 01100001 01101110 01101110 01101111 01110100 00100000 01110010 01100101 01100011 01100101 01101001 01110110 01100101 00100000 01110000 01100001 01111001 01101101 01100101 01101110 01110100 01110011 00101110",
+        footer: "01001000 01010100 01001101 01001100 00100000 11000010 10110111 00100000 01000011 00101011 00101011 00100000 00101111 00100000 01000011 00100011",
+        settings: "01010011 01100101 01110100 01110100 01101001 01101110 01100111 01110011",
+        disableTilt: "01000100 01101001 01110011 01100001 01100010 01101100 01100101 00100000 00110011 01000100 00100000 01010100 01101001 01101100 01110100",
+        season: "01010011 01100101 01100001 01110011 01101111 01101110",
+        particleEffects: "01010000 01100001 01110010 01110100 01101001 01100011 01101100 01100101 00100000 01000101 01100110 01100110 01100101 01100011 01110100 01110011",
+        forceDark: "01000110 01101111 01110010 01100011 01100101 00100000 01000100 01100001 01110010 01101011 00100000 01001101 01101111 01100100 01100101",
+        reduceMotion: "01010010 01100101 01100100 01110101 01100011 01100101 00100000 01001101 01101111 01110100 01101001 01101111 01101110",
+        monoFont: "01001101 01101111 01101110 01101111 01110011 01110000 01100001 01100011 01100101 00100000 01000110 01101111 01101110 01110100",
+        sfx: "01010101 01001001 00100000 01010011 01101111 01110101 01101110 01100100 00100000 01000101 01100110 01100110 01100101 01100011 01110100 01110011",
+        accentColor: "01000001 01100011 01100011 01100101 01101110 01110100 00100000 01000011 01101111 01101100 01101111 01110010",
+        cardOpacity: "01000011 01100001 01110010 01100100 00100000 01001111 01110000 01100001 01100011 01101001 01110100 01111001",
+        reset: "01010010 01100101 01110011 01100101 01110100 00100000 01110100 01101111 00100000 01000100 01100101 01100110 01100001 01110101 01101100 01110100",
+        partyMode: "01010000 01100001 01110010 01110100 01111001 00100000 01001101 01101111 01100100 01100101",
+        partyText: "01110011 01110100 01110010 01101111 01100010 01100101 00100000 01101100 01101001 01100111 01101000 01110100 01110011",
+        pressPlay: "01110000 01110010 01100101 01110011 01110011 00100000 01110000 01101100 01100001 01111001 00100000 01110100 01101111 00100000 01101100 01101001 01110011 01110100 01100101 01101110",
+        trackName: "01000010 01100001 01110011 01110011 01101000 01110101 01101110 01110100 01100101 01110010 00100000 00101101 00100000 01000100 01101111 01110100 01100001",
+        trackArtist: "01000010 01100001 01110011 01110011 01101000 01110101 01101110 01110100 01100101 01110010",
+        stopped: "01110011 01110100 01101111 01110000 01110000 01100101 01100100",
+        playing: "01110000 01101100 01100001 01111001 01101001 01101110 01100111",
+        paused: "01110000 01100001 01110101 01110011 01100101 01100100",
+        high: "01001000 01101001 01100111 01101000",
+        medium: "01001101 01100101 01100100 01101001 01110101 01101101",
+        low: "01001100 01101111 01110111",
+        off: "01001111 01100110 01100110",
+        default: "01000100 01100101 01100110 01100001 01110101 01101100 01110100",
+        spring: "01010011 01110000 01110010 01101001 01101110 01100111",
+        summer: "01010011 01110101 01101101 01101101 01100101 01110010",
+        autumn: "01000001 01110101 01110100 01110101 01101101 01101110",
+        winter: "01010111 01101001 01101110 01110100 01100101 01110010",
+        partyWarning: "01010000 01000001 01010010 01010100 01011001 00100000 01001101 01001111 01000100 01000101",
+        partyWarningText: "01011001 01101111 01110101 00100000 01100001 01110010 01100101 00100000 01100001 01100010 01101111 01110101 01110100 00100000 01110100 01101111 00100000 01100101 01101110 01110100 01100101 01110010 00100000 01010000 01100001 01110010 01110100 01111001 00100000 01001101 01101111 01100100 01100101 00101110",
+        partyWarningSub: "01001110 01101111 01110100 00100000 01100001 01100100 01110110 01101001 01110011 01100101 01100100 00100000 01100110 01101111 01110010 00100000 01110000 01100101 01101111 01110000 01101100 01100101 00100000 01110100 01101000 01100001 01110100 00100000 01100001 01110010 01100101 00100000 01100101 01100001 01110011 01101001 01101100 01111001 00100000 01110011 01101000 01101111 01100011 01101011 01100101 01100100 00101110",
+        partyDisclaimer: "01010100 01101000 01101001 01110011 00100000 01101101 01101111 01100100 01100101 00100000 01110111 01101001 01101100 01101100 00100000 01100001 01100011 01110100 01101001 01110110 01100001 01110100 01100101 00111010 00100000 01110010 01100001 01110000 01101001 01100100 00100000 01110011 01110100 01110010 01101111 01100010 01101001 01101110 01100111 00100000 01101100 01101001 01100111 01101000 01110100 01110011 00101110",
+        noCancel: "01001110 01101111 00101100 00100000 01100011 01100001 01101110 01100011 01100101 01101100",
+        yesParty: "01011001 01000101 01010011 00101100 00100000 01001100 01000101 01010100 00100111 01010011 00100000 01010000 01000001 01010010 01010100 01011001 00100001",
+        partyActive: "01010000 01000001 01010010 01010100 01011001 00100000 01001101 01001111 01000100 01000101 00100000 01000001 01000011 01010100 01001001 01010110 01000101 00100000 11100010 10000000 10010100 00100000 01000011 01001100 01001001 01000011 01001011 00100000 01010100 01001111 00100000 01010011 01010100 01001111 01010000",
+        disableAds: "01000100 01101001 01110011 01100001 01100010 01101100 01100101 00100000 01000001 01000100 01110011",
+        githubBtn: "01001111 01110000 01100101 01101110 00100000 01000111 01101001 01110100 01001000 01110101 01100010"
+    },
+    
+    hebrew: {
+        aboutMe: "עליי",
+        myTools: "הכלים שלי",
+        music: "מוזיקה",
+        devices: "על המכשירים שלי",
+        support: "תמיכה / תכניות בתשלום",
+        links: "הקישורים שלי",
+        languages: "שפות",
+        status: "סטטוס",
+        gmt: "GMT +05",
+        turkmenistan: "טורקמניסטן",
+        age: "גיל: 16",
+        height: "176 ס\"מ",
+        male: "זכר",
+        born: "נולד: 15 בפברואר",
+        junior: "ג'וניור",
+        undefined: "לא מוגדר",
+        expert: "מומחה",
+        htmlNote: "אני יודע ש-HTML היא לא שפת תכנות",
+        status1: "פיתוח נוכחי של משחק Unity (HDRP)",
+        status2: "פיתוח מוקפא עבור XM3",
+        status3: "פיתוח מוקפא/איטי עבור Blitz3D 2028 Overhaul",
+        status4: "מתכנן פרויקט Unity URP ב-2028.",
+        laptop: "לפטופ:",
+        phones: "טלפונים:",
+        supportText: "לצערי, אני לא יכול לקבל תשלומים דרך שירותים כמו PayPal, Visa או פלטפורמות דומות. אני גם לא יכול לפרסם ב-Steam, לשכור מפתחים או להתקבל לעבודה כי המדינה שלי לא מקבלת את אמצעי התשלום האלה.",
+        footer: "HTML · C++ / C#",
+        settings: "הגדרות",
+        disableTilt: "בטל הטיה תלת-ממדית",
+        season: "עונה",
+        particleEffects: "אפקטי חלקיקים",
+        forceDark: "מצב כהה מאולץ",
+        reduceMotion: "הפחת תנועה",
+        monoFont: "גופן מונוספייס",
+        sfx: "אפקטי קול בממשק",
+        accentColor: "צבע הדגשה",
+        cardOpacity: "אטימות כרטיס",
+        reset: "אפס לברירת מחדל",
+        partyMode: "מצב מסיבה",
+        partyText: "אורות מהבהבים · שמע חזק · רעידת מסך",
+        pressPlay: "לחץ הפעל להאזנה",
+        trackName: "Basshunter - Dota",
+        trackArtist: "Basshunter",
+        stopped: "עצור",
+        playing: "מתנגן",
+        paused: "מושהה",
+        high: "גבוה",
+        medium: "בינוני",
+        low: "נמוך",
+        off: "כבוי",
+        default: "ברירת מחדל",
+        spring: "אביב",
+        summer: "קיץ",
+        autumn: "סתיו",
+        winter: "חורף",
+        partyWarning: "מצב מסיבה",
+        partyWarningText: "אתה עומד להיכנס למצב מסיבה.",
+        partyWarningSub: "לא מומלץ לאנשים שנבהלים בקלות מברקים מהירים, רעשים חזקים או גירוי חזותי אינטנסיבי.",
+        partyDisclaimer: "מצב זה יפעיל: אורות מהבהבים מהירים, רעידת מסך אינטנסיבית, שמע חזק במיוחד, כאוס פריסה, כפתורים חמקמקים, שבילי סמן, שלג מתפוצץ, זום מונע בס וכאוס גובה צליל. אם אתה חווה אי נוחות, רגישות לאור או התקפים, צא מיד.",
+        noCancel: "לא, בטל",
+        yesParty: "כן, בואו נחגוג!",
+        partyActive: "מצב מסיבה פעיל — לחץ לעצירה",
+        disableAds: "בטל פרסומות",
+        githubBtn: "פתח GitHub"
+    }
+};
+
+// Current language
+let currentLanguage = 'english';
+
+
+function applyLanguage(lang) {
+    currentLanguage = lang;
+    const t = translations[lang] || translations.english;
+    
+    // Apply to all data-i18n elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) {
+            el.textContent = t[key];
+        }
+    });
+    
+  
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (t[key]) {
+            el.placeholder = t[key];
+        }
+    });
+ 
+    const partyLabel = document.querySelector('.party-mode-label span:last-child');
+    if (partyLabel && t.partyMode) {
+        // The party mode label has nested spans
+        const mainSpan = partyLabel.parentElement;
+        mainSpan.childNodes[0].textContent = t.partyMode + ' ';
+    }
+    
+    // Update ad popup text if exists
+    const adHeadline = document.querySelector('.ad-popup .ad-headline');
+    if (adHeadline) adHeadline.textContent = "Download Opera GX Right NOW!";
+    const adSubtext = document.querySelector('.ad-popup .ad-subtext');
+    if (adSubtext) adSubtext.textContent = "The gaming browser for gamers. Boost your experience.";
+    
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        const btnLang = btn.getAttribute('data-lang');
+        btn.classList.toggle('active', btnLang === lang);
+    });
+    
+   
+    const settings = loadSettings();
+    settings.language = lang;
+    saveSettings(settings);
+}
+
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const lang = btn.getAttribute('data-lang');
+        if (lang && translations[lang]) {
+            applyLanguage(lang);
+        }
+    });
+});
+
+
+function initI18n() {
+ 
+    document.querySelectorAll('.accordion-header .header-left span:last-child').forEach(el => {
+   
+    });
+}
+
+        
+        function applySettings() {
+            const settings = loadSettings();
+
+            // Season
+            const season = settings.season || 'default';
+            document.body.classList.remove('theme-spring', 'theme-summer', 'theme-autumn', 'theme-winter', 'force-dark');
+            if (season !== 'default') document.body.classList.add(`theme-${season}`);
+            document.querySelectorAll('.season-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.season === season);
+            });
+
+            // Force dark mode
+            if (settings.forceDark) document.body.classList.add('force-dark');
+
+            // Particle density
+            const density = settings.particleDensity || 'medium';
+            document.getElementById('particleDensity').value = density;
+            updateParticleDensity(density);
+
+            // Reduce motion
+            if (settings.reduceMotion) document.body.classList.add('reduce-motion');
+            else document.body.classList.remove('reduce-motion');
+            document.getElementById('reduceMotionToggle').checked = !!settings.reduceMotion;
+
+            // Monospace font
+            if (settings.monoFont) document.body.classList.add('mono-font');
+            else document.body.classList.remove('mono-font');
+            document.getElementById('monoFontToggle').checked = !!settings.monoFont;
+
+            // Accent color
+            if (settings.accentColor) {
+                document.documentElement.style.setProperty('--accent', settings.accentColor);
+                document.getElementById('accentColorPicker').value = settings.accentColor;
+            }
+
+            // Card opacity
+            if (settings.cardOpacity) {
+                document.documentElement.style.setProperty('--card-opacity', settings.cardOpacity);
+                document.getElementById('cardOpacitySlider').value = settings.cardOpacity;
+            }
+
+            // 3D tilt
+            const tiltEnabled = !settings.disableTilt;
+            document.getElementById('tiltToggle').checked = !tiltEnabled;
+            window.tiltEnabled = tiltEnabled;
+
+            // SFX
+            document.getElementById('sfxToggle').checked = !!settings.sfx;
+
+            // Disable Ads
+            const disableAds = settings.disableAds || false;
+            document.getElementById('disableAdsToggle').checked = disableAds;
+            // Restart ad interval based on setting
+            if (window.adInterval) clearInterval(window.adInterval);
+            if (!disableAds) {
+                window.adInterval = setInterval(showAdPopup, 30000); // every 30 seconds
+            } else {
+                hideAdPopup(); // ensure hidden if disabled
+            }
+        }
+
+        // Update particle density function (accessible globally)
+        function updateParticleDensity(density) {
+            if (window.__snowControls) {
+                window.__snowControls.setDensity(density);
+            }
+        }
+
+        // Show ad popup
+        function showAdPopup() {
+            const adPopup = document.getElementById('adPopup');
+            if (adPopup && !document.body.classList.contains('party-active')) { // don't show during party mode
+                adPopup.classList.add('active');
+            }
+        }
+
+        function hideAdPopup() {
+            const adPopup = document.getElementById('adPopup');
+            if (adPopup) adPopup.classList.remove('active');
+        }
+
+        // Initialize all event listeners after DOM load
+        window.addEventListener('load', () => {
+            // Loading screen
+            setTimeout(() => {
+                document.getElementById('loading-screen').classList.add('hidden');
+            }, 800);
+
+            // Load and apply settings
+            applySettings();
+
+            // Initialize Three.js snow
+            initSnow();
+
+            // Initialize other features
+            initTilt();
+            initSettingsPanel();
+            initAccordion();
+            initClock();
+            initAudioPlayer();
+            initPartyMode();
+            initAdPopup();
+        });
+
+        // Ad Popup event listeners
+        function initAdPopup() {
+            const adPopup = document.getElementById('adPopup');
+            const adCloseBtn = document.getElementById('adCloseBtn');
+            const adDeclineBtn = document.getElementById('adDeclineBtn');
+            // Download button is a link, nothing to do
+            if (adCloseBtn) adCloseBtn.addEventListener('click', hideAdPopup);
+            if (adDeclineBtn) adDeclineBtn.addEventListener('click', hideAdPopup);
+            // Click outside to close
+            adPopup.addEventListener('click', (e) => {
+                if (e.target === adPopup) hideAdPopup();
+            });
+        }
+
+        // Snow / Particle System with density control and snow emoji for winter
+        function initSnow() {
+            const container = document.getElementById('three-canvas');
+            if (typeof THREE === 'undefined') { console.error('Three.js not loaded'); return; }
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.domElement.style.position = 'fixed';
+            renderer.domElement.style.top = '0';
+            renderer.domElement.style.left = '0';
+            renderer.domElement.style.width = '100%';
+            renderer.domElement.style.height = '100%';
+            renderer.domElement.style.pointerEvents = 'none';
+            renderer.domElement.style.zIndex = '0';
+            container.appendChild(renderer.domElement);
+
+            // Particle count based on density
+            let densityMap = { high: 3000, medium: 1500, low: 500, off: 0 };
+            let currentDensity = loadSettings().particleDensity || 'medium';
+            let count = densityMap[currentDensity] || 1500;
+
+            // Create geometry and attributes
+            let positions, velocities;
+            let geometry, snow, material;
+
+            function createParticles() {
+                positions = new Float32Array(count * 3);
+                velocities = new Float32Array(count * 3);
+                for (let i = 0; i < count; i++) {
+                    const i3 = i * 3;
+                    positions[i3] = (Math.random() - 0.5) * 60;
+                    positions[i3 + 1] = (Math.random() - 0.5) * 40;
+                    positions[i3 + 2] = (Math.random() - 0.5) * 40;
+                    velocities[i3] = (Math.random() - 0.5) * 0.02;
+                    velocities[i3 + 1] = -(0.01 + Math.random() * 0.03);
+                    velocities[i3 + 2] = (Math.random() - 0.5) * 0.02;
+                }
+                geometry = new THREE.BufferGeometry();
+                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+                // Texture: snowflake emoji for winter, white circle for others
+                const canvas = document.createElement('canvas');
+                canvas.width = 64; canvas.height = 64;
+                const ctx = canvas.getContext('2d');
+                const season = loadSettings().season || 'default';
+                if (season === 'winter') {
+                    ctx.font = '48px serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('❄', 32, 32);
+                } else {
+                    const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+                    gradient.addColorStop(0, 'rgba(255,255,255,1)');
+                    gradient.addColorStop(0.5, 'rgba(255,255,255,0.8)');
+                    gradient.addColorStop(1, 'rgba(255,255,255,0)');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, 64, 64);
+                }
+                const texture = new THREE.CanvasTexture(canvas);
+                material = new THREE.PointsMaterial({
+                    color: 0xffffff, size: 0.3, transparent: true, opacity: 0.8,
+                    map: texture, blending: THREE.AdditiveBlending, depthWrite: false,
+                });
+                snow = new THREE.Points(geometry, material);
+                scene.add(snow);
+            }
+
+            createParticles();
+            camera.position.z = 18;
+
+            let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            let partyModeActive = false;
+            let snowSpeedBoost = 1;
+            let partyColorMode = false;
+            let explosionMode = false;
+            const partyColors = [0xff0066, 0x00ff88, 0x0066ff, 0xffff00, 0xff00ff, 0x00ffff, 0xff6600, 0x8800ff];
+            let colorIndex = 0;
+            let colorChangeCounter = 0;
+
+            function setPartyMode(active) {
+                partyModeActive = active;
+                if (active) {
+                    snowSpeedBoost = 4;
+                    partyColorMode = true;
+                    explosionMode = true;
+                    for (let i = 0; i < count; i++) {
+                        const i3 = i * 3;
+                        positions[i3] = (Math.random() - 0.5) * 5;
+                        positions[i3 + 1] = (Math.random() - 0.5) * 5;
+                        positions[i3 + 2] = (Math.random() - 0.5) * 5;
+                        const speed = 0.1 + Math.random() * 0.3;
+                        const dx = positions[i3]; const dy = positions[i3+1]; const dz = positions[i3+2];
+                        const len = Math.sqrt(dx*dx + dy*dy + dz*dz) || 1;
+                        velocities[i3] = (dx / len) * speed;
+                        velocities[i3+1] = (dy / len) * speed;
+                        velocities[i3+2] = (dz / len) * speed;
+                    }
+                } else {
+                    snowSpeedBoost = 1;
+                    partyColorMode = false;
+                    explosionMode = false;
+                    material.color.setHex(0xffffff);
+                    for (let i = 0; i < count; i++) {
+                        const i3 = i * 3;
+                        velocities[i3] = (Math.random() - 0.5) * 0.02;
+                        velocities[i3+1] = -(0.01 + Math.random() * 0.03);
+                        velocities[i3+2] = (Math.random() - 0.5) * 0.02;
+                    }
+                }
+            }
+
+            function setDensity(density) {
+                currentDensity = density;
+                const newCount = densityMap[density] || 0;
+                if (newCount !== count) {
+                    count = newCount;
+                    scene.remove(snow);
+                    createParticles();
+                    if (partyModeActive) setPartyMode(true);
+                }
+                // Update visibility
+                snow.visible = count > 0;
+            }
+
+            function animateSnow() {
+                requestAnimationFrame(animateSnow);
+                if (count === 0) { renderer.render(scene, camera); return; }
+                targetX += (mouseX - targetX) * 0.05;
+                targetY += (mouseY - targetY) * 0.05;
+                snow.rotation.x += 0.0005 + targetY * 0.0003;
+                snow.rotation.y += 0.0005 + targetX * 0.0003;
+                if (partyColorMode) {
+                    colorChangeCounter++;
+                    if (colorChangeCounter > 4) {
+                        colorChangeCounter = 0;
+                        colorIndex = (colorIndex + 1) % partyColors.length;
+                        material.color.setHex(partyColors[colorIndex]);
+                    }
+                }
+                const positionsAttr = geometry.attributes.position;
+                const posArray = positionsAttr.array;
+                const speedFactor = snowSpeedBoost;
+                for (let i = 0; i < count; i++) {
+                    const i3 = i * 3;
+                    if (explosionMode) {
+                        posArray[i3] += velocities[i3] * speedFactor;
+                        posArray[i3+1] += velocities[i3+1] * speedFactor;
+                        posArray[i3+2] += velocities[i3+2] * speedFactor;
+                        const dist = Math.sqrt(posArray[i3]**2 + posArray[i3+1]**2 + posArray[i3+2]**2);
+                        if (dist > 30) {
+                            posArray[i3] = (Math.random() - 0.5) * 5;
+                            posArray[i3+1] = (Math.random() - 0.5) * 5;
+                            posArray[i3+2] = (Math.random() - 0.5) * 5;
+                        }
+                    } else {
+                        posArray[i3] += velocities[i3] * speedFactor;
+                        posArray[i3+1] += velocities[i3+1] * speedFactor;
+                        posArray[i3+2] += velocities[i3+2] * speedFactor;
+                        if (posArray[i3+1] < -20) {
+                            posArray[i3+1] = 20;
+                            posArray[i3] = (Math.random() - 0.5) * 60;
+                            posArray[i3+2] = (Math.random() - 0.5) * 40;
+                        }
+                    }
+                }
+                positionsAttr.needsUpdate = true;
+                renderer.render(scene, camera);
+            }
+            animateSnow();
+
+            // Expose controls globally
+            window.__snowControls = { setPartyMode, setDensity };
+        }
+
+        // 3D Tilt Logic
+        let tiltEnabled = true;
+        let tiltX = 0, tiltY = 0, currentX = 0, currentY = 0;
+        const card = document.getElementById('mainCard');
+        function initTilt() {
+            card.addEventListener('mousemove', (e) => {
+                if (!tiltEnabled) return;
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const y = (e.clientY - rect.top) / rect.height;
+                tiltX = (y - 0.5) * 8;
+                tiltY = (x - 0.5) * -8;
+            });
+            card.addEventListener('mouseleave', () => { tiltX = 0; tiltY = 0; });
+            animateTilt();
+        }
+        function animateTilt() {
+            requestAnimationFrame(animateTilt);
+            if (tiltEnabled) {
+                currentX += (tiltX - currentX) * 0.08;
+                currentY += (tiltY - currentY) * 0.08;
+                card.style.transform = `perspective(1200px) rotateX(${currentX}deg) rotateY(${currentY}deg)`;
+            } else {
+                currentX = 0; currentY = 0;
+                card.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg)`;
+            }
+        }
+
+        // Settings Panel Logic
+        function initSettingsPanel() {
+            const settingsToggle = document.getElementById('settingsToggle');
+            const settingsPanel = document.getElementById('settingsPanel');
+            settingsToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                settingsPanel.classList.toggle('open');
+            });
+            document.addEventListener('click', (e) => {
+                if (!settingsToggle.contains(e.target) && !settingsPanel.contains(e.target)) {
+                    settingsPanel.classList.remove('open');
+                }
+            });
+
+            // Individual setting handlers
+            document.getElementById('tiltToggle').addEventListener('change', (e) => {
+                const settings = loadSettings();
+                settings.disableTilt = e.target.checked;
+                saveSettings(settings);
+                tiltEnabled = !e.target.checked;
+                if (!tiltEnabled) { tiltX = 0; tiltY = 0; }
+            });
+
+            // Season buttons
+            document.querySelectorAll('.season-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const season = btn.dataset.season;
+                    const settings = loadSettings();
+                    settings.season = season;
+                    saveSettings(settings);
+                    applySettings();
+                });
+            });
+
+            // Particle density
+            document.getElementById('particleDensity').addEventListener('change', (e) => {
+                const settings = loadSettings();
+                settings.particleDensity = e.target.value;
+                saveSettings(settings);
+                updateParticleDensity(e.target.value);
+            });
+
+            // Force dark mode
+            document.getElementById('forceDarkToggle').addEventListener('change', (e) => {
+                const settings = loadSettings();
+                settings.forceDark = e.target.checked;
+                saveSettings(settings);
+                applySettings();
+            });
+
+            // Reduce motion
+            document.getElementById('reduceMotionToggle').addEventListener('change', (e) => {
+                const settings = loadSettings();
+                settings.reduceMotion = e.target.checked;
+                saveSettings(settings);
+                applySettings();
+            });
+
+            // Monospace font
+            document.getElementById('monoFontToggle').addEventListener('change', (e) => {
+                const settings = loadSettings();
+                settings.monoFont = e.target.checked;
+                saveSettings(settings);
+                applySettings();
+            });
+
+            // SFX
+            document.getElementById('sfxToggle').addEventListener('change', (e) => {
+                const settings = loadSettings();
+                settings.sfx = e.target.checked;
+                saveSettings(settings);
+                // No actual sound implementation, just saved
+            });
+
+            // Accent color
+            document.getElementById('accentColorPicker').addEventListener('input', (e) => {
+                const settings = loadSettings();
+                settings.accentColor = e.target.value;
+                saveSettings(settings);
+                document.documentElement.style.setProperty('--accent', e.target.value);
+            });
+
+            // Card opacity
+            document.getElementById('cardOpacitySlider').addEventListener('input', (e) => {
+                const settings = loadSettings();
+                settings.cardOpacity = e.target.value;
+                saveSettings(settings);
+                document.documentElement.style.setProperty('--card-opacity', e.target.value);
+            });
+
+            // Disable Ads toggle
+            document.getElementById('disableAdsToggle').addEventListener('change', (e) => {
+                const settings = loadSettings();
+                settings.disableAds = e.target.checked;
+                saveSettings(settings);
+                // Restart ad interval
+                if (window.adInterval) clearInterval(window.adInterval);
+                if (e.target.checked) {
+                    hideAdPopup();
+                } else {
+                    window.adInterval = setInterval(showAdPopup, 30000);
+                }
+            });
+
+            // Reset
+            document.getElementById('resetSettingsBtn').addEventListener('click', () => {
+                localStorage.removeItem('safeswing-settings');
+                applySettings();
+            });
+        }
+
+        // Accordion
+        function initAccordion() {
+            const headers = document.querySelectorAll('.accordion-header');
+            headers.forEach(header => {
+                header.addEventListener('click', () => {
+                    const section = header.parentElement;
+                    if (section.classList.contains('about-expanded')) {
+                        section.classList.remove('about-expanded');
+                        section.classList.remove('open');
+                    } else {
+                        section.classList.toggle('open');
+                    }
+                });
+            });
+        }
+
+        // Live clock
+        function initClock() {
+            function updateLiveClock() {
+                const clockEl = document.getElementById('liveTime');
+                if (!clockEl) return;
+                const now = new Date();
+                const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+                const gmt5Time = new Date(utcTime + (3600000 * 5));
+                const hrs = String(gmt5Time.getHours()).padStart(2, '0');
+                const mins = String(gmt5Time.getMinutes()).padStart(2, '0');
+                const secs = String(gmt5Time.getSeconds()).padStart(2, '0');
+                clockEl.textContent = `${hrs}:${mins}:${secs}`;
+            }
+            setInterval(updateLiveClock, 1000);
+            updateLiveClock();
+        }
+
+        // Audio Player
+        function initAudioPlayer() {
+            const audio = document.getElementById('myAudio');
+            const playBtn = document.querySelector('.music-controls .play-btn');
+            const musicBadge = document.querySelector('.music-badge');
+            const progressFill = document.querySelector('.progress-fill');
+            const progressTrack = document.querySelector('.progress-track');
+            const timeLabels = document.querySelectorAll('.music-progress .time-label');
+
+            function formatTime(seconds) {
+                if (isNaN(seconds)) return "0:00";
+                const m = Math.floor(seconds / 60);
+                const s = Math.floor(seconds % 60);
+                return `${m}:${s < 10 ? '0' : ''}${s}`;
+            }
+
+            if (audio && playBtn) {
+                playBtn.addEventListener('click', () => {
+                    if (audio.paused) {
+                        audio.play().catch(e => console.log("Audio playback blocked", e));
+                        playBtn.textContent = '||';
+                        if (musicBadge) { musicBadge.textContent = 'playing'; musicBadge.style.color = '#34D399'; }
+                    } else {
+                        audio.pause();
+                        playBtn.textContent = '>';
+                        if (musicBadge) { musicBadge.textContent = 'paused'; musicBadge.style.color = '#38BDF8'; }
+                    }
+                });
+
+                audio.addEventListener('timeupdate', () => {
+                    if (audio.duration) {
+                        const pct = (audio.currentTime / audio.duration) * 100;
+                        if (progressFill) progressFill.style.width = pct + '%';
+                        if (timeLabels[0]) timeLabels[0].textContent = formatTime(audio.currentTime);
+                        if (timeLabels[1]) timeLabels[1].textContent = formatTime(audio.duration);
+                    }
+                });
+
+                audio.addEventListener('ended', () => {
+                    playBtn.textContent = '>';
+                    if (progressFill) progressFill.style.width = '0%';
+                    if (musicBadge) { musicBadge.textContent = 'stopped'; musicBadge.style.color = '#38BDF8'; }
+                });
+
+                if (progressTrack) {
+                    progressTrack.addEventListener('click', (e) => {
+                        const rect = progressTrack.getBoundingClientRect();
+                        const clickX = e.clientX - rect.left;
+                        const pct = clickX / rect.width;
+                        if (audio.duration) audio.currentTime = pct * audio.duration;
+                    });
+                }
+            }
+        }
+
+        // Party Mode
+        function initPartyMode() {
+            const partyToggle = document.getElementById('partyModeToggle');
+            const partyModal = document.getElementById('partyModal');
+            const partyModalYes = document.getElementById('partyModalYes');
+            const partyModalNo = document.getElementById('partyModalNo');
+            const strobeOverlay = document.getElementById('strobeOverlay');
+            const partyIndicator = document.getElementById('partyIndicator');
+            const trailContainer = document.getElementById('cursorTrailContainer');
+            const audio = document.getElementById('myAudio');
+            const playBtn = document.querySelector('.music-controls .play-btn');
+            const musicBadge = document.querySelector('.music-badge');
+
+            let partyActive = false;
+
+            partyToggle.addEventListener('change', (e) => {
+                if (e.target.checked) partyModal.classList.add('active');
+                else stopPartyMode();
+            });
+
+            partyModalNo.addEventListener('click', () => {
+                partyModal.classList.remove('active');
+                partyToggle.checked = false;
+            });
+
+            partyModalYes.addEventListener('click', () => {
+                partyModal.classList.remove('active');
+                startPartyMode();
+            });
+
+            partyIndicator.addEventListener('click', stopPartyMode);
+
+            function startPartyMode() {
+                partyActive = true;
+                partyToggle.checked = true;
+                document.body.classList.add('party-active', 'party-shake-active', 'party-layout-chaos');
+                strobeOverlay.classList.add('active');
+                partyIndicator.classList.add('active');
+
+                if (window.__snowControls) window.__snowControls.setPartyMode(true);
+
+                if (audio) {
+                    audio.play().catch(() => {});
+                    if (playBtn) playBtn.textContent = '||';
+                    if (musicBadge) { musicBadge.textContent = 'PARTY TIME!'; musicBadge.style.color = '#ff0080'; }
+                }
+
+                document.addEventListener('mousemove', spawnTrail);
+                // Hide ad if visible
+                hideAdPopup();
+            }
+
+            function stopPartyMode() {
+                partyActive = false;
+                partyToggle.checked = false;
+                document.body.classList.remove('party-active', 'party-shake-active', 'party-layout-chaos');
+                strobeOverlay.classList.remove('active');
+                partyIndicator.classList.remove('active');
+
+                if (window.__snowControls) window.__snowControls.setPartyMode(false);
+
+                if (audio) {
+                    audio.pause();
+                    if (playBtn) playBtn.textContent = '>';
+                    if (musicBadge) { musicBadge.textContent = 'stopped'; musicBadge.style.color = '#38BDF8'; }
+                }
+
+                document.removeEventListener('mousemove', spawnTrail);
+            }
+
+            function spawnTrail(e) {
+                if (!partyActive) return;
+                const spark = document.createElement('div');
+                spark.className = 'cursor-trail-spark';
+                spark.style.left = e.clientX + 'px';
+                spark.style.top = e.clientY + 'px';
+
+                const tx = (Math.random() - 0.5) * 100;
+                const ty = (Math.random() - 0.5) * 100;
+                spark.style.setProperty('--tx', tx + 'px');
+                spark.style.setProperty('--ty', ty + 'px');
+
+                trailContainer.appendChild(spark);
+                setTimeout(() => spark.remove(), 600);
+            }
+        }
+    </script>
+</body>
+</html>
