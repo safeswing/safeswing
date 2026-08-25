@@ -17,7 +17,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
+            z-index: 99999;
             transition: opacity 0.8s ease, visibility 0.8s ease;
             font-family: 'Inter', sans-serif;
             color: rgba(255, 255, 255, 0.8);
@@ -44,31 +44,181 @@
             letter-spacing: 2px;
             opacity: 0.6;
         }
-        .loading-dots::after {
-            content: '';
-            animation: dots 1.5s steps(4, end) infinite;
-        }
-        @keyframes dots {
-            0% { content: ''; }
-            25% { content: '.'; }
-            50% { content: '..'; }
-            75% { content: '...'; }
-            100% { content: ''; }
-        }
     </style>
 </head>
 <body>
 
     <div id="loading-screen">
         <div class="loader"></div>
-        <div class="loading-text">Loading Libraries<span class="loading-dots"></span></div>
+        <div class="loading-text">Loading Libraries...</div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- SETTINGS WRAPPER -->
+    <div class="settings-wrapper">
+        <div class="lang-selector">
+            <a href="index.html" class="lang-btn active" title="English">English</a>
+            <a href="indexrus.html" class="lang-btn" title="Russian">Russian</a>
+            <a href="index64.html" class="lang-btn" title="Base64">Base64</a>
+            <a href="indexturk.html" class="lang-btn" title="Binary">Binary</a>
+            <a href="indexis.html" class="lang-btn" title="Israeli">Israeli</a>
+        </div>
+        <div class="settings-icon" id="settingsToggle" title="Settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+        </div>
+        <div class="settings-panel" id="settingsPanel">
+            <div class="panel-title">Settings</div>
+            <div class="setting-item">
+                <span>Disable 3D Tilt</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="tiltToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <span>Season</span>
+                <div class="season-selector">
+                    <button class="season-btn" data-season="spring">Spring</button>
+                    <button class="season-btn" data-season="summer">Summer</button>
+                    <button class="season-btn" data-season="autumn">Autumn</button>
+                    <button class="season-btn" data-season="winter">Winter</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap');
+
+        :root {
+            --text-primary: #ffffff;
+            --text-secondary: #e2e8f0;
+            --text-tertiary: #94a3b8;
+            --bg-color: #0b0d15;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.15);
+            --section-bg: rgba(15, 18, 30, 0.5);
+            --section-border: rgba(255, 255, 255, 0.1);
+            --pill-bg: rgba(255, 255, 255, 0.06);
+            --pill-border: rgba(255, 255, 255, 0.08);
+            --pill-text: rgba(255, 255, 255, 0.85);
+            --accent: #38BDF8;
+            --accent-hover: #7dd3fc;
+            --badge-text: #ffffff;
+            --badge-bg: rgba(255, 255, 255, 0.05);
+            --badge-border: rgba(255, 255, 255, 0.1);
+            --status-text: #e2e8f0;
+            --music-text: #ffffff;
+            --music-secondary: rgba(255, 255, 255, 0.5);
+            --footer-text: rgba(255, 255, 255, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.6);
+            --text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Theme-specific variables */
+        body.theme-winter {
+            --text-primary: #111827;
+            --text-secondary: #374151;
+            --text-tertiary: #6b7280;
+            --bg-color: #e0e5ec;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-border: #d1d5db;
+            --section-bg: rgba(255, 255, 255, 0.7);
+            --section-border: rgba(0, 0, 0, 0.1);
+            --pill-bg: rgba(0, 0, 0, 0.05);
+            --pill-border: rgba(0, 0, 0, 0.1);
+            --pill-text: #111827;
+            --accent: #0284c7;
+            --accent-hover: #0369a1;
+            --badge-text: #111827;
+            --badge-bg: rgba(0, 0, 0, 0.05);
+            --badge-border: rgba(0, 0, 0, 0.1);
+            --status-text: #111827;
+            --music-text: #111827;
+            --music-secondary: #4b5563;
+            --footer-text: #6b7280;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --text-shadow: none;
+        }
+
+        body.theme-spring {
+            --text-primary: #4a0e17;
+            --text-secondary: #6b1620;
+            --text-tertiary: #8b3540;
+            --bg-color: #fdf2f4;
+            --card-bg: rgba(255, 228, 240, 0.85);
+            --card-border: #ff69b4;
+            --section-bg: rgba(255, 255, 255, 0.5);
+            --section-border: rgba(255, 105, 180, 0.3);
+            --pill-bg: rgba(255, 255, 255, 0.7);
+            --pill-border: rgba(255, 105, 180, 0.3);
+            --pill-text: #4a0e17;
+            --accent: #db2777;
+            --accent-hover: #be185d;
+            --badge-text: #4a0e17;
+            --badge-bg: rgba(255, 255, 255, 0.7);
+            --badge-border: rgba(255, 105, 180, 0.3);
+            --status-text: #4a0e17;
+            --music-text: #4a0e17;
+            --music-secondary: #8b3540;
+            --footer-text: #8b3540;
+            --shadow-color: rgba(255, 105, 180, 0.2);
+            --text-shadow: none;
+        }
+
+        body.theme-summer {
+            --text-primary: #042f2e;
+            --text-secondary: #064e3b;
+            --text-tertiary: #065f46;
+            --bg-color: #d4edda;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-border: #2e8b57;
+            --section-bg: rgba(255, 255, 255, 0.5);
+            --section-border: rgba(46, 139, 87, 0.3);
+            --pill-bg: rgba(255, 255, 255, 0.7);
+            --pill-border: rgba(46, 139, 87, 0.3);
+            --pill-text: #042f2e;
+            --accent: #059669;
+            --accent-hover: #047857;
+            --badge-text: #042f2e;
+            --badge-bg: rgba(255, 255, 255, 0.7);
+            --badge-border: rgba(46, 139, 87, 0.3);
+            --status-text: #042f2e;
+            --music-text: #042f2e;
+            --music-secondary: #065f46;
+            --footer-text: #065f46;
+            --shadow-color: rgba(46, 139, 87, 0.2);
+            --text-shadow: none;
+        }
+
+        body.theme-autumn {
+            --text-primary: #ffffff;
+            --text-secondary: #e0d0c0;
+            --text-tertiary: #b8a898;
+            --bg-color: #2b1704;
+            --card-bg: rgba(60, 30, 10, 0.85);
+            --card-border: #d2691e;
+            --section-bg: rgba(80, 40, 15, 0.6);
+            --section-border: rgba(210, 105, 30, 0.3);
+            --pill-bg: rgba(255, 255, 255, 0.1);
+            --pill-border: rgba(210, 105, 30, 0.3);
+            --pill-text: #ffffff;
+            --accent: #fb923c;
+            --accent-hover: #fdba74;
+            --badge-text: #ffffff;
+            --badge-bg: rgba(255, 255, 255, 0.1);
+            --badge-border: rgba(210, 105, 30, 0.3);
+            --status-text: #ffffff;
+            --music-text: #ffffff;
+            --music-secondary: #e0d0c0;
+            --footer-text: #b8a898;
+            --shadow-color: rgba(0, 0, 0, 0.6);
+            --text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
 
         * {
             margin: 0;
@@ -78,14 +228,15 @@
 
         body {
             min-height: 100vh;
-            background: #0b0d15;
+            background: var(--bg-color);
             font-family: 'Inter', sans-serif;
             padding: 1.5rem;
             position: relative;
             overflow-x: hidden;
             overflow-y: auto;
             margin: 0;
-            transition: filter 0.3s ease;
+            transition: background 0.5s ease, filter 0.3s ease;
+            color: var(--text-primary);
         }
 
         body.party-active {
@@ -143,13 +294,13 @@
             max-width: 720px;
             width: 100%;
             padding: 2.8rem 2.5rem;
-            background: rgba(255, 255, 255, 0.08);
+            background: var(--card-bg);
             backdrop-filter: blur(14px) saturate(180%);
             -webkit-backdrop-filter: blur(14px) saturate(180%);
             border-radius: 3.5rem 1.5rem 3.5rem 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-            transition: transform 0.1s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 30px 50px var(--shadow-color), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+            transition: transform 0.1s ease, box-shadow 0.3s ease, background 0.5s ease, border-color 0.5s ease;
             overflow: visible;
             z-index: 2;
             transform-style: preserve-3d;
@@ -158,11 +309,10 @@
         }
 
         .settings-wrapper {
-            position: absolute;
+            position: fixed; 
             top: 1.5rem;
             right: 1.8rem;
-            z-index: 50;
-            transform: translateZ(40px);
+            z-index: 9999; 
             display: flex;
             align-items: center;
             gap: 0.8rem;
@@ -171,18 +321,19 @@
         .lang-selector {
             display: flex;
             gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--pill-bg);
             padding: 0.4rem 0.6rem;
             border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--pill-border);
             backdrop-filter: blur(8px);
             white-space: nowrap;
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
 
         .lang-btn {
             background: transparent;
             border: none;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-secondary);
             font-size: 0.7rem;
             font-weight: 600;
             letter-spacing: 0.5px;
@@ -197,24 +348,24 @@
         }
 
         .lang-btn:hover {
-            background: rgba(255, 255, 255, 0.12);
-            color: #fff;
+            background: var(--pill-bg);
+            color: var(--text-primary);
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
         }
 
         .lang-btn.active {
             background: rgba(56, 189, 248, 0.2);
-            color: #38BDF8;
+            color: var(--accent);
             border: 1px solid rgba(56, 189, 248, 0.3);
         }
 
         .settings-icon {
             cursor: pointer;
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--text-secondary);
             transition: all 0.3s ease;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: var(--pill-bg);
+            border: 1px solid var(--pill-border);
             width: 42px;
             height: 42px;
             display: flex;
@@ -230,7 +381,7 @@
         .settings-icon svg {
             width: 20px;
             height: 20px;
-            stroke: #38BDF8;
+            stroke: var(--accent);
             transition: transform 0.3s ease;
         }
 
@@ -243,7 +394,7 @@
         }
 
         .settings-icon:hover {
-            color: #ffffff;
+            color: var(--text-primary);
             background: rgba(56, 189, 248, 0.2);
             border-color: rgba(56, 189, 248, 0.5);
             animation: none;
@@ -380,19 +531,20 @@
         .content {
             position: relative;
             z-index: 3;
-            color: rgba(255, 255, 255, 0.92);
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            color: var(--text-primary);
+            text-shadow: var(--text-shadow);
             transform: translateZ(20px);
             transform-style: preserve-3d;
+            transition: color 0.5s ease, text-shadow 0.5s ease;
         }
 
         .accordion-section {
             margin-bottom: 1.2rem;
             border-radius: 1.5rem 0.8rem 1.5rem 0.8rem;
-            background: rgba(15, 18, 30, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--section-bg);
+            border: 1px solid var(--section-border);
             overflow: hidden;
-            transition: border-color 0.3s ease, background 0.3s ease;
+            transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
             position: relative;
             transform: translateZ(0);
         }
@@ -413,8 +565,8 @@
             opacity: 1;
         }
         .accordion-section:hover {
-            border-color: rgba(56, 189, 248, 0.25);
-            background: rgba(20, 25, 42, 0.65);
+            border-color: var(--accent);
+            background: var(--section-bg);
         }
 
         .accordion-header {
@@ -424,7 +576,7 @@
             padding: 1.1rem 1.5rem;
             cursor: pointer;
             user-select: none;
-            transition: background 0.2s ease, transform 0.05s ease;
+            transition: background 0.2s ease, transform 0.05s ease, color 0.3s ease;
             gap: 1rem;
             position: relative;
             z-index: 2;
@@ -439,14 +591,15 @@
             gap: 0.8rem;
             font-weight: 600;
             font-size: 1.05rem;
-            color: #ffffff;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
         }
         .accordion-header .header-left .icon {
             font-size: 1.2rem;
         }
         .accordion-header .toggle-icon {
             font-size: 1.2rem;
-            color: #38BDF8;
+            color: var(--accent);
             transition: transform 0.3s ease;
             flex-shrink: 0;
         }
@@ -483,20 +636,21 @@
             padding: 0 0.2rem;
         }
         .subhead-about span {
-            background: rgba(255, 255, 255, 0.06);
+            background: var(--pill-bg);
             padding: 0.3rem 1rem;
             border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--pill-border);
             font-size: 0.85rem;
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
-            color: rgba(255, 255, 255, 0.85);
+            color: var(--pill-text);
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
         .live-clock {
             background: rgba(56, 189, 248, 0.12) !important;
             border: 1px solid rgba(56, 189, 248, 0.3) !important;
-            color: #38BDF8 !important;
+            color: var(--accent) !important;
             font-weight: 600;
         }
         .username-gold {
@@ -524,17 +678,18 @@
             flex-wrap: wrap;
         }
         .lang-pill {
-            background: rgba(255, 255, 255, 0.08);
+            background: var(--pill-bg);
             padding: 0.3rem 1.2rem;
             border-radius: 60px;
             font-size: 0.9rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--pill-border);
+            color: var(--pill-text);
             display: inline-block;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
         .lang-pill.cpp,
         .lang-pill.cs {
-            border-color: rgba(56, 189, 248, 0.25);
+            border-color: var(--accent);
         }
         .skill-level-card {
             display: inline-flex;
@@ -545,23 +700,25 @@
             font-weight: 600;
             letter-spacing: 0.3px;
             text-transform: uppercase;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--badge-border);
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
         .skill-level-card.junior,
         .skill-level-card.expert {
-            border-color: rgba(56, 189, 248, 0.3);
-            color: #38BDF8;
+            border-color: var(--accent);
+            color: var(--accent);
         }
         .skill-level-card.undefined {
-            border-color: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.5);
+            border-color: var(--badge-border);
+            color: var(--text-tertiary);
         }
         .small-note {
             font-size: 0.75rem;
-            color: #94A3B8;
+            color: var(--text-tertiary);
             margin-left: 0.5rem;
+            transition: color 0.3s ease;
         }
         .status-list {
             display: flex;
@@ -578,43 +735,39 @@
             font-size: 0.85rem;
             font-weight: 500;
             backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #E2E8F0;
+            border: 1px solid var(--badge-border);
+            color: var(--status-text);
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
-        .status-card.green:hover {
-    background: rgba(34, 197, 94, 0.25);
-    border-color: rgba(34, 197, 94, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(34, 197, 94, 0.2);
-    transition: all 0.3s ease;
-}
-        .status-card.green { background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.25); }
-        .status-card.red { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.25); }
-        .status-card.yellow { background: rgba(234, 179, 8, 0.15); border-color: rgba(234, 179, 8, 0.25); }
+        .status-card.green { 
+            background: rgba(34, 197, 94, 0.15); 
+            border-color: rgba(34, 197, 94, 0.25); 
+            color: var(--status-text);
+            font-weight: 600;
+        }
+        .status-card.red { 
+            background: rgba(239, 68, 68, 0.15); 
+            border-color: rgba(239, 68, 68, 0.25); 
+            color: var(--status-text);
+            font-weight: 600;
+        }
+        .status-card.yellow { 
+            background: rgba(234, 179, 8, 0.15); 
+            border-color: rgba(234, 179, 8, 0.25); 
+            color: var(--status-text);
+            font-weight: 600;
+        }
         .section-label {
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            color: rgba(255, 255, 255, 0.4);
+            color: var(--text-tertiary);
             margin-bottom: 0.5rem;
             margin-top: 1rem;
             padding: 0 0.2rem;
             font-weight: 600;
+            transition: color 0.3s ease;
         }
-        .tool-card.unav {
-    border-color: rgba(239, 68, 68, 0.3);
-    background: rgba(239, 68, 68, 0.1);
-    color: rgba(255, 255, 255, 0.5);
-    cursor: not-allowed;
-    position: relative;
-    text-decoration: line-through;
-}
-
-.tool-card.unav:hover {
-    border-color: rgba(239, 68, 68, 0.5);
-    background: rgba(239, 68, 68, 0.15);
-    transform: none;
-}
         .tools-grid {
             display: flex;
             flex-wrap: wrap;
@@ -627,25 +780,26 @@
             border-radius: 30px;
             font-size: 0.85rem;
             font-weight: 500;
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.9);
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            border: 1px solid var(--badge-border);
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.3s ease, color 0.3s ease;
         }
         .tool-card:hover {
             transform: translateY(-3px);
-            border-color: rgba(56, 189, 248, 0.5);
+            border-color: var(--accent);
             background: rgba(56, 189, 248, 0.1);
         }
         .music-player {
-            background: rgba(0, 0, 0, 0.3);
+            background: var(--section-bg);
             border-radius: 1.5rem 0.8rem 1.5rem 0.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--section-border);
             padding: 1.2rem 1.5rem;
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
             margin-top: 0.5rem;
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
         .music-top {
             display: flex;
@@ -657,27 +811,29 @@
             height: 50px;
             border-radius: 14px;
             background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.05));
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--section-border);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.6rem;
             flex-shrink: 0;
-            color: #38BDF8;
+            color: var(--accent);
         }
         .music-info { flex: 1; min-width: 0; }
         .music-info .track-name {
             font-weight: 600;
             font-size: 0.95rem;
-            color: #ffffff;
+            color: var(--music-text);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            transition: color 0.3s ease;
         }
         .music-info .track-artist {
             font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: var(--music-secondary);
             margin-top: 2px;
+            transition: color 0.3s ease;
         }
         .music-badge {
             background: rgba(56, 189, 248, 0.12);
@@ -688,7 +844,7 @@
             font-weight: 600;
             letter-spacing: 0.4px;
             text-transform: uppercase;
-            color: #38BDF8;
+            color: var(--accent);
             white-space: nowrap;
         }
         .music-controls {
@@ -698,8 +854,8 @@
             justify-content: center;
         }
         .music-controls .ctrl-btn {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--badge-bg);
+            border: 1px solid var(--badge-border);
             border-radius: 50%;
             width: 36px;
             height: 36px;
@@ -707,30 +863,30 @@
             align-items: center;
             justify-content: center;
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.2s ease;
             user-select: none;
         }
         .music-controls .ctrl-btn:hover {
             background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(56, 189, 248, 0.3);
+            border-color: var(--accent);
             transform: scale(1.05);
-            color: #ffffff;
+            color: var(--text-primary);
         }
         .music-controls .ctrl-btn.play-btn {
             width: 44px;
             height: 44px;
             background: rgba(56, 189, 248, 0.15);
-            border-color: rgba(56, 189, 248, 0.3);
+            border-color: var(--accent);
             font-size: 1.2rem;
-            color: #38BDF8;
+            color: var(--accent);
         }
         .music-controls .ctrl-btn.play-btn:hover {
             background: rgba(56, 189, 248, 0.25);
-            border-color: rgba(56, 189, 248, 0.5);
+            border-color: var(--accent);
             transform: scale(1.08);
-            color: #7dd3fc;
+            color: var(--accent-hover);
         }
         .music-progress {
             display: flex;
@@ -740,15 +896,17 @@
         .music-progress .time-label {
             font-size: 0.7rem;
             font-variant-numeric: tabular-nums;
-            color: rgba(255, 255, 255, 0.4);
+            color: var(--music-secondary);
             min-width: 32px;
+            transition: color 0.3s ease;
         }
         .progress-track {
             flex: 1;
             height: 4px;
             border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--badge-bg);
             position: relative;
+            cursor: pointer;
             overflow: hidden;
         }
         .progress-track .progress-fill {
@@ -762,17 +920,19 @@
         .music-placeholder-note {
             text-align: center;
             font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.4);
+            color: var(--music-secondary);
             letter-spacing: 0.3px;
             padding-top: 0.3rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid var(--section-border);
+            transition: color 0.3s ease;
         }
         .device-group { margin-bottom: 0.8rem; padding: 0 0.2rem; }
         .device-group-label {
             font-size: 0.85rem;
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--text-secondary);
             margin-bottom: 0.4rem;
+            transition: color 0.3s ease;
         }
         .device-specs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .device-spec {
@@ -780,24 +940,25 @@
             border-radius: 30px;
             font-size: 0.75rem;
             font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.85);
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            border: 1px solid var(--badge-border);
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.3s ease, color 0.3s ease;
         }
         .device-spec:hover {
             transform: translateY(-2px);
-            border-color: rgba(56, 189, 248, 0.3);
+            border-color: var(--accent);
         }
         .support-content {
-            background: rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--section-bg);
+            border: 1px solid var(--section-border);
             border-radius: 1rem 0.6rem 1rem 0.6rem;
             padding: 1.2rem;
             font-size: 0.85rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--text-secondary);
             margin-top: 0.5rem;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
         .links-grid {
             display: flex;
@@ -810,35 +971,36 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--badge-bg);
+            border: 1px solid var(--badge-border);
             padding: 0.5rem 1.2rem;
             border-radius: 60px;
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.85);
+            color: var(--badge-text);
             transition: all 0.2s ease;
             text-decoration: none;
             font-size: 0.8rem;
         }
         .link-btn:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(56, 189, 248, 0.3);
+            background: var(--pill-bg);
+            border-color: var(--accent);
             transform: scale(1.05);
-            color: #ffffff;
+            color: var(--text-primary);
         }
-        .link-btn.moddb { border-color: rgba(255, 107, 53, 0.3); color: #ff8c42; }
-        .link-btn.itch { border-color: rgba(250, 92, 92, 0.3); color: #fa5c5c; }
-        .link-btn.gitlab { border-color: rgba(252, 109, 38, 0.3); color: #fc6d26; }
+        .link-btn.moddb { border-color: rgba(255, 107, 53, 0.5); color: #ff8c42; }
+        .link-btn.itch { border-color: rgba(250, 92, 92, 0.5); color: #fa5c5c; }
+        .link-btn.gitlab { border-color: rgba(252, 109, 38, 0.5); color: #fc6d26; }
         .footer-tag {
             margin-top: 1.6rem;
             font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.3);
+            color: var(--footer-text);
             text-align: right;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid var(--section-border);
             padding-top: 0.8rem;
+            transition: color 0.3s ease;
         }
         .footer-tag span {
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--badge-bg);
             padding: 0.2rem 1.2rem;
             border-radius: 60px;
         }
@@ -846,9 +1008,9 @@
         .party-mode-container {
             margin-top: 1rem;
             padding: 0.9rem 1.2rem;
-            background: rgba(0, 0, 0, 0.25);
+            background: var(--section-bg);
             border-radius: 1rem 0.6rem 1rem 0.6rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--section-border);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -865,12 +1027,12 @@
             gap: 0.6rem;
             font-weight: 600;
             font-size: 0.9rem;
-            color: #fff;
+            color: var(--text-primary);
         }
         .party-mode-label .party-icon { font-size: 1.2rem; }
         .party-mode-label .party-text {
             font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: var(--text-tertiary);
             display: block;
             font-weight: 400;
         }
@@ -889,10 +1051,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(255, 255, 255, 0.12);
+            background: var(--badge-bg);
             border-radius: 34px;
             transition: 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--badge-border);
         }
         .party-toggle-slider::before {
             content: '';
@@ -1036,10 +1198,6 @@
             position: fixed; top:0; left:0; width:100%; height:100%;
             pointer-events: none; z-index: 9997; overflow: hidden;
         }
-        .cursor-trail-particle {
-            position: fixed; pointer-events: none; font-size: 22px;
-            z-index: 9997; animation: trail-fade 0.8s forwards; will-change: transform, opacity;
-        }
         .cursor-trail-spark {
             position: fixed; pointer-events: none; width: 8px; height: 8px; border-radius: 50%;
             background: rgba(255, 255, 255, 0.9);
@@ -1049,6 +1207,34 @@
         @keyframes trail-fade {
             0% { opacity: 1; transform: translate(0, 0) scale(1); }
             100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.3); }
+        }
+
+        /* Season Selector */
+        .season-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .season-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: capitalize;
+        }
+        .season-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+        .season-btn.active {
+            background: rgba(56, 189, 248, 0.3);
+            border-color: rgba(56, 189, 248, 0.5);
+            color: #fff;
         }
 
         @media (max-width: 500px) {
@@ -1069,39 +1255,11 @@
             .party-indicator { font-size: 0.7rem; padding: 0.5rem 1.2rem; bottom: 1rem; }
         }
     </style>
-</head>
-<body>
 
     <div id="three-canvas"></div>
 
     <div class="itch-profile-wrapper">
         <div class="glass-panel" id="mainCard">
-
-            <div class="settings-wrapper">
-                <div class="lang-selector">
-                    <a href="index.html" class="lang-btn active" title="English">English</a>
-                    <a href="indexrus.html" class="lang-btn" title="Russian">Russian</a>
-                    <a href="index64.html" class="lang-btn" title="Base64">Base64</a>
-                    <a href="indexturk.html" class="lang-btn" title="Binary">Turkish</a>
-                    <a href="indexis.html" class="lang-btn" title="Israeli">Israeli</a>
-                </div>
-                <div class="settings-icon" id="settingsToggle" title="Settings">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                    </svg>
-                </div>
-                <div class="settings-panel" id="settingsPanel">
-                    <div class="panel-title">Settings</div>
-                    <div class="setting-item">
-                        <span>Disable 3D Tilt</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="tiltToggle">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
 
             <div class="content">
 
@@ -1145,31 +1303,15 @@
 
                             <div class="section-label">Status</div>
                             <div class="status-list">
-                             <a href="https://safeswing.itch.io/thelaststandingb" target="_blank" rel="noopener noreferrer" class="status-card green" style="text-decoration: none; display: flex;">
-    Currently development of Unity Game (Link) 
-</a>
-
-  <a href="https://www.moddb.com/games/the-last-standing-ball" target="_blank" rel="noopener noreferrer" class="status-card green" style="text-decoration: none; display: flex;">
-    Currently development of Unity Game ModDB (Link) 
-    <a/>
-                                <div class="status-card yellow">Frozen Development for XM3</div>
-                                  <a href="https://github.com/safeswing/Blitz3d-2028-Overhaul" target="_blank" rel="noopener noreferrer" class="status-card yellow" style="text-decoration: none; display: flex;">
-   Slowed Development for Blitz3d-2028-Overhaul (Link)
-</a>
-                                <div class="status-card yellow">Planning on Unity URP project in 2027 March.</div>
+                                <div class="status-card green">Currently development of Unity Game (HDRP)</div>
+                                <div class="status-card red">Frozen Development for XM3</div>
+                                <div class="status-card red">Frozen/Slow development for Blitz3D 2028 Overhaul</div>
+                                <div class="status-card yellow">Planning on Unity URP project in 2028.</div>
                             </div>
                         </div>
                     </div>
-                       </div>
-                          </div>
-                    <div class="itch-embed-container" style="margin-top: 1rem; display: flex; justify-content: center;">
-    <iframe frameborder="0" src="https://itch.io/embed/4932226?bg_color=000000&amp;fg_color=ffffff&amp;link_color=850000&amp;border_color=760000" width="552" height="167">
-        <a href="https://safeswing.itch.io/thelaststandingb">The Last Standing Ball (HDRP) by Safeswing</a>
-    </iframe>
-</div>
-        
+                </div>
 
-                
                 <div class="accordion-section" id="toolsSection">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
                         <div class="header-left">
@@ -1181,35 +1323,12 @@
                     <div class="accordion-body">
                         <div class="accordion-body-inner">
                             <div class="tools-grid">
-                                <a href="https://developer.android.com/studio" target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
-    Android studio
-</a>
-                                <span class="tool-card vscode unav" title="Unavailable">Xcode (NoMacOS)</span>
-                                  <a href= https://visualstudio.microsoft.com/vs/community/ " target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
-    Visual Studio Community
-</a>
-                               <a href=https://code.visualstudio.com/ " target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
-    VS Code
-</a>
-                               <a href=https://www.adobe.com/products/photoshop-elements/whats-new.html " target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
-    Adobe Photoshop 2026
-</a>
-                               <a href="https://www.adobe.com/products/premiere.html" target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
-    Adobe Premiere Pro 2024 
-</a>
-                                <a href="https://protonvpn.com/pricing" target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
-    Proton VPN
-</a>
-                            <span class="tool-card vscode unav" title="Unavailable">Speed Top</span>
-                               <a href="https://git-scm.com/install/windows" target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
-    Git Bash
-</a>
-                                  <a href="https://docs.unity.com/en-us/hub/install-hub" target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
-    Unity Hub
-</a>
-                              <a href="https://unity.com/releases/unity-6" target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
-    Unity 6
-</a>
+                                <span class="tool-card android-studio">Android Studio</span>
+                                <span class="tool-card xcode">Xcode</span>
+                                <span class="tool-card vs2026">Visual Studio 2026 Community</span>
+                                <span class="tool-card vscode">VS Code</span>
+                                <span class="tool-card photoshop">Adobe Photoshop 2026</span>
+                                <span class="tool-card premiere">Adobe Premiere Pro 2024</span>
                             </div>
                         </div>
                     </div>
@@ -1243,7 +1362,7 @@
                                 </div>
                                 <div class="music-progress">
                                     <span class="time-label">0:00</span>
-                                    <div class="progress-track"><div class="progress-fill" style="width:0%;"></div></div>
+                                    <div class="progress-track"><div class="progress-fill"></div></div>
                                     <span class="time-label">0:00</span>
                                 </div>
                                 <audio id="myAudio" src="basshunterdota.mp3" preload="metadata"></audio>
@@ -1288,12 +1407,8 @@
                             <div class="device-group">
                                 <div class="device-group-label">Phones:</div>
                                 <div class="device-specs">
-                                   <a href=https://ispace.az/en/product/iphone-16-pro-256-gb-white-titanium-mynj3hx-a " target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
-    Iphone 16 Pro
-</a>
-                                    <a href= https://consumer.huawei.com/sa-en/phones/pura70/specs/ " target="_blank" rel="noopener noreferrer" class="tool-card premiere" style="text-decoration: none;">
-    Huawei Pura 70
-</a>
+                                    <span class="device-spec desert">IPhone 16 Pro</span>
+                                    <span class="device-spec huawei">Pura 70 Base</span>
                                 </div>
                             </div>
                         </div>
@@ -1333,7 +1448,6 @@
                                 <a href="https://safeswing.itch.io/" target="_blank" rel="noopener noreferrer" class="link-btn itch">Itch.io</a>
                                 <a href="https://github.com/safeswing" target="_blank" rel="noopener noreferrer" class="link-btn github">GitHub</a>
                                 <a href="https://gitlab.com/safe22183" target="_blank" rel="noopener noreferrer" class="link-btn gitlab">GitLab</a>
-                                  <a href="https://discord.gg/sUEjwxRp2P" target="_blank" rel="noopener noreferrer" class="link-btn discord">Discord Server</a>
                             </div>
                         </div>
                     </div>
@@ -1400,7 +1514,6 @@
             const count = 2000;
             const positions = new Float32Array(count * 3);
             const velocities = new Float32Array(count * 3);
-            const initialRadii = new Float32Array(count);
             for (let i = 0; i < count; i++) {
                 const i3 = i * 3;
                 positions[i3] = (Math.random() - 0.5) * 60;
@@ -1409,7 +1522,6 @@
                 velocities[i3] = (Math.random() - 0.5) * 0.02;
                 velocities[i3 + 1] = -(0.01 + Math.random() * 0.03);
                 velocities[i3 + 2] = (Math.random() - 0.5) * 0.02;
-                initialRadii[i] = Math.sqrt(positions[i3] ** 2 + positions[i3+1] ** 2 + positions[i3+2] ** 2);
             }
             const geometry = new THREE.BufferGeometry();
             geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -1446,13 +1558,10 @@
             let snowSpeedBoost = 1;
             let partyColorMode = false;
             let explosionMode = false;
-            const originalSnowColor = 0xffffff;
             const partyColors = [0xff0066, 0x00ff88, 0x0066ff, 0xffff00, 0xff00ff, 0x00ffff, 0xff6600, 0x8800ff];
             let colorIndex = 0;
             let colorChangeCounter = 0;
-            let bassIntensity = 0;
-            let targetCameraZ = 18;
-            let currentCameraZ = 18;
+            let snowColor = 0xffffff;
 
             function setPartyMode(active) {
                 partyModeActive = active;
@@ -1476,7 +1585,7 @@
                     snowSpeedBoost = 1;
                     partyColorMode = false;
                     explosionMode = false;
-                    material.color.setHex(originalSnowColor);
+                    material.color.setHex(snowColor);
                     for (let i = 0; i < count; i++) {
                         const i3 = i * 3;
                         velocities[i3] = (Math.random() - 0.5) * 0.02;
@@ -1485,12 +1594,13 @@
                     }
                 }
             }
-            function setBassIntensity(value) { bassIntensity = value; targetCameraZ = 18 + bassIntensity * 8; }
+            function setSnowColor(hex) {
+                snowColor = hex;
+                if (!partyModeActive) material.color.setHex(hex);
+            }
 
             function animateSnow() {
                 requestAnimationFrame(animateSnow);
-                currentCameraZ += (targetCameraZ - currentCameraZ) * 0.1;
-                camera.position.z = currentCameraZ;
                 targetX += (mouseX - targetX) * 0.05;
                 targetY += (mouseY - targetY) * 0.05;
                 snow.rotation.x += 0.0005 + targetY * 0.0003;
@@ -1517,15 +1627,11 @@
                             posArray[i3] = (Math.random() - 0.5) * 5;
                             posArray[i3+1] = (Math.random() - 0.5) * 5;
                             posArray[i3+2] = (Math.random() - 0.5) * 5;
-                            const speed = 0.1 + Math.random() * 0.3;
-                            const dx = posArray[i3]; const dy = posArray[i3+1]; const dz = posArray[i3+2];
-                            const len = Math.sqrt(dx*dx + dy*dy + dz*dz) || 1;
-                            velocities[i3] = (dx/len)*speed; velocities[i3+1] = (dy/len)*speed; velocities[i3+2] = (dz/len)*speed;
                         }
                     } else {
-                        posArray[i3] += velocities[i3] * speedFactor + targetX * 0.01 * speedFactor;
+                        posArray[i3] += velocities[i3] * speedFactor;
                         posArray[i3+1] += velocities[i3+1] * speedFactor;
-                        posArray[i3+2] += velocities[i3+2] * speedFactor + targetY * 0.01 * speedFactor;
+                        posArray[i3+2] += velocities[i3+2] * speedFactor;
                         if (posArray[i3+1] < -20) {
                             posArray[i3+1] = 20;
                             posArray[i3] = (Math.random() - 0.5) * 60;
@@ -1537,10 +1643,10 @@
                 renderer.render(scene, camera);
             }
             animateSnow();
-            window.__snowControls = { setPartyMode, setBassIntensity };
+            window.__snowControls = { setPartyMode, setSnowColor };
         })();
 
-        // 3D tilt
+        // 3D Tilt Logic
         let tiltEnabled = true;
         let tiltX = 0, tiltY = 0, currentX = 0, currentY = 0;
         const card = document.getElementById('mainCard');
@@ -1573,6 +1679,7 @@
             if (!tiltEnabled) { tiltX = 0; tiltY = 0; }
         });
 
+        // Settings Toggle Logic
         const settingsToggle = document.getElementById('settingsToggle');
         const settingsPanel = document.getElementById('settingsPanel');
         ['click', 'touchstart'].forEach(evt =>
@@ -1588,260 +1695,213 @@
             }
         });
 
+        // Dynamic Glow Effects
         (function initGlow() {
             const card = document.getElementById('mainCard');
             const sections = document.querySelectorAll('.accordion-section');
-            function handleMouseMove(e) {
+            card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
                 const relX = ((e.clientX - rect.left) / rect.width) * 100;
                 const relY = ((e.clientY - rect.top) / rect.height) * 100;
                 card.style.setProperty('--mouse-x', relX + '%');
                 card.style.setProperty('--mouse-y', relY + '%');
                 card.classList.add('glow-active');
-                sections.forEach(section => {
-                    const rect2 = section.getBoundingClientRect();
-                    if (e.clientX >= rect2.left && e.clientX <= rect2.right && e.clientY >= rect2.top && e.clientY <= rect2.bottom) {
-                        section.classList.add('glow-active');
-                    } else {
-                        section.classList.remove('glow-active');
-                    }
+            });
+            card.addEventListener('mouseleave', () => card.classList.remove('glow-active'));
+
+            sections.forEach(sec => {
+                sec.addEventListener('mousemove', (e) => {
+                    const rect = sec.getBoundingClientRect();
+                    const relX = ((e.clientX - rect.left) / rect.width) * 100;
+                    const relY = ((e.clientY - rect.top) / rect.height) * 100;
+                    sec.style.setProperty('--mouse-x', relX + '%');
+                    sec.style.setProperty('--mouse-y', relY + '%');
+                    sec.classList.add('glow-active');
                 });
-            }
-            function handleMouseLeave() { card.classList.remove('glow-active'); sections.forEach(s => s.classList.remove('glow-active')); }
-            document.addEventListener('mousemove', handleMouseMove);
-            document.addEventListener('mouseleave', handleMouseLeave);
+                sec.addEventListener('mouseleave', () => sec.classList.remove('glow-active'));
+            });
         })();
 
+        // Accordion Toggle Logic
         function toggleAccordion(header) {
-            const section = header.closest('.accordion-section');
-            if (section.classList.contains('about-expanded')) return;
-            if (section.id === 'musicSection' && window.__partyModeActive) return;
-            section.classList.toggle('open');
-        }
-
-        function updateClock() {
-            const now = new Date();
-            const utcHours = now.getUTCHours();
-            const utcMinutes = now.getUTCMinutes();
-            const utcSeconds = now.getUTCSeconds();
-            let gmtPlus5Hours = utcHours + 5;
-            if (gmtPlus5Hours >= 24) gmtPlus5Hours -= 24;
-            const hours = String(gmtPlus5Hours).padStart(2, '0');
-            const minutes = String(utcMinutes).padStart(2, '0');
-            const seconds = String(utcSeconds).padStart(2, '0');
-            const liveTime = document.getElementById('liveTime');
-            if (liveTime) liveTime.textContent = `${hours}:${minutes}:${seconds}`;
-        }
-        updateClock();
-        setInterval(updateClock, 1000);
-
-        function initMusicPlayer() {
-            const audio = document.getElementById('myAudio');
-            const playBtn = document.querySelector('.play-btn');
-            const progressFill = document.querySelector('.progress-fill');
-            const timeLabels = document.querySelectorAll('.time-label');
-            const musicBadge = document.querySelector('.music-badge');
-            const placeholderNote = document.querySelector('.music-placeholder-note');
-            let isPlaying = false;
-            let audioContext = null, analyser = null, dataArray = null, source = null;
-            if (!audio || !playBtn) return;
-
-            function setupAudioContext() {
-                if (!audioContext) {
-                    audioContext = new(window.AudioContext || window.webkitAudioContext)();
-                    source = audioContext.createMediaElementSource(audio);
-                    analyser = audioContext.createAnalyser();
-                    analyser.fftSize = 256;
-                    source.connect(analyser);
-                    analyser.connect(audioContext.destination);
-                    dataArray = new Uint8Array(analyser.frequencyBinCount);
-                }
+            const section = header.parentElement;
+            if (section.classList.contains('about-expanded')) {
+                section.classList.remove('about-expanded');
+                section.classList.remove('open');
+            } else {
+                section.classList.toggle('open');
             }
+        }
+
+        // Live GMT+5 Clock
+        function updateLiveClock() {
+            const clockEl = document.getElementById('liveTime');
+            if (!clockEl) return;
+            const now = new Date();
+            const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const gmt5Time = new Date(utcTime + (3600000 * 5));
+            const hrs = String(gmt5Time.getHours()).padStart(2, '0');
+            const mins = String(gmt5Time.getMinutes()).padStart(2, '0');
+            const secs = String(gmt5Time.getSeconds()).padStart(2, '0');
+            clockEl.textContent = `${hrs}:${mins}:${secs}`;
+        }
+        setInterval(updateLiveClock, 1000);
+        updateLiveClock();
+
+        // Season Selector Handler
+        const seasonBtns = document.querySelectorAll('.season-btn');
+        seasonBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const season = btn.getAttribute('data-season');
+                document.body.classList.remove('theme-spring', 'theme-summer', 'theme-autumn', 'theme-winter');
+                seasonBtns.forEach(b => b.classList.remove('active'));
+
+                if (season) {
+                    document.body.classList.add(`theme-${season}`);
+                    btn.classList.add('active');
+                }
+
+                if (window.__snowControls) {
+                    if (season === 'spring') window.__snowControls.setSnowColor(0xff69b4);
+                    else if (season === 'summer') window.__snowControls.setSnowColor(0x2e8b57);
+                    else if (season === 'autumn') window.__snowControls.setSnowColor(0xd2691e);
+                    else window.__snowControls.setSnowColor(0xffffff);
+                }
+            });
+        });
+
+        // Audio Player Integration
+        const audio = document.getElementById('myAudio');
+        const playBtn = document.querySelector('.music-controls .play-btn');
+        const musicBadge = document.querySelector('.music-badge');
+        const progressFill = document.querySelector('.progress-fill');
+        const progressTrack = document.querySelector('.progress-track');
+        const timeLabels = document.querySelectorAll('.music-progress .time-label');
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return "0:00";
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        if (audio && playBtn) {
             playBtn.addEventListener('click', () => {
-                if (isPlaying) {
+                if (audio.paused) {
+                    audio.play().catch(e => console.log("Audio playback blocked", e));
+                    playBtn.textContent = '||';
+                    if (musicBadge) { musicBadge.textContent = 'playing'; musicBadge.style.color = '#34D399'; }
+                } else {
                     audio.pause();
                     playBtn.textContent = '>';
-                    if (musicBadge) musicBadge.textContent = 'paused';
-                    if (placeholderNote && !window.__partyModeActive) placeholderNote.textContent = 'paused';
-                } else {
-                    setupAudioContext();
-                    if (audioContext && audioContext.state === 'suspended') audioContext.resume();
-                    audio.play().catch(err => { console.error('Playback failed:', err); if(placeholderNote){ placeholderNote.textContent='Cannot play. Check console.'; placeholderNote.style.color='#f87171'; }});
-                    playBtn.textContent = '| |';
-                    if (musicBadge) musicBadge.textContent = 'playing';
-                    if (placeholderNote && !window.__partyModeActive) placeholderNote.textContent = 'now playing: Basshunter - Dota';
+                    if (musicBadge) { musicBadge.textContent = 'paused'; musicBadge.style.color = '#38BDF8'; }
                 }
-                isPlaying = !isPlaying;
             });
+
             audio.addEventListener('timeupdate', () => {
-                if (audio.duration && !isNaN(audio.duration)) {
-                    const percent = (audio.currentTime / audio.duration) * 100;
-                    progressFill.style.width = percent + '%';
-                    const currentMin = Math.floor(audio.currentTime / 60);
-                    const currentSec = Math.floor(audio.currentTime % 60);
-                    const totalMin = Math.floor(audio.duration / 60);
-                    const totalSec = Math.floor(audio.duration % 60);
-                    if (timeLabels[0]) timeLabels[0].textContent = `${currentMin}:${String(currentSec).padStart(2, '0')}`;
-                    if (timeLabels[1]) timeLabels[1].textContent = `${totalMin}:${String(totalSec).padStart(2, '0')}`;
-                    if (analyser && dataArray) {
-                        analyser.getByteFrequencyData(dataArray);
-                        let sum = 0;
-                        const bassBins = Math.min(20, dataArray.length);
-                        for (let i = 0; i < bassBins; i++) sum += dataArray[i];
-                        const bassAvg = sum / bassBins / 255;
-                        if (window.__snowControls) window.__snowControls.setBassIntensity(bassAvg);
-                    }
+                if (audio.duration) {
+                    const pct = (audio.currentTime / audio.duration) * 100;
+                    if (progressFill) progressFill.style.width = pct + '%';
+                    if (timeLabels[0]) timeLabels[0].textContent = formatTime(audio.currentTime);
+                    if (timeLabels[1]) timeLabels[1].textContent = formatTime(audio.duration);
                 }
             });
+
             audio.addEventListener('ended', () => {
-                playBtn.textContent = '>'; isPlaying = false; progressFill.style.width = '0%';
-                if(timeLabels[0]) timeLabels[0].textContent = '0:00';
-                if(musicBadge) musicBadge.textContent = 'ended';
-                if(placeholderNote && !window.__partyModeActive) placeholderNote.textContent = 'song ended';
+                playBtn.textContent = '>';
+                if (progressFill) progressFill.style.width = '0%';
+                if (musicBadge) { musicBadge.textContent = 'stopped'; musicBadge.style.color = '#38BDF8'; }
             });
-            audio.addEventListener('error', () => {
-                if(placeholderNote){ placeholderNote.textContent='Audio file not found. Make sure basshunterdota.mp3 is in the same folder.'; placeholderNote.style.color='#f87171'; }
-            });
-            window.__audioControls = {
-                play: () => { audio.play().catch(() => {}); },
-                pause: () => { audio.pause(); },
-                setVolume: (v) => { audio.volume = Math.min(v, 1.0); },
-                isPlaying: () => !audio.paused,
-                getAudioContext: () => audioContext,
-                getAnalyser: () => analyser,
-                getDataArray: () => dataArray,
-                getAudioElement: () => audio,
-            };
-        }
-        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initMusicPlayer);
-        else initMusicPlayer();
 
-        (function initPartyMode() {
-            const partyToggle = document.getElementById('partyModeToggle');
-            const partyModal = document.getElementById('partyModal');
-            const partyModalNo = document.getElementById('partyModalNo');
-            const partyModalYes = document.getElementById('partyModalYes');
-            const strobeOverlay = document.getElementById('strobeOverlay');
-            const partyIndicator = document.getElementById('partyIndicator');
-            const musicSection = document.getElementById('musicSection');
-            const musicBadge = document.querySelector('.music-badge');
-            const placeholderNote = document.querySelector('.music-placeholder-note');
-            const playBtn = document.querySelector('.play-btn');
-            const cursorTrailContainer = document.getElementById('cursorTrailContainer');
-            window.__partyModeActive = false;
-
-            const elusiveElements = document.querySelectorAll('.accordion-header, .settings-icon, .party-mode-container');
-            const originalTransforms = new Map();
-            elusiveElements.forEach(el => originalTransforms.set(el, el.style.transform || ''));
-            let elusiveEnabled = false;
-            let pitchChaosInterval = null;
-
-            function spawnTrail(e) {
-                if (!window.__partyModeActive) return;
-                const particleCount = 2;
-                for (let i = 0; i < particleCount; i++) {
-                    const isEmoji = Math.random() > 0.4;
-                    const el = document.createElement('div');
-                    if (isEmoji) {
-                        el.className = 'cursor-trail-particle';
-                        const symbols = ['*', '+', 'x', 'o', '#'];
-                        el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-                        el.style.fontSize = (18 + Math.random() * 14) + 'px';
-                    } else {
-                        el.className = 'cursor-trail-spark';
-                        const size = 4 + Math.random() * 8;
-                        el.style.width = size + 'px'; el.style.height = size + 'px';
-                    }
-                    const tx = (Math.random() - 0.5) * 60;
-                    const ty = (Math.random() - 0.5) * 60;
-                    el.style.setProperty('--tx', tx + 'px'); el.style.setProperty('--ty', ty + 'px');
-                    el.style.left = (e.clientX + (Math.random() - 0.5) * 20) + 'px';
-                    el.style.top = (e.clientY + (Math.random() - 0.5) * 20) + 'px';
-                    cursorTrailContainer.appendChild(el);
-                    setTimeout(() => el.remove(), 800);
-                }
-            }
-            function startCursorTrail() { document.addEventListener('mousemove', spawnTrail); }
-            function stopCursorTrail() { document.removeEventListener('mousemove', spawnTrail); cursorTrailContainer.innerHTML = ''; }
-
-            function elusiveMove(e) {
-                if (!elusiveEnabled) return;
-                const mouseX = e.clientX, mouseY = e.clientY;
-                const radius = 120;
-                elusiveElements.forEach(el => {
-                    const rect = el.getBoundingClientRect();
-                    const elX = rect.left + rect.width/2, elY = rect.top + rect.height/2;
-                    const dx = elX - mouseX, dy = elY - mouseY;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    if (dist < radius) {
-                        const angle = Math.atan2(dy, dx);
-                        const pushDist = (radius - dist) * 0.6;
-                        const moveX = Math.cos(angle) * pushDist * 2;
-                        const moveY = Math.sin(angle) * pushDist * 2;
-                        el.style.transform = `translate(${moveX}px, ${moveY}px)`;
-                    } else {
-                        el.style.transform = originalTransforms.get(el) || '';
-                    }
+            if (progressTrack) {
+                progressTrack.addEventListener('click', (e) => {
+                    const rect = progressTrack.getBoundingClientRect();
+                    const clickX = e.clientX - rect.left;
+                    const pct = clickX / rect.width;
+                    if (audio.duration) audio.currentTime = pct * audio.duration;
                 });
             }
-            function startElusive() { elusiveEnabled = true; document.addEventListener('mousemove', elusiveMove); }
-            function stopElusive() { elusiveEnabled = false; document.removeEventListener('mousemove', elusiveMove); elusiveElements.forEach(el => el.style.transform = originalTransforms.get(el) || ''); }
+        }
 
-            function startPitchChaos() {
-                const audio = window.__audioControls?.getAudioElement?.();
-                if (!audio) return;
-                pitchChaosInterval = setInterval(() => {
-                    if (!window.__partyModeActive) return;
-                    audio.playbackRate = 1.0 + Math.random() * 0.5;
-                    if (Math.random() < 0.2) audio.playbackRate = 1.5 + Math.random() * 0.5;
-                }, 200);
-            }
-            function stopPitchChaos() {
-                if (pitchChaosInterval) { clearInterval(pitchChaosInterval); pitchChaosInterval = null; }
-                const audio = window.__audioControls?.getAudioElement?.();
-                if (audio) audio.playbackRate = 1.0;
+        // Party Mode Execution
+        const partyToggle = document.getElementById('partyModeToggle');
+        const partyModal = document.getElementById('partyModal');
+        const partyModalYes = document.getElementById('partyModalYes');
+        const partyModalNo = document.getElementById('partyModalNo');
+        const strobeOverlay = document.getElementById('strobeOverlay');
+        const partyIndicator = document.getElementById('partyIndicator');
+        const trailContainer = document.getElementById('cursorTrailContainer');
+
+        let partyActive = false;
+
+        partyToggle.addEventListener('change', (e) => {
+            if (e.target.checked) partyModal.classList.add('active');
+            else stopPartyMode();
+        });
+
+        partyModalNo.addEventListener('click', () => {
+            partyModal.classList.remove('active');
+            partyToggle.checked = false;
+        });
+
+        partyModalYes.addEventListener('click', () => {
+            partyModal.classList.remove('active');
+            startPartyMode();
+        });
+
+        partyIndicator.addEventListener('click', stopPartyMode);
+
+        function startPartyMode() {
+            partyActive = true;
+            partyToggle.checked = true;
+            document.body.classList.add('party-active', 'party-shake-active', 'party-layout-chaos');
+            strobeOverlay.classList.add('active');
+            partyIndicator.classList.add('active');
+
+            if (window.__snowControls) window.__snowControls.setPartyMode(true);
+
+            if (audio) {
+                audio.play().catch(() => {});
+                if (playBtn) playBtn.textContent = '||';
+                if (musicBadge) { musicBadge.textContent = 'PARTY TIME!'; musicBadge.style.color = '#ff0080'; }
             }
 
-            function startPartyMode() {
-                window.__partyModeActive = true;
-                strobeOverlay.classList.add('active');
-                document.body.classList.add('party-active', 'party-shake-active', 'party-layout-chaos');
-                partyIndicator.classList.add('active');
-                musicSection.classList.add('open');
-                if (window.__snowControls) window.__snowControls.setPartyMode(true);
-                if (window.__audioControls) { window.__audioControls.setVolume(1.0); window.__audioControls.play(); }
-                startCursorTrail(); startElusive(); startPitchChaos();
-                if (musicBadge) musicBadge.textContent = 'PARTY MODE';
-                if (placeholderNote) { placeholderNote.textContent = 'PARTY MODE ACTIVE!'; placeholderNote.style.color = '#ff6b6b'; }
-                if (playBtn) playBtn.textContent = '| |';
-                tiltEnabled = false; document.getElementById('tiltToggle').checked = true;
-                document.title = 'PARTY MODE';
-            }
-            function stopPartyMode() {
-                window.__partyModeActive = false;
-                strobeOverlay.classList.remove('active');
-                document.body.classList.remove('party-active', 'party-shake-active', 'party-layout-chaos');
-                partyIndicator.classList.remove('active');
-                if (window.__snowControls) window.__snowControls.setPartyMode(false);
-                if (window.__audioControls) window.__audioControls.pause();
-                stopCursorTrail(); stopElusive(); stopPitchChaos();
-                if (musicBadge) musicBadge.textContent = 'stopped';
-                if (placeholderNote) { placeholderNote.textContent = 'press play to listen'; placeholderNote.style.color = 'rgba(255, 255, 255, 0.4)'; }
+            document.addEventListener('mousemove', spawnTrail);
+        }
+
+        function stopPartyMode() {
+            partyActive = false;
+            partyToggle.checked = false;
+            document.body.classList.remove('party-active', 'party-shake-active', 'party-layout-chaos');
+            strobeOverlay.classList.remove('active');
+            partyIndicator.classList.remove('active');
+
+            if (window.__snowControls) window.__snowControls.setPartyMode(false);
+
+            if (audio) {
+                audio.pause();
                 if (playBtn) playBtn.textContent = '>';
-                if (!document.getElementById('tiltToggle').checked) tiltEnabled = true;
-                document.title = 'profile · safeswing';
+                if (musicBadge) { musicBadge.textContent = 'stopped'; musicBadge.style.color = '#38BDF8'; }
             }
 
-            partyToggle.addEventListener('change', (e) => {
-                if (e.target.checked) partyModal.classList.add('active');
-                else stopPartyMode();
-            });
-            partyModalNo.addEventListener('click', () => { partyModal.classList.remove('active'); partyToggle.checked = false; stopPartyMode(); });
-            partyModalYes.addEventListener('click', () => { partyModal.classList.remove('active'); startPartyMode(); });
-            partyModal.addEventListener('click', (e) => { if (e.target === partyModal) { partyModal.classList.remove('active'); partyToggle.checked = false; stopPartyMode(); } });
-            partyIndicator.addEventListener('click', () => { partyToggle.checked = false; stopPartyMode(); });
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && window.__partyModeActive) { partyToggle.checked = false; stopPartyMode(); } });
-        })();
+            document.removeEventListener('mousemove', spawnTrail);
+        }
+
+        function spawnTrail(e) {
+            if (!partyActive) return;
+            const spark = document.createElement('div');
+            spark.className = 'cursor-trail-spark';
+            spark.style.left = e.clientX + 'px';
+            spark.style.top = e.clientY + 'px';
+
+            const tx = (Math.random() - 0.5) * 100;
+            const ty = (Math.random() - 0.5) * 100;
+            spark.style.setProperty('--tx', tx + 'px');
+            spark.style.setProperty('--ty', ty + 'px');
+
+            trailContainer.appendChild(spark);
+            setTimeout(() => spark.remove(), 600);
+        }
     </script>
 </body>
 </html>
