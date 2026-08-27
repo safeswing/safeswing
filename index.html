@@ -6,167 +6,6 @@
     <title>profile · safeswing</title>
 
     <style>
-        #loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0b0d15;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-            font-family: 'Inter', sans-serif;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        #loading-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-        .loader {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(56, 189, 248, 0.1);
-            border-top: 3px solid #38BDF8;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1.5rem;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .loading-text {
-            font-size: 1rem;
-            letter-spacing: 2px;
-            opacity: 0.6;
-        }
-    </style>
-</head>
-<body>
-
-    <div id="loading-screen">
-        <div class="loader"></div>
-        <div class="loading-text">Loading Libraries...</div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <!-- SETTINGS WRAPPER -->
-    <div class="settings-wrapper">
-        <!-- Language selector -->
-<div class="lang-selector">
-    <a href="#" class="lang-btn active" data-lang="english" title="English">English</a>
-    <a href="#" class="lang-btn" data-lang="russian" title="Russian">Russian</a>
-    <a href="#" class="lang-btn" data-lang="base64" title="Base64">Base64</a>
-    <a href="#" class="lang-btn" data-lang="binary" title="Binary">Binary</a>
-    <a href="#" class="lang-btn" data-lang="hebrew" title="Hebrew">Hebrew</a>
-</div>
-        <div class="settings-icon" id="settingsToggle" title="Settings">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"></circle>
-                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-            </svg>
-        </div>
-        <div class="settings-panel" id="settingsPanel">
-            <div class="panel-title">Settings</div>
-
-            <div class="setting-item">
-                <span>Disable 3D Tilt</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="tiltToggle">
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
-
-            <div class="setting-item">
-                <span>Season</span>
-                <div class="season-selector">
-                    <button class="season-btn active" data-season="default">Default</button>
-                    <button class="season-btn" data-season="spring">Spring</button>
-                    <button class="season-btn" data-season="summer">Summer</button>
-                    <button class="season-btn" data-season="autumn">Autumn</button>
-                    <button class="season-btn" data-season="winter">Winter</button>
-                </div>
-            </div>
-
-            <div class="setting-item">
-                <span>Particle Effects</span>
-                <select id="particleDensity" class="select-input">
-                    <option value="high">High</option>
-                    <option value="medium" selected>Medium</option>
-                    <option value="low">Low</option>
-                    <option value="off">Off</option>
-                </select>
-            </div>
-
-            <div class="setting-item">
-                <span>Force Dark Mode</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="forceDarkToggle">
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
-
-            <div class="setting-item">
-                <span>Reduce Motion</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="reduceMotionToggle">
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
-
-            <div class="setting-item">
-                <span>Monospace Font</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="monoFontToggle">
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
-
-            <div class="setting-item">
-                <span>UI Sound Effects</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="sfxToggle">
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
-
-            <div class="setting-item">
-                <span>Accent Color</span>
-                <input type="color" id="accentColorPicker" value="#38BDF8" class="color-input">
-            </div>
-
-            <div class="setting-item">
-                <span>Card Opacity</span>
-                <input type="range" id="cardOpacitySlider" min="0.3" max="1" step="0.05" value="0.8" class="range-input">
-            </div>
-
-            <!-- New: Disable Ads toggle -->
-            <div class="setting-item">
-                <span>Disable ADs</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="disableAdsToggle">
-                    <span class="toggle-slider"></span>
-                </label>
-            </div>
-
-            <!-- New: GitHub link button -->
-            <div class="setting-item">
-                <span>Wanna make your own? Click this!</span>
-                <a href="https://github.com/safeswing/About-Safeswing-s-Index-page" target="_blank" rel="noopener noreferrer" class="github-btn">Open GitHub</a>
-            </div>
-
-            <div class="setting-item">
-                <button id="resetSettingsBtn" class="reset-btn">Reset to Default</button>
-            </div>
-        </div>
-    </div>
-
-    <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;600&display=swap');
 
         :root {
@@ -196,7 +35,6 @@
             --blur-amount: 14px;
         }
 
-        /* Theme-specific variables */
         body.theme-winter {
             --text-primary: #e0e7ff;
             --text-secondary: #b0b8d0;
@@ -219,7 +57,7 @@
             --music-secondary: #8890a8;
             --footer-text: #667080;
             --shadow-color: rgba(0, 0, 0, 0.8);
-            --text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            --text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             --card-opacity: 0.85;
             --blur-amount: 12px;
         }
@@ -305,7 +143,6 @@
             --blur-amount: 12px;
         }
 
-        /* Force dark mode override */
         body.force-dark {
             --text-primary: #ffffff;
             --text-secondary: #e2e8f0;
@@ -318,7 +155,6 @@
             --pill-bg: rgba(255, 255, 255, 0.06);
             --pill-border: rgba(255, 255, 255, 0.08);
             --pill-text: rgba(255, 255, 255, 0.85);
-            --accent: var(--accent);
             --badge-text: #ffffff;
             --badge-bg: rgba(255, 255, 255, 0.05);
             --badge-border: rgba(255, 255, 255, 0.1);
@@ -371,6 +207,7 @@
             transform-origin: center center;
             will-change: transform;
         }
+
         @keyframes layoutChaos {
             0% { transform: rotate(0deg) skewX(0deg) scale(1) translate(0, 0); }
             12% { transform: rotate(4deg) skewX(2deg) scale(1.02) translate(-0.5%, 0.2%); }
@@ -433,54 +270,13 @@
         }
 
         .settings-wrapper {
-            position: fixed; 
+            position: fixed;
             top: 1.5rem;
             right: 1.8rem;
-            z-index: 9999; 
+            z-index: 9999;
             display: flex;
             align-items: center;
             gap: 0.8rem;
-        }
-
-        .lang-selector {
-            display: flex;
-            gap: 0.5rem;
-            background: var(--pill-bg);
-            padding: 0.4rem 0.6rem;
-            border-radius: 60px;
-            border: 1px solid var(--pill-border);
-            backdrop-filter: blur(8px);
-            white-space: nowrap;
-            transition: background 0.3s ease, border-color 0.3s ease;
-        }
-
-        .lang-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            padding: 0.25rem 0.7rem;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .lang-btn:hover {
-            background: var(--pill-bg);
-            color: var(--text-primary);
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
-        }
-
-        .lang-btn.active {
-            background: rgba(56, 189, 248, 0.2);
-            color: var(--accent);
-            border: 1px solid rgba(56, 189, 248, 0.3);
         }
 
         .settings-icon {
@@ -538,7 +334,7 @@
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 1.2rem 0.6rem 1.2rem 0.6rem;
             padding: 1.2rem 1.5rem;
-            min-width: 260px;
+            min-width: 280px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
             opacity: 0;
             visibility: hidden;
@@ -578,9 +374,14 @@
             flex-wrap: wrap;
         }
 
+        .settings-panel .setting-item .setting-label {
+            flex: 1;
+            min-width: 100px;
+        }
+
         .select-input {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: #fff;
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
@@ -599,7 +400,7 @@
             padding: 0;
         }
         .color-input::-webkit-color-swatch {
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
         }
 
@@ -664,7 +465,6 @@
             transform: translateX(18px);
         }
 
-        /* GitHub button style */
         .github-btn {
             background: linear-gradient(135deg, #ff0000, #cc0000);
             border: 1px solid #ff3333;
@@ -931,21 +731,21 @@
             color: var(--status-text);
             transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
-        .status-card.green { 
-            background: rgba(34, 197, 94, 0.15); 
-            border-color: rgba(34, 197, 94, 0.25); 
+        .status-card.green {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.25);
             color: var(--status-text);
             font-weight: 600;
         }
-        .status-card.red { 
-            background: rgba(239, 68, 68, 0.15); 
-            border-color: rgba(239, 68, 68, 0.25); 
+        .status-card.red {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.25);
             color: var(--status-text);
             font-weight: 600;
         }
-        .status-card.yellow { 
-            background: rgba(234, 179, 8, 0.15); 
-            border-color: rgba(234, 179, 8, 0.25); 
+        .status-card.yellow {
+            background: rgba(234, 179, 8, 0.15);
+            border-color: rgba(234, 179, 8, 0.25);
             color: var(--status-text);
             font-weight: 600;
         }
@@ -1011,7 +811,10 @@
             flex-shrink: 0;
             color: var(--accent);
         }
-        .music-info { flex: 1; min-width: 0; }
+        .music-info {
+            flex: 1;
+            min-width: 0;
+        }
         .music-info .track-name {
             font-weight: 600;
             font-size: 0.95rem;
@@ -1118,7 +921,10 @@
             border-top: 1px solid var(--section-border);
             transition: color 0.3s ease;
         }
-        .device-group { margin-bottom: 0.8rem; padding: 0 0.2rem; }
+        .device-group {
+            margin-bottom: 0.8rem;
+            padding: 0 0.2rem;
+        }
         .device-group-label {
             font-size: 0.85rem;
             font-weight: 600;
@@ -1126,7 +932,11 @@
             margin-bottom: 0.4rem;
             transition: color 0.3s ease;
         }
-        .device-specs { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .device-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
         .device-spec {
             padding: 0.4rem 0.9rem;
             border-radius: 30px;
@@ -1179,9 +989,18 @@
             transform: scale(1.05);
             color: var(--text-primary);
         }
-        .link-btn.moddb { border-color: rgba(255, 107, 53, 0.5); color: #ff8c42; }
-        .link-btn.itch { border-color: rgba(250, 92, 92, 0.5); color: #fa5c5c; }
-        .link-btn.gitlab { border-color: rgba(252, 109, 38, 0.5); color: #fc6d26; }
+        .link-btn.moddb {
+            border-color: rgba(255, 107, 53, 0.5);
+            color: #ff8c42;
+        }
+        .link-btn.itch {
+            border-color: rgba(250, 92, 92, 0.5);
+            color: #fa5c5c;
+        }
+        .link-btn.gitlab {
+            border-color: rgba(252, 109, 38, 0.5);
+            color: #fc6d26;
+        }
         .footer-tag {
             margin-top: 1.6rem;
             font-size: 0.75rem;
@@ -1221,7 +1040,9 @@
             font-size: 0.9rem;
             color: var(--text-primary);
         }
-        .party-mode-label .party-icon { font-size: 1.2rem; }
+        .party-mode-label .party-icon {
+            font-size: 1.2rem;
+        }
         .party-mode-label .party-text {
             font-size: 0.7rem;
             color: var(--text-tertiary);
@@ -1235,7 +1056,11 @@
             flex-shrink: 0;
             cursor: pointer;
         }
-        .party-toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .party-toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
         .party-toggle-slider {
             position: absolute;
             cursor: pointer;
@@ -1269,7 +1094,9 @@
             background: #fff;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
-        .party-toggle-switch input:checked+.party-toggle-slider { animation: party-toggle-pulse 0.6s infinite; }
+        .party-toggle-switch input:checked+.party-toggle-slider {
+            animation: party-toggle-pulse 0.6s infinite;
+        }
         @keyframes party-toggle-pulse {
             0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 128, 0.4); }
             50% { box-shadow: 0 0 40px rgba(255, 0, 128, 0.8), 0 0 60px rgba(121, 40, 202, 0.4); }
@@ -1277,84 +1104,156 @@
 
         .party-modal-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0, 0, 0, 0.75);
             z-index: 9998;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
-        .party-modal-overlay.active { opacity: 1; visibility: visible; }
+        .party-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
         .party-modal {
             background: rgba(20, 22, 36, 0.98);
             border: 1px solid rgba(255, 100, 150, 0.3);
             border-radius: 2rem 1rem 2rem 1rem;
             padding: 2.2rem 2rem;
-            max-width: 430px; width: 90%;
+            max-width: 430px;
+            width: 90%;
             text-align: center;
             box-shadow: 0 30px 80px rgba(255, 0, 128, 0.15), 0 10px 30px rgba(0, 0, 0, 0.8);
             transform: scale(0.9) translateY(10px);
             transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .party-modal-overlay.active .party-modal { transform: scale(1) translateY(0); }
+        .party-modal-overlay.active .party-modal {
+            transform: scale(1) translateY(0);
+        }
         .party-modal .warning-icon {
-            font-size: 3.5rem; margin-bottom: 1rem;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
             animation: warning-pulse 1s ease-in-out infinite;
         }
         @keyframes warning-pulse {
             0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 100, 100, 0.5)); }
             50% { transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(255, 100, 100, 0.9)); }
         }
-        .party-modal .modal-title { font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
-        .party-modal .modal-text { font-size: 0.85rem; line-height: 1.6; color: rgba(255, 255, 255, 0.7); margin-bottom: 0.8rem; }
+        .party-modal .modal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .party-modal .modal-text {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.8rem;
+        }
         .party-modal .modal-warning-text {
-            font-size: 0.75rem; color: #ff6b6b; font-weight: 600;
-            letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 1.2rem;
+            font-size: 0.75rem;
+            color: #ff6b6b;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 1.2rem;
         }
         .party-modal .modal-disclaimer {
-            font-size: 0.7rem; color: rgba(255, 255, 255, 0.35); line-height: 1.4;
-            margin-bottom: 1.5rem; padding: 0.8rem;
-            background: rgba(255, 0, 0, 0.05); border-radius: 1rem;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.35);
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+            padding: 0.8rem;
+            background: rgba(255, 0, 0, 0.05);
+            border-radius: 1rem;
             border: 1px solid rgba(255, 0, 0, 0.1);
         }
-        .party-modal-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-        .party-modal-buttons button {
-            padding: 0.7rem 1.8rem; border-radius: 60px; font-weight: 600;
-            font-size: 0.85rem; cursor: pointer; transition: all 0.25s ease;
-            border: 1px solid; letter-spacing: 0.3px;
+        .party-modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
         }
-        .party-modal-buttons .btn-no { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); }
-        .party-modal-buttons .btn-no:hover { background: rgba(255,255,255,0.12); color:#fff; border-color: rgba(255,255,255,0.3); }
+        .party-modal-buttons button {
+            padding: 0.7rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: 1px solid;
+            letter-spacing: 0.3px;
+        }
+        .party-modal-buttons .btn-no {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .party-modal-buttons .btn-no:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
         .party-modal-buttons .btn-yes {
             background: linear-gradient(135deg, #ff6b6b, #ff0080);
-            border-color: rgba(255, 0, 128, 0.5); color: #fff;
+            border-color: rgba(255, 0, 128, 0.5);
+            color: #fff;
             box-shadow: 0 5px 20px rgba(255, 0, 128, 0.3);
         }
         .party-modal-buttons .btn-yes:hover {
             background: linear-gradient(135deg, #ff8585, #ff3399);
-            box-shadow: 0 5px 30px rgba(255, 0, 128, 0.6); transform: scale(1.05);
+            box-shadow: 0 5px 30px rgba(255, 0, 128, 0.6);
+            transform: scale(1.05);
         }
 
         .strobe-overlay {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            pointer-events: none; z-index: 9995;
-            opacity:0; visibility:hidden; mix-blend-mode: screen;
-            animation:none; transition: opacity 0.3s ease;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9995;
+            opacity: 0;
+            visibility: hidden;
+            mix-blend-mode: screen;
+            animation: none;
+            transition: opacity 0.3s ease;
         }
-        .strobe-overlay.active { opacity:1; visibility:visible; animation: strobe-flash 0.35s infinite; }
+        .strobe-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            animation: strobe-flash 0.35s infinite;
+        }
         @keyframes strobe-flash {
-            0% { background: rgba(255, 0, 50, 0.35); } 8% { background: rgba(0, 255, 100, 0.45); }
-            16% { background: rgba(0, 50, 255, 0.3); } 25% { background: rgba(255, 255, 0, 0.5); }
-            33% { background: rgba(255, 0, 255, 0.4); } 41% { background: rgba(0, 255, 255, 0.5); }
-            50% { background: rgba(255, 100, 0, 0.45); } 58% { background: rgba(150, 255, 0, 0.35); }
-            66% { background: rgba(0, 150, 255, 0.4); } 75% { background: rgba(255, 0, 150, 0.45); }
-            83% { background: rgba(255, 255, 255, 0.5); } 91% { background: rgba(0, 0, 0, 0.35); }
+            0% { background: rgba(255, 0, 50, 0.35); }
+            8% { background: rgba(0, 255, 100, 0.45); }
+            16% { background: rgba(0, 50, 255, 0.3); }
+            25% { background: rgba(255, 255, 0, 0.5); }
+            33% { background: rgba(255, 0, 255, 0.4); }
+            41% { background: rgba(0, 255, 255, 0.5); }
+            50% { background: rgba(255, 100, 0, 0.45); }
+            58% { background: rgba(150, 255, 0, 0.35); }
+            66% { background: rgba(0, 150, 255, 0.4); }
+            75% { background: rgba(255, 0, 150, 0.45); }
+            83% { background: rgba(255, 255, 255, 0.5); }
+            91% { background: rgba(0, 0, 0, 0.35); }
             100% { background: rgba(255, 0, 50, 0.35); }
         }
 
-        .party-shake-active .itch-profile-wrapper { animation: party-shake 0.25s infinite; will-change: transform; }
+        .party-shake-active .itch-profile-wrapper {
+            animation: party-shake 0.25s infinite;
+            will-change: transform;
+        }
         @keyframes party-shake {
             0% { transform: translate(0, 0) rotate(0deg) scale(1); }
             10% { transform: translate(-12px, -6px) rotate(-0.8deg) scale(1.01); }
@@ -1370,38 +1269,71 @@
         }
 
         .party-indicator {
-            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-            z-index: 9996; padding: 0.6rem 1.8rem; border-radius: 60px;
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9996;
+            padding: 0.6rem 1.8rem;
+            border-radius: 60px;
             background: linear-gradient(135deg, rgba(255, 0, 128, 0.3), rgba(121, 40, 202, 0.3));
-            border: 1px solid rgba(255, 100, 150, 0.5); color: #fff;
-            font-weight: 700; font-size: 0.85rem; letter-spacing: 1px;
-            text-transform: uppercase; cursor: pointer; opacity: 0; visibility: hidden;
-            transition: all 0.4s ease; box-shadow: 0 5px 30px rgba(255, 0, 128, 0.3);
-            animation: none; user-select: none; white-space: nowrap;
+            border: 1px solid rgba(255, 100, 150, 0.5);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 30px rgba(255, 0, 128, 0.3);
+            animation: none;
+            user-select: none;
+            white-space: nowrap;
         }
-        .party-indicator.active { opacity: 1; visibility: visible; animation: party-indicator-pulse 0.5s infinite; }
+        .party-indicator.active {
+            opacity: 1;
+            visibility: visible;
+            animation: party-indicator-pulse 0.5s infinite;
+        }
         @keyframes party-indicator-pulse {
             0%, 100% { box-shadow: 0 5px 30px rgba(255, 0, 128, 0.3); transform: translateX(-50%) scale(1); }
             50% { box-shadow: 0 5px 60px rgba(255, 0, 128, 0.7), 0 5px 80px rgba(121, 40, 202, 0.5); transform: translateX(-50%) scale(1.05); }
         }
-        .party-indicator:hover { animation: none; transform: translateX(-50%) scale(1.1); box-shadow: 0 5px 60px rgba(255, 0, 128, 0.8); }
+        .party-indicator:hover {
+            animation: none;
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 5px 60px rgba(255, 0, 128, 0.8);
+        }
 
         .cursor-trail-container {
-            position: fixed; top:0; left:0; width:100%; height:100%;
-            pointer-events: none; z-index: 9997; overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9997;
+            overflow: hidden;
         }
         .cursor-trail-spark {
-            position: fixed; pointer-events: none; width: 8px; height: 8px; border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
             background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 0 10px #fff, 0 0 20px #ff00ff, 0 0 30px #00ffff;
-            z-index: 9997; animation: trail-fade 0.6s forwards; will-change: transform, opacity;
+            z-index: 9997;
+            animation: trail-fade 0.6s forwards;
+            will-change: transform, opacity;
         }
         @keyframes trail-fade {
             0% { opacity: 1; transform: translate(0, 0) scale(1); }
             100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.3); }
         }
 
-        /* Season Selector */
         .season-selector {
             display: flex;
             flex-wrap: wrap;
@@ -1429,19 +1361,27 @@
             color: #fff;
         }
 
-        /* Opera GX Ad Modal Styles */
         .ad-popup-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0, 0, 0, 0.85);
             z-index: 10000;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
         }
-        .ad-popup-overlay.active { opacity: 1; visibility: visible; }
+        .ad-popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
         .ad-popup {
             background: linear-gradient(135deg, #1a0000, #330000);
             border: 2px solid #ff0000;
@@ -1456,13 +1396,17 @@
             position: relative;
             overflow: hidden;
         }
-        .ad-popup-overlay.active .ad-popup { transform: scale(1) translateY(0); }
+        .ad-popup-overlay.active .ad-popup {
+            transform: scale(1) translateY(0);
+        }
         .ad-popup::before {
             content: '';
             position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle at center, rgba(255,0,0,0.2) 0%, transparent 70%);
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 0, 0, 0.2) 0%, transparent 70%);
             animation: ad-glow 2s infinite;
             pointer-events: none;
         }
@@ -1477,7 +1421,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 0.5rem;
-            text-shadow: 0 0 20px rgba(255,0,0,0.8);
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
             position: relative;
             z-index: 1;
         }
@@ -1491,7 +1435,7 @@
         }
         .ad-popup .ad-subtext {
             font-size: 0.85rem;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255, 255, 255, 0.8);
             margin-bottom: 1.5rem;
             position: relative;
             z-index: 1;
@@ -1520,16 +1464,16 @@
             background: #ff0000;
             border-color: #ff0000;
             color: #fff;
-            box-shadow: 0 0 20px rgba(255,0,0,0.5);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
         }
         .ad-popup .ad-btn-download:hover {
             background: #ff3333;
             border-color: #ff3333;
-            box-shadow: 0 0 40px rgba(255,0,0,0.8);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
             transform: scale(1.05);
         }
         .ad-popup .ad-btn-decline {
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             border-color: #ff0000;
             color: #ff0000;
         }
@@ -1543,49 +1487,498 @@
             top: 10px;
             right: 15px;
             font-size: 1.5rem;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255, 255, 255, 0.5);
             cursor: pointer;
             background: none;
             border: none;
             transition: color 0.2s;
             z-index: 2;
         }
-        .ad-popup .ad-close:hover { color: #fff; }
+        .ad-popup .ad-close:hover {
+            color: #fff;
+        }
 
         @media (max-width: 500px) {
-            .glass-panel { padding: 1.8rem 1rem; }
-            .settings-wrapper { top: 1rem; right: 1rem; gap: 0.4rem; }
-            .lang-selector { padding: 0.3rem 0.4rem; gap: 0.3rem; }
-            .lang-btn { font-size: 0.6rem; padding: 0.2rem 0.5rem; }
-            .settings-icon { width: 36px; height: 36px; }
-            .settings-icon svg { width: 18px; height: 18px; }
-            .settings-panel { min-width: 200px; padding: 1rem; right: -0.5rem; }
-            .accordion-header { padding: 0.9rem 1rem; }
-            .accordion-body-inner { padding: 0 1rem 1rem 1rem; }
-            .party-modal { padding: 1.5rem 1rem; border-radius: 1.5rem 0.8rem 1.5rem 0.8rem; }
-            .party-mode-container { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
-            .party-toggle-switch { width: 48px; height: 26px; }
-            .party-toggle-slider::before { height: 18px; width: 18px; }
-            .party-toggle-switch input:checked+.party-toggle-slider::before { transform: translateX(22px); }
-            .party-indicator { font-size: 0.7rem; padding: 0.5rem 1.2rem; bottom: 1rem; }
-            .ad-popup { padding: 1.5rem 1rem; border-radius: 1.5rem 0.8rem 1.5rem 0.8rem; }
-            .ad-popup .ad-headline { font-size: 1.1rem; }
+            .glass-panel {
+                padding: 1.8rem 1rem;
+            }
+            .settings-wrapper {
+                top: 1rem;
+                right: 1rem;
+                gap: 0.4rem;
+            }
+            .settings-icon {
+                width: 36px;
+                height: 36px;
+            }
+            .settings-icon svg {
+                width: 18px;
+                height: 18px;
+            }
+            .settings-panel {
+                min-width: 200px;
+                padding: 1rem;
+                right: -0.5rem;
+            }
+            .accordion-header {
+                padding: 0.9rem 1rem;
+            }
+            .accordion-body-inner {
+                padding: 0 1rem 1rem 1rem;
+            }
+            .party-modal {
+                padding: 1.5rem 1rem;
+                border-radius: 1.5rem 0.8rem 1.5rem 0.8rem;
+            }
+            .party-mode-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.6rem;
+            }
+            .party-toggle-switch {
+                width: 48px;
+                height: 26px;
+            }
+            .party-toggle-slider::before {
+                height: 18px;
+                width: 18px;
+            }
+            .party-toggle-switch input:checked+.party-toggle-slider::before {
+                transform: translateX(22px);
+            }
+            .party-indicator {
+                font-size: 0.7rem;
+                padding: 0.5rem 1.2rem;
+                bottom: 1rem;
+            }
+            .ad-popup {
+                padding: 1.5rem 1rem;
+                border-radius: 1.5rem 0.8rem 1.5rem 0.8rem;
+            }
+            .ad-popup .ad-headline {
+                font-size: 1.1rem;
+            }
+        }
+
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0b0d15;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            font-family: 'Inter', sans-serif;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(56, 189, 248, 0.1);
+            border-top: 3px solid #38BDF8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text {
+            font-size: 1rem;
+            letter-spacing: 2px;
+            opacity: 0.6;
+        }
+
+        .pp-toggle-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem 1rem;
+            align-items: center;
+        }
+        .pp-toggle-group .pp-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+        }
+        .pp-toggle-group .pp-item input[type="checkbox"] {
+            accent-color: var(--accent);
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+        }
+        .pp-toggle-group .pp-item label {
+            cursor: pointer;
+            user-select: none;
+        }
+        .pp-intensity-group {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .pp-intensity-group label {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+        .pp-intensity-group input[type="range"] {
+            width: 80px;
+            accent-color: var(--accent);
+        }
+
+        /* Discord Widget */
+        .discord-widget {
+            background: var(--section-bg);
+            border: 1px solid var(--section-border);
+            border-radius: 1.2rem 0.6rem 1.2rem 0.6rem;
+            padding: 1.2rem;
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .discord-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .discord-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #5865F2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .discord-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .discord-status-dot {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--section-bg);
+            background: #747f8d;
+        }
+        .discord-status-dot.online { background: #23a55a; }
+        .discord-status-dot.idle { background: #f0b232; }
+        .discord-status-dot.dnd { background: #f23f43; }
+        .discord-status-dot.offline { background: #747f8d; }
+        .discord-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .discord-username {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+        .discord-status-text {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+        .discord-activity {
+            padding: 0.6rem 0.8rem;
+            background: rgba(88, 101, 242, 0.1);
+            border: 1px solid rgba(88, 101, 242, 0.2);
+            border-radius: 0.8rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .discord-activity .activity-name {
+            font-weight: 600;
+            color: #5865F2;
+        }
+        .discord-activity .activity-details {
+            margin-top: 4px;
+            font-size: 0.75rem;
+        }
+        .discord-custom-status {
+            padding: 0.4rem 0.8rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.6rem;
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+
+        /* Windows 11 loading */
+        .win11-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: win11-fade-in 0.6s ease forwards;
+        }
+        .win11-logo svg {
+            width: 100%;
+            height: 100%;
+        }
+        .win11-spinner {
+            display: flex;
+            gap: 6px;
+            margin-top: 1rem;
+        }
+        .win11-spinner .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ffffff;
+            animation: win11-dot-pulse 1.2s infinite;
+        }
+        .win11-spinner .dot:nth-child(2) { animation-delay: 0.2s; }
+        .win11-spinner .dot:nth-child(3) { animation-delay: 0.4s; }
+        .win11-spinner .dot:nth-child(4) { animation-delay: 0.6s; }
+        .win11-spinner .dot:nth-child(5) { animation-delay: 0.8s; }
+        @keyframes win11-fade-in {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes win11-dot-pulse {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Windows 7 loading */
+        .win7-logo {
+            max-width: 200px;
+            max-height: 200px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: win7-fade-in 0.6s ease forwards;
+        }
+        .win7-logo img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .win7-text {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #ffffff;
+            letter-spacing: 2px;
+            margin-top: 1rem;
+        }
+        @keyframes win7-fade-in {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
     </style>
+</head>
+<body>
+
+    <div id="loading-screen">
+        <!-- Dynamic content will be injected here -->
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <div class="settings-wrapper">
+        <div class="settings-icon" id="settingsToggle" title="Settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+        </div>
+        <div class="settings-panel" id="settingsPanel">
+            <div class="panel-title">Settings</div>
+
+            <div class="setting-item">
+                <span class="setting-label">Disable 3D Tilt</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="tiltToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Season</span>
+                <div class="season-selector">
+                    <button class="season-btn active" data-season="default">Default</button>
+                    <button class="season-btn" data-season="spring">Spring</button>
+                    <button class="season-btn" data-season="summer">Summer</button>
+                    <button class="season-btn" data-season="autumn">Autumn</button>
+                    <button class="season-btn" data-season="winter">Winter</button>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Particle Effects</span>
+                <select id="particleDensity" class="select-input">
+                    <option value="high">High</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="low">Low</option>
+                    <option value="off">Off</option>
+                </select>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Cursor Repulsion</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="cursorRepulsionToggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Force Dark Mode</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="forceDarkToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Reduce Motion</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="reduceMotionToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Monospace Font</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="monoFontToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">UI Sound Effects</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="sfxToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item" style="flex-direction:column;align-items:stretch;gap:0.4rem;border-top:1px solid rgba(255,255,255,0.06);padding-top:0.8rem;margin-top:0.2rem;">
+                <span style="font-weight:600;font-size:0.8rem;color:var(--accent);letter-spacing:0.5px;">Post-Processing</span>
+                <div class="pp-toggle-group">
+                    <div class="pp-item">
+                        <input type="checkbox" id="ppBloom" checked>
+                        <label for="ppBloom">Bloom</label>
+                    </div>
+                    <div class="pp-item">
+                        <input type="checkbox" id="ppChromatic" checked>
+                        <label for="ppChromatic">Chromatic Aberration</label>
+                    </div>
+                    <div class="pp-item">
+                        <input type="checkbox" id="ppCRT" checked>
+                        <label for="ppCRT">CRT Scanline</label>
+                    </div>
+                    <div class="pp-item">
+                        <input type="checkbox" id="ppVignette" checked>
+                        <label for="ppVignette">Vignette</label>
+                    </div>
+                    <div class="pp-item">
+                        <input type="checkbox" id="ppFog" checked>
+                        <label for="ppFog">Volumetric Fog</label>
+                    </div>
+                </div>
+                <div class="pp-intensity-group">
+                    <label>Bloom Intensity</label>
+                    <input type="range" id="ppBloomIntensity" min="0.1" max="1.5" step="0.05" value="0.6">
+                    <span id="ppBloomIntensityVal" style="font-size:0.7rem;min-width:28px;">0.60</span>
+                </div>
+                <div class="pp-intensity-group">
+                    <label>Vignette Strength</label>
+                    <input type="range" id="ppVignetteIntensity" min="0" max="1" step="0.05" value="0.4">
+                    <span id="ppVignetteIntensityVal" style="font-size:0.7rem;min-width:28px;">0.40</span>
+                </div>
+                <div class="pp-intensity-group">
+                    <label>Fog Density</label>
+                    <input type="range" id="ppFogDensity" min="0" max="1" step="0.05" value="0.3">
+                    <span id="ppFogDensityVal" style="font-size:0.7rem;min-width:28px;">0.30</span>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Accent Color</span>
+                <input type="color" id="accentColorPicker" value="#38BDF8" class="color-input">
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Card Opacity</span>
+                <input type="range" id="cardOpacitySlider" min="0.3" max="1" step="0.05" value="0.8" class="range-input">
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Disable ADs</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="disableAdsToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Show Discord Activity</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="discordToggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Loading Screen Style</span>
+                <select id="loadingStyleSelect" class="select-input">
+                    <option value="default">Default</option>
+                    <option value="win11">Windows 11 Style</option>
+                    <option value="win7">Windows 7 Style</option>
+                </select>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Wanna make your own? Click this!</span>
+                <a href="https://github.com/safeswing/About-Safeswing-s-Index-page" target="_blank" rel="noopener noreferrer" class="github-btn">Open GitHub</a>
+            </div>
+
+            <div class="setting-item">
+                <button id="resetSettingsBtn" class="reset-btn">Reset to Default</button>
+            </div>
+        </div>
+    </div>
 
     <div id="three-canvas"></div>
 
     <div class="itch-profile-wrapper">
         <div class="glass-panel" id="mainCard">
-
             <div class="content">
-
                 <div class="accordion-section about-expanded" id="aboutSection">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                       <div class="header-left">
-    <span class="icon">//</span>
-    <span data-i18n="aboutMe">About Safeswing</span>
-</div>
+                        <div class="header-left">
+                            <span class="icon">//</span>
+                            <span>About Safeswing</span>
+                        </div>
                         <span class="toggle-icon">v</span>
                     </div>
                     <div class="accordion-body">
@@ -1627,15 +2020,29 @@
                                 <div class="status-card green">Currently development of Unity Game (HDRP)</div>
                                 <div class="status-card red">Frozen Development for XM3.
                                     <a href="XM3About.html" style="color: #0066cc; text-decoration: underline;">Learn more..</a>
-</div>   
+                                </div>
                                 <div class="status-card red">
-                                    Frozen/Slow development for Blitz3D 2028 Overhaul.    
-                                   <a href="Blitz2028About.html" style="color: #0066cc; text-decoration: underline;">Learn more..</a>
-</div>   
-                            <div class="status-card yellow">
-    Planning on Unity URP project in 2028.   
-    <a href="URPAbout.html" style="color: #0066cc; text-decoration: underline;">Learn more..</a>
-</div>
+                                    Frozen/Slow development for Blitz3D 2028 Overhaul.
+                                    <a href="Blitz2028About.html" style="color: #0066cc; text-decoration: underline;">Learn more..</a>
+                                </div>
+                                <div class="status-card yellow">
+                                    Planning on Unity URP project in 2028.
+                                    <a href="URPAbout.html" style="color: #0066cc; text-decoration: underline;">Learn more..</a>
+                                </div>
+                            </div>
+
+                            <div class="section-label">Discord Presence</div>
+                            <div class="discord-widget" id="discordWidget">
+                                <div class="discord-profile">
+                                    <div class="discord-avatar" id="discordAvatar">
+                                    </div>
+                                    <div class="discord-info">
+                                        <div class="discord-username" id="discordUsername">Loading...</div>
+                                        <div class="discord-status-text" id="discordStatusText">Connecting to Discord...</div>
+                                    </div>
+                                </div>
+                                <div id="discordActivities">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1785,13 +2192,10 @@
                 <div class="footer-tag">
                     <span>Version 8.27.2026</span>
                 </div>
-                
-
             </div>
         </div>
     </div>
 
-    <!-- PARTY MODE WARNING MODAL -->
     <div class="party-modal-overlay" id="partyModal">
         <div class="party-modal">
             <div class="warning-icon">!</div>
@@ -1808,7 +2212,6 @@
         </div>
     </div>
 
-    <!-- OPERA GX AD MODAL -->
     <div class="ad-popup-overlay" id="adPopup">
         <div class="ad-popup">
             <button class="ad-close" id="adCloseBtn">&times;</button>
@@ -1822,433 +2225,360 @@
         </div>
     </div>
 
-    <!-- STROBE OVERLAY -->
     <div class="strobe-overlay" id="strobeOverlay"></div>
-
-    <!-- PARTY MODE INDICATOR -->
     <div class="party-indicator" id="partyIndicator">PARTY MODE ACTIVE — CLICK TO STOP</div>
-
-    <!-- CURSOR TRAIL CONTAINER -->
     <div class="cursor-trail-container" id="cursorTrailContainer"></div>
 
-    <script>
-        // Load preferences from localStorage
+    <script type="module">
+        import * as THREE from 'three';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+        import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+
+        const container = document.getElementById('three-canvas');
+        const loadingScreen = document.getElementById('loading-screen');
+
         function loadSettings() {
-            try {
-                return JSON.parse(localStorage.getItem('safeswing-settings')) || {};
-            } catch { return {}; }
+            try { return JSON.parse(localStorage.getItem('safeswing-settings')) || {}; } catch { return {}; }
+        }
+        function saveSettings(s) { localStorage.setItem('safeswing-settings', JSON.stringify(s)); }
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 18;
+
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.domElement.style.position = 'fixed';
+        renderer.domElement.style.top = '0';
+        renderer.domElement.style.left = '0';
+        renderer.domElement.style.width = '100%';
+        renderer.domElement.style.height = '100%';
+        renderer.domElement.style.pointerEvents = 'none';
+        renderer.domElement.style.zIndex = '0';
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.0;
+        container.appendChild(renderer.domElement);
+
+        const composer = new EffectComposer(renderer);
+        const renderPass = new RenderPass(scene, camera);
+        composer.addPass(renderPass);
+
+        const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.6, 0.4, 0.2);
+        composer.addPass(bloomPass);
+
+        const chromaticShader = {
+            uniforms: { tDiffuse: { value: null }, amount: { value: 0.004 } },
+            vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+            fragmentShader: `uniform sampler2D tDiffuse; uniform float amount; varying vec2 vUv;
+                void main() {
+                    vec2 offset = amount * vec2(1.0, 0.0);
+                    float r = texture2D(tDiffuse, vUv + offset).r;
+                    float g = texture2D(tDiffuse, vUv).g;
+                    float b = texture2D(tDiffuse, vUv - offset).b;
+                    gl_FragColor = vec4(r, g, b, 1.0);
+                }`
+        };
+        const chromaticPass = new ShaderPass(chromaticShader);
+        composer.addPass(chromaticPass);
+
+        const crtShader = {
+            uniforms: { tDiffuse: { value: null }, time: { value: 0 }, intensity: { value: 0.15 } },
+            vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+            fragmentShader: `uniform sampler2D tDiffuse; uniform float time; uniform float intensity; varying vec2 vUv;
+                void main() {
+                    vec4 color = texture2D(tDiffuse, vUv);
+                    float scanline = sin(vUv.y * 800.0 + time * 2.0) * 0.5 + 0.5;
+                    scanline = 1.0 - intensity * scanline;
+                    float vignette = 1.0 - 0.3 * length(vUv - 0.5);
+                    gl_FragColor = vec4(color.rgb * scanline * vignette, color.a);
+                }`
+        };
+        const crtPass = new ShaderPass(crtShader);
+        composer.addPass(crtPass);
+
+        const vignetteShader = {
+            uniforms: { tDiffuse: { value: null }, intensity: { value: 0.4 } },
+            vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+            fragmentShader: `uniform sampler2D tDiffuse; uniform float intensity; varying vec2 vUv;
+                void main() {
+                    vec4 color = texture2D(tDiffuse, vUv);
+                    float dist = length(vUv - 0.5);
+                    float vig = 1.0 - intensity * dist * dist * 2.5;
+                    vig = clamp(vig, 0.0, 1.0);
+                    gl_FragColor = vec4(color.rgb * vig, color.a);
+                }`
+        };
+        const vignettePass = new ShaderPass(vignetteShader);
+        composer.addPass(vignettePass);
+
+        const densityMap = { high: 3000, medium: 1500, low: 500, off: 0 };
+        let currentDensity = loadSettings().particleDensity || 'medium';
+        let count = densityMap[currentDensity] || 1500;
+        let positions, velocities, geometry, material, snow;
+
+        const mouse = new THREE.Vector2(9999, 9999);
+        const mouseWorld = new THREE.Vector3();
+        const raycaster = new THREE.Raycaster();
+        const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+        let cursorRepulsionEnabled = true;
+        const repulsionStrength = 0.8;
+        const repulsionRadius = 6.0;
+
+        let partyModeActive = false;
+        let snowSpeedBoost = 1;
+        let partyColorMode = false;
+        let explosionMode = false;
+        const partyColors = [0xff0066, 0x00ff88, 0x0066ff, 0xffff00, 0xff00ff, 0x00ffff, 0xff6600, 0x8800ff];
+        let colorIndex = 0;
+        let colorChangeCounter = 0;
+
+        function createParticles() {
+            if (geometry) geometry.dispose();
+            if (material) material.dispose();
+            if (snow) scene.remove(snow);
+
+            positions = new Float32Array(count * 3);
+            velocities = new Float32Array(count * 3);
+            for (let i = 0; i < count; i++) {
+                const i3 = i * 3;
+                positions[i3] = (Math.random() - 0.5) * 60;
+                positions[i3 + 1] = (Math.random() - 0.5) * 40;
+                positions[i3 + 2] = (Math.random() - 0.5) * 40;
+                velocities[i3] = (Math.random() - 0.5) * 0.02;
+                velocities[i3 + 1] = -(0.01 + Math.random() * 0.03);
+                velocities[i3 + 2] = (Math.random() - 0.5) * 0.02;
+            }
+            geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const canvas = document.createElement('canvas');
+            canvas.width = 64;
+            canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            const season = loadSettings().season || 'default';
+            if (season === 'winter') {
+                ctx.font = '48px serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('❄', 32, 32);
+            } else {
+                const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+                grad.addColorStop(0, 'rgba(255,255,255,1)');
+                grad.addColorStop(0.5, 'rgba(255,255,255,0.8)');
+                grad.addColorStop(1, 'rgba(255,255,255,0)');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, 64, 64);
+            }
+            const texture = new THREE.CanvasTexture(canvas);
+            material = new THREE.PointsMaterial({
+                color: 0xffffff, size: 0.35, transparent: true, opacity: 0.85,
+                map: texture, blending: THREE.AdditiveBlending, depthWrite: false
+            });
+            snow = new THREE.Points(geometry, material);
+            scene.add(snow);
+        }
+        createParticles();
+
+        const fogGroup = new THREE.Group();
+        scene.add(fogGroup);
+        const fogPlanes = [];
+        let fogDensity = 0.3;
+
+        function createFogTexture() {
+            const c = document.createElement('canvas');
+            c.width = 256; c.height = 256;
+            const ctx = c.getContext('2d');
+            ctx.clearRect(0, 0, 256, 256);
+            for (let i = 0; i < 35; i++) {
+                const cx = Math.random() * 256, cy = Math.random() * 256;
+                const r = 20 + Math.random() * 70;
+                const alpha = 0.03 + Math.random() * 0.08;
+                const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+                grad.addColorStop(0, `rgba(255,255,255,${alpha})`);
+                grad.addColorStop(1, 'rgba(255,255,255,0)');
+                ctx.fillStyle = grad;
+                ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+            }
+            return new THREE.CanvasTexture(c);
         }
 
-        function saveSettings(settings) {
-            localStorage.setItem('safeswing-settings', JSON.stringify(settings));
+        function createFogPlanes() {
+            while (fogGroup.children.length) fogGroup.remove(fogGroup.children[0]);
+            fogPlanes.length = 0;
+            const tex = createFogTexture();
+            const zPositions = [12, 8, 4, 0, -4, -10, -16];
+            const sizes = [[70,45],[80,50],[75,48],[85,55],[70,42],[90,55],[80,48]];
+            for (let i = 0; i < zPositions.length; i++) {
+                const geo = new THREE.PlaneGeometry(sizes[i][0], sizes[i][1]);
+                const mat = new THREE.MeshBasicMaterial({
+                    map: tex, transparent: true, opacity: fogDensity * (0.5 + Math.random() * 0.5),
+                    blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide,
+                });
+                const mesh = new THREE.Mesh(geo, mat);
+                mesh.position.set((Math.random()-0.5)*8, (Math.random()-0.5)*6, zPositions[i]);
+                mesh.rotation.z = (Math.random()-0.5)*0.15;
+                fogGroup.add(mesh);
+                fogPlanes.push({ mesh, driftX: (Math.random()-0.5)*0.006, driftY: (Math.random()-0.5)*0.004 });
+            }
         }
-
-
-// Language System
-const translations = {
-    english: {
-        aboutMe: "About Me",
-        myTools: "My Tools",
-        music: "Music",
-        devices: "About my devices",
-        support: "Support me / Paid Plannings",
-        links: "My links",
-        languages: "Languages",
-        status: "Status",
-        gmt: "GMT +05",
-        turkmenistan: "Turkmenistan",
-        age: "Age: 16",
-        height: "176cm",
-        male: "Male",
-        born: "Born: 15th February",
-        junior: "Junior",
-        undefined: "Undefined",
-        expert: "Expert",
-        htmlNote: "i know HTML is not a coding language",
-        status1: "Currently development of Unity Game (HDRP)",
-        status2: "Frozen Development for XM3",
-        status3: "Frozen/Slow development for Blitz3D 2028 Overhaul",
-        status4: "Planning on Unity URP project in 2028.",
-        laptop: "Laptop:",
-        phones: "Phones:",
-        supportText: "Unfortunately, I cannot receive payments through services like PayPal, Visa, or similar platforms. I also cannot publish on Steam, hire developers, or be hired for work because my country does not accept these payment methods. This situation is not permanent — I expect to be free from these limitations when I turn 20 or older. I didn't want to explain this further earlier, as it's a long-term situation. Stay tuned for more information in the future.",
-        footer: "HTML · C++ / C#",
-        settings: "Settings",
-        disableTilt: "Disable 3D Tilt",
-        season: "Season",
-        particleEffects: "Particle Effects",
-        forceDark: "Force Dark Mode",
-        reduceMotion: "Reduce Motion",
-        monoFont: "Monospace Font",
-        sfx: "UI Sound Effects",
-        accentColor: "Accent Color",
-        cardOpacity: "Card Opacity",
-        reset: "Reset to Default",
-        partyMode: "Party Mode",
-        partyText: "strobe lights · loud audio · screen shake",
-        pressPlay: "press play to listen",
-        trackName: "Basshunter - Dota",
-        trackArtist: "Basshunter",
-        stopped: "stopped",
-        playing: "playing",
-        paused: "paused",
-        high: "High",
-        medium: "Medium",
-        low: "Low",
-        off: "Off",
-        default: "Default",
-        spring: "Spring",
-        summer: "Summer",
-        autumn: "Autumn",
-        winter: "Winter",
-        partyWarning: "PARTY MODE",
-        partyWarningText: "You are about to enter Party Mode.",
-        partyWarningSub: "Not advised for people that are easily shocked from rapid lightning, loud noises, or extreme visual stimulation.",
-        partyDisclaimer: "This mode will activate: rapid strobing lights, intense screen shaking, extremely loud audio, layout chaos, elusive buttons, cursor trails, exploding snow, bass-driven zoom, and pitch chaos. If you experience discomfort, photosensitivity, or seizures, exit immediately. Party Mode is for entertainment purposes only. We are not liable for any damage to your eyes, ears, or sanity. You have been warned.",
-        noCancel: "No, cancel",
-        yesParty: "YES, LET'S PARTY!",
-        partyActive: "PARTY MODE ACTIVE — CLICK TO STOP",
-        disableAds: "Disable ADs",
-        githubBtn: "Open GitHub"
-    },
-    
-    russian: {
-        aboutMe: "Обо мне",
-        myTools: "Мои инструменты",
-        music: "Музыка",
-        devices: "О моих устройствах",
-        support: "Поддержка / Планы",
-        links: "Мои ссылки",
-        languages: "Языки",
-        status: "Статус",
-        gmt: "GMT +05",
-        turkmenistan: "Туркменистан",
-        age: "Возраст: 16",
-        height: "176см",
-        male: "Мужской",
-        born: "Родился: 15 февраля",
-        junior: "Джуниор",
-        undefined: "Не определено",
-        expert: "Эксперт",
-        htmlNote: "я знаю, что HTML не язык программирования",
-        status1: "Разработка Unity игры (HDRP)",
-        status2: "Заморожена разработка XM3",
-        status3: "Заморожена/медленная разработка Blitz3D 2028 Overhaul",
-        status4: "Планирую Unity URP проект в 2028.",
-        laptop: "Ноутбук:",
-        phones: "Телефоны:",
-        supportText: "К сожалению, я не могу получать платежи через такие сервисы, как PayPal, Visa или подобные платформы. Я также не могу публиковаться в Steam, нанимать разработчиков или работать по найму, потому что моя страна не принимает эти способы оплаты. Эта ситуация не постоянна — я ожидаю, что освобожусь от этих ограничений, когда мне исполнится 20 или больше. Я не хотел объяснять это раньше, так как это долгосрочная ситуация. Следите за новостями в будущем.",
-        footer: "HTML · C++ / C#",
-        settings: "Настройки",
-        disableTilt: "Отключить 3D наклон",
-        season: "Сезон",
-        particleEffects: "Эффекты частиц",
-        forceDark: "Принудительный темный режим",
-        reduceMotion: "Уменьшить движение",
-        monoFont: "Моноширинный шрифт",
-        sfx: "Звуковые эффекты UI",
-        accentColor: "Цвет акцента",
-        cardOpacity: "Прозрачность карточки",
-        reset: "Сбросить настройки",
-        partyMode: "Режим вечеринки",
-        partyText: "стробоскоп · громкий звук · тряска экрана",
-        pressPlay: "нажмите play для прослушивания",
-        trackName: "Basshunter - Dota",
-        trackArtist: "Basshunter",
-        stopped: "остановлено",
-        playing: "играет",
-        paused: "пауза",
-        high: "Высокий",
-        medium: "Средний",
-        low: "Низкий",
-        off: "Выкл",
-        default: "По умолчанию",
-        spring: "Весна",
-        summer: "Лето",
-        autumn: "Осень",
-        winter: "Зима",
-        partyWarning: "РЕЖИМ ВЕЧЕРИНКИ",
-        partyWarningText: "Вы собираетесь войти в режим вечеринки.",
-        partyWarningSub: "Не рекомендуется людям, которые легко пугаются быстрых вспышек, громких звуков или интенсивной визуальной стимуляции.",
-        partyDisclaimer: "Этот режим активирует: быстрые стробоскопы, интенсивную тряску экрана, очень громкий звук, хаос в макете, ускользающие кнопки, следы курсора, взрывающийся снег, зум от басов и хаос высоты тона. Если вы испытываете дискомфорт, светочувствительность или судороги, немедленно выйдите. Режим вечеринки предназначен только для развлечения. Мы не несем ответственности за любой ущерб вашим глазам, ушам или рассудку. Вы были предупреждены.",
-        noCancel: "Нет, отмена",
-        yesParty: "ДА, ПОЕХАЛИ!",
-        partyActive: "РЕЖИМ ВЕЧЕРИНКИ АКТИВЕН — НАЖМИТЕ ЧТОБЫ ОСТАНОВИТЬ",
-        disableAds: "Отключить рекламу",
-        githubBtn: "Открыть GitHub"
-    },
-    
-    base64: {
-        aboutMe: "QWJvdXQgTWU=",
-        myTools: "TXkgVG9vbHM=",
-        music: "TXVzaWM=",
-        devices: "QWJvdXQgbXkgZGV2aWNlcw==",
-        support: "U3VwcG9ydCBtZSAvIFBhaWQgUGxhbm5pbmdz",
-        links: "TXkgbGlua3M=",
-        languages: "TGFuZ3VhZ2Vz",
-        status: "U3RhdHVz",
-        gmt: "R01UICswNQ==",
-        turkmenistan: "VHVya21lbmlzdGFu",
-        age: "QWdlOiAxNg==",
-        height: "MTc2Y20=",
-        male: "TWFsZQ==",
-        born: "Qm9ybjogMTV0aCBGZWJydWFyeQ==",
-        junior: "SnVuaW9y",
-        undefined: "VW5kZWZpbmVk",
-        expert: "RXhwZXJ0",
-        htmlNote: "aSBrbm93IEhUTUwgaXMgbm90IGEgY29kaW5nIGxhbmd1YWdl",
-        status1: "Q3VycmVudGx5IGRldmVsb3BtZW50IG9mIFVuaXR5IEdhbWUgKEhEUlAp",
-        status2: "RnJvemVuIERldmVsb3BtZW50IGZvciBYTTM=",
-        status3: "RnJvemVuL1Nsb3cgZGV2ZWxvcG1lbnQgZm9yIEJsaXR6M0QgMjAyOCBPdmVyaGF1bA==",
-        status4: "UGxhbm5pbmcgb24gVW5pdHkgVVJQIHByb2plY3QgaW4gMjAyOC4=",
-        laptop: "TGFwdG9wOg==",
-        phones: "UGhvbmVzOg==",
-        supportText: "VW5mb3J0dW5hdGVseSwgSSBjYW5ub3QgcmVjZWl2ZSBwYXltZW50cyB0aHJvdWdoIHNlcnZpY2VzIGxpa2UgUGF5UGFsLCBWaXNhLCBvciBzaW1pbGFyIHBsYXRmb3Jtcy4=",
-        footer: "SFRNTCDCtyBDKysgLyBDIw==",
-        settings: "U2V0dGluZ3M=",
-        disableTilt: "RGlzYWJsZSAzRCBUaWx0",
-        season: "U2Vhc29u",
-        particleEffects: "UGFydGljbGUgRWZmZWN0cw==",
-        forceDark: "Rm9yY2UgRGFyayBNb2Rl",
-        reduceMotion: "UmVkdWNlIE1vdGlvbg==",
-        monoFont: "TW9ub3NwYWNlIEZvbnQ=",
-        sfx: "VUkgU291bmQgRWZmZWN0cw==",
-        accentColor: "QWNjZW50IENvbG9y",
-        cardOpacity: "Q2FyZCBPcGFjaXR5",
-        reset: "UmVzZXQgdG8gRGVmYXVsdA==",
-        partyMode: "UGFydHkgTW9kZQ==",
-        partyText: "c3Ryb2JlIGxpZ2h0cyDCtyBsb3VkIGF1ZGlvIMK3IHNjcmVlbiBzaGFrZQ==",
-        pressPlay: "cHJlc3MgcGxheSB0byBsaXN0ZW4=",
-        trackName: "QmFzc2h1bnRlciAtIERvdGE=",
-        trackArtist: "QmFzc2h1bnRlcg==",
-        stopped: "c3RvcHBlZA==",
-        playing: "cGxheWluZw==",
-        paused: "cGF1c2Vk",
-        high: "SGlnaA==",
-        medium: "TWVkaXVt",
-        low: "TG93",
-        off: "T2Zm",
-        default: "RGVmYXVsdA==",
-        spring: "U3ByaW5n",
-        summer: "U3VtbWVy",
-        autumn: "QXV0dW1u",
-        winter: "V2ludGVy",
-        partyWarning: "UEFSVFkgTU9ERQ==",
-        partyWarningText: "WW91IGFyZSBhYm91dCB0byBlbnRlciBQYXJ0eSBNb2RlLg==",
-        partyWarningSub: "Tm90IGFkdmlzZWQgZm9yIHBlb3BsZSB0aGF0IGFyZSBlYXNpbHkgc2hvY2tlZCBmcm9tIHJhcGlkIGxpZ2h0bmluZy4=",
-        partyDisclaimer: "VGhpcyBtb2RlIHdpbGwgYWN0aXZhdGU6IHJhcGlkIHN0cm9iaW5nIGxpZ2h0cy4=",
-        noCancel: "Tm8sIGNhbmNlbA==",
-        yesParty: "WUVTLCBMRVQnUyBQQVJUWSE=",
-        partyActive: "UEFSVFkgTU9ERSBBQ1RJVkUg4oCUIENMSUNLIFRPIFNUT1A=",
-        disableAds: "RGlzYWJsZSBBRHM=",
-        githubBtn: "T3BlbiBHaXRIdWI="
-    },
-    
-    binary: {
-        aboutMe: "01000001 01100010 01101111 01110101 01110100 00100000 01001101 01100101",
-        myTools: "01001101 01111001 00100000 01010100 01101111 01101111 01101100 01110011",
-        music: "01001101 01110101 01110011 01101001 01100011",
-        devices: "01000001 01100010 01101111 01110101 01110100 00100000 01101101 01111001 00100000 01100100 01100101 01110110 01101001 01100011 01100101 01110011",
-        support: "01010011 01110101 01110000 01110000 01101111 01110010 01110100 00100000 01101101 01100101 00100000 00101111 00100000 01010000 01100001 01101001 01100100 00100000 01010000 01101100 01100001 01101110 01101110 01101001 01101110 01100111 01110011",
-        links: "01001101 01111001 00100000 01101100 01101001 01101110 01101011 01110011",
-        languages: "01001100 01100001 01101110 01100111 01110101 01100001 01100111 01100101 01110011",
-        status: "01010011 01110100 01100001 01110100 01110101 01110011",
-        gmt: "01000111 01001101 01010100 00100000 00101011 00110000 00110101",
-        turkmenistan: "01010100 01110101 01110010 01101011 01101101 01100101 01101110 01101001 01110011 01110100 01100001 01101110",
-        age: "01000001 01100111 01100101 00111010 00100000 00110001 00110110",
-        height: "00110001 00110111 00110110 01100011 01101101",
-        male: "01001101 01100001 01101100 01100101",
-        born: "01000010 01101111 01110010 01101110 00111010 00100000 00110001 00110101 01110100 01101000 00100000 01000110 01100101 01100010 01110010 01110101 01100001 01110010 01111001",
-        junior: "01001010 01110101 01101110 01101001 01101111 01110010",
-        undefined: "01010101 01101110 01100100 01100101 01100110 01101001 01101110 01100101 01100100",
-        expert: "01000101 01111000 01110000 01100101 01110010 01110100",
-        htmlNote: "01101001 00100000 01101011 01101110 01101111 01110111 00100000 01001000 01010100 01001101 01001100 00100000 01101001 01110011 00100000 01101110 01101111 01110100 00100000 01100001 00100000 01100011 01101111 01100100 01101001 01101110 01100111 00100000 01101100 01100001 01101110 01100111 01110101 01100001 01100111 01100101",
-        status1: "01000011 01110101 01110010 01110010 01100101 01101110 01110100 01101100 01111001 00100000 01100100 01100101 01110110 01100101 01101100 01101111 01110000 01101101 01100101 01101110 01110100 00100000 01101111 01100110 00100000 01010101 01101110 01101001 01110100 01111001 00100000 01000111 01100001 01101101 01100101 00100000 00101000 01001000 01000100 01010010 01010000 00101001",
-        status2: "01000110 01110010 01101111 01111010 01100101 01101110 00100000 01000100 01100101 01110110 01100101 01101100 01101111 01110000 01101101 01100101 01101110 01110100 00100000 01100110 01101111 01110010 00100000 01011000 01001101 00110011",
-        status3: "01000110 01110010 01101111 01111010 01100101 01101110 00101111 01010011 01101100 01101111 01110111 00100000 01100100 01100101 01110110 01100101 01101100 01101111 01110000 01101101 01100101 01101110 01110100 00100000 01100110 01101111 01110010 00100000 01000010 01101100 01101001 01110100 01111010 00110011 01000100 00100000 00110010 00110000 00110010 00111000 00100000 01001111 01110110 01100101 01110010 01101000 01100001 01110101 01101100",
-        status4: "01010000 01101100 01100001 01101110 01101110 01101001 01101110 01100111 00100000 01101111 01101110 00100000 01010101 01101110 01101001 01110100 01111001 00100000 01010101 01010010 01010000 00100000 01110000 01110010 01101111 01101010 01100101 01100011 01110100 00100000 01101001 01101110 00100000 00110010 00110000 00110010 00111000 00101110",
-        laptop: "01001100 01100001 01110000 01110100 01101111 01110000 00111010",
-        phones: "01010000 01101000 01101111 01101110 01100101 01110011 00111010",
-        supportText: "01010101 01101110 01100110 01101111 01110010 01110100 01110101 01101110 01100001 01110100 01100101 01101100 01111001 00101100 00100000 01001001 00100000 01100011 01100001 01101110 01101110 01101111 01110100 00100000 01110010 01100101 01100011 01100101 01101001 01110110 01100101 00100000 01110000 01100001 01111001 01101101 01100101 01101110 01110100 01110011 00101110",
-        footer: "01001000 01010100 01001101 01001100 00100000 11000010 10110111 00100000 01000011 00101011 00101011 00100000 00101111 00100000 01000011 00100011",
-        settings: "01010011 01100101 01110100 01110100 01101001 01101110 01100111 01110011",
-        disableTilt: "01000100 01101001 01110011 01100001 01100010 01101100 01100101 00100000 00110011 01000100 00100000 01010100 01101001 01101100 01110100",
-        season: "01010011 01100101 01100001 01110011 01101111 01101110",
-        particleEffects: "01010000 01100001 01110010 01110100 01101001 01100011 01101100 01100101 00100000 01000101 01100110 01100110 01100101 01100011 01110100 01110011",
-        forceDark: "01000110 01101111 01110010 01100011 01100101 00100000 01000100 01100001 01110010 01101011 00100000 01001101 01101111 01100100 01100101",
-        reduceMotion: "01010010 01100101 01100100 01110101 01100011 01100101 00100000 01001101 01101111 01110100 01101001 01101111 01101110",
-        monoFont: "01001101 01101111 01101110 01101111 01110011 01110000 01100001 01100011 01100101 00100000 01000110 01101111 01101110 01110100",
-        sfx: "01010101 01001001 00100000 01010011 01101111 01110101 01101110 01100100 00100000 01000101 01100110 01100110 01100101 01100011 01110100 01110011",
-        accentColor: "01000001 01100011 01100011 01100101 01101110 01110100 00100000 01000011 01101111 01101100 01101111 01110010",
-        cardOpacity: "01000011 01100001 01110010 01100100 00100000 01001111 01110000 01100001 01100011 01101001 01110100 01111001",
-        reset: "01010010 01100101 01110011 01100101 01110100 00100000 01110100 01101111 00100000 01000100 01100101 01100110 01100001 01110101 01101100 01110100",
-        partyMode: "01010000 01100001 01110010 01110100 01111001 00100000 01001101 01101111 01100100 01100101",
-        partyText: "01110011 01110100 01110010 01101111 01100010 01100101 00100000 01101100 01101001 01100111 01101000 01110100 01110011",
-        pressPlay: "01110000 01110010 01100101 01110011 01110011 00100000 01110000 01101100 01100001 01111001 00100000 01110100 01101111 00100000 01101100 01101001 01110011 01110100 01100101 01101110",
-        trackName: "01000010 01100001 01110011 01110011 01101000 01110101 01101110 01110100 01100101 01110010 00100000 00101101 00100000 01000100 01101111 01110100 01100001",
-        trackArtist: "01000010 01100001 01110011 01110011 01101000 01110101 01101110 01110100 01100101 01110010",
-        stopped: "01110011 01110100 01101111 01110000 01110000 01100101 01100100",
-        playing: "01110000 01101100 01100001 01111001 01101001 01101110 01100111",
-        paused: "01110000 01100001 01110101 01110011 01100101 01100100",
-        high: "01001000 01101001 01100111 01101000",
-        medium: "01001101 01100101 01100100 01101001 01110101 01101101",
-        low: "01001100 01101111 01110111",
-        off: "01001111 01100110 01100110",
-        default: "01000100 01100101 01100110 01100001 01110101 01101100 01110100",
-        spring: "01010011 01110000 01110010 01101001 01101110 01100111",
-        summer: "01010011 01110101 01101101 01101101 01100101 01110010",
-        autumn: "01000001 01110101 01110100 01110101 01101101 01101110",
-        winter: "01010111 01101001 01101110 01110100 01100101 01110010",
-        partyWarning: "01010000 01000001 01010010 01010100 01011001 00100000 01001101 01001111 01000100 01000101",
-        partyWarningText: "01011001 01101111 01110101 00100000 01100001 01110010 01100101 00100000 01100001 01100010 01101111 01110101 01110100 00100000 01110100 01101111 00100000 01100101 01101110 01110100 01100101 01110010 00100000 01010000 01100001 01110010 01110100 01111001 00100000 01001101 01101111 01100100 01100101 00101110",
-        partyWarningSub: "01001110 01101111 01110100 00100000 01100001 01100100 01110110 01101001 01110011 01100101 01100100 00100000 01100110 01101111 01110010 00100000 01110000 01100101 01101111 01110000 01101100 01100101 00100000 01110100 01101000 01100001 01110100 00100000 01100001 01110010 01100101 00100000 01100101 01100001 01110011 01101001 01101100 01111001 00100000 01110011 01101000 01101111 01100011 01101011 01100101 01100100 00101110",
-        partyDisclaimer: "01010100 01101000 01101001 01110011 00100000 01101101 01101111 01100100 01100101 00100000 01110111 01101001 01101100 01101100 00100000 01100001 01100011 01110100 01101001 01110110 01100001 01110100 01100101 00111010 00100000 01110010 01100001 01110000 01101001 01100100 00100000 01110011 01110100 01110010 01101111 01100010 01101001 01101110 01100111 00100000 01101100 01101001 01100111 01101000 01110100 01110011 00101110",
-        noCancel: "01001110 01101111 00101100 00100000 01100011 01100001 01101110 01100011 01100101 01101100",
-        yesParty: "01011001 01000101 01010011 00101100 00100000 01001100 01000101 01010100 00100111 01010011 00100000 01010000 01000001 01010010 01010100 01011001 00100001",
-        partyActive: "01010000 01000001 01010010 01010100 01011001 00100000 01001101 01001111 01000100 01000101 00100000 01000001 01000011 01010100 01001001 01010110 01000101 00100000 11100010 10000000 10010100 00100000 01000011 01001100 01001001 01000011 01001011 00100000 01010100 01001111 00100000 01010011 01010100 01001111 01010000",
-        disableAds: "01000100 01101001 01110011 01100001 01100010 01101100 01100101 00100000 01000001 01000100 01110011",
-        githubBtn: "01001111 01110000 01100101 01101110 00100000 01000111 01101001 01110100 01001000 01110101 01100010"
-    },
-    
-    hebrew: {
-        aboutMe: "עליי",
-        myTools: "הכלים שלי",
-        music: "מוזיקה",
-        devices: "על המכשירים שלי",
-        support: "תמיכה / תכניות בתשלום",
-        links: "הקישורים שלי",
-        languages: "שפות",
-        status: "סטטוס",
-        gmt: "GMT +05",
-        turkmenistan: "טורקמניסטן",
-        age: "גיל: 16",
-        height: "176 ס\"מ",
-        male: "זכר",
-        born: "נולד: 15 בפברואר",
-        junior: "ג'וניור",
-        undefined: "לא מוגדר",
-        expert: "מומחה",
-        htmlNote: "אני יודע ש-HTML היא לא שפת תכנות",
-        status1: "פיתוח נוכחי של משחק Unity (HDRP)",
-        status2: "פיתוח מוקפא עבור XM3",
-        status3: "פיתוח מוקפא/איטי עבור Blitz3D 2028 Overhaul",
-        status4: "מתכנן פרויקט Unity URP ב-2028.",
-        laptop: "לפטופ:",
-        phones: "טלפונים:",
-        supportText: "לצערי, אני לא יכול לקבל תשלומים דרך שירותים כמו PayPal, Visa או פלטפורמות דומות. אני גם לא יכול לפרסם ב-Steam, לשכור מפתחים או להתקבל לעבודה כי המדינה שלי לא מקבלת את אמצעי התשלום האלה.",
-        footer: "HTML · C++ / C#",
-        settings: "הגדרות",
-        disableTilt: "בטל הטיה תלת-ממדית",
-        season: "עונה",
-        particleEffects: "אפקטי חלקיקים",
-        forceDark: "מצב כהה מאולץ",
-        reduceMotion: "הפחת תנועה",
-        monoFont: "גופן מונוספייס",
-        sfx: "אפקטי קול בממשק",
-        accentColor: "צבע הדגשה",
-        cardOpacity: "אטימות כרטיס",
-        reset: "אפס לברירת מחדל",
-        partyMode: "מצב מסיבה",
-        partyText: "אורות מהבהבים · שמע חזק · רעידת מסך",
-        pressPlay: "לחץ הפעל להאזנה",
-        trackName: "Basshunter - Dota",
-        trackArtist: "Basshunter",
-        stopped: "עצור",
-        playing: "מתנגן",
-        paused: "מושהה",
-        high: "גבוה",
-        medium: "בינוני",
-        low: "נמוך",
-        off: "כבוי",
-        default: "ברירת מחדל",
-        spring: "אביב",
-        summer: "קיץ",
-        autumn: "סתיו",
-        winter: "חורף",
-        partyWarning: "מצב מסיבה",
-        partyWarningText: "אתה עומד להיכנס למצב מסיבה.",
-        partyWarningSub: "לא מומלץ לאנשים שנבהלים בקלות מברקים מהירים, רעשים חזקים או גירוי חזותי אינטנסיבי.",
-        partyDisclaimer: "מצב זה יפעיל: אורות מהבהבים מהירים, רעידת מסך אינטנסיבית, שמע חזק במיוחד, כאוס פריסה, כפתורים חמקמקים, שבילי סמן, שלג מתפוצץ, זום מונע בס וכאוס גובה צליל. אם אתה חווה אי נוחות, רגישות לאור או התקפים, צא מיד.",
-        noCancel: "לא, בטל",
-        yesParty: "כן, בואו נחגוג!",
-        partyActive: "מצב מסיבה פעיל — לחץ לעצירה",
-        disableAds: "בטל פרסומות",
-        githubBtn: "פתח GitHub"
-    }
-};
-
-// Current language
-let currentLanguage = 'english';
-
-
-function applyLanguage(lang) {
-    currentLanguage = lang;
-    const t = translations[lang] || translations.english;
-    
-    // Apply to all data-i18n elements
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (t[key]) {
-            el.textContent = t[key];
+        function setFogVisible(visible) { fogGroup.visible = visible; }
+        function setFogDensity(val) {
+            fogDensity = val;
+            fogPlanes.forEach((fp, i) => { fp.mesh.material.opacity = val * (0.4 + (i / fogPlanes.length) * 0.6); });
         }
-    });
-    
-  
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (t[key]) {
-            el.placeholder = t[key];
+        function setFogEnabled(enabled) { fogGroup.visible = enabled; }
+        createFogPlanes();
+        setFogDensity(fogDensity);
+
+        function updateMouseWorld(event) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+            mouse.set(x, y);
+            raycaster.setFromCamera(mouse, camera);
+            const intersectPoint = new THREE.Vector3();
+            raycaster.ray.intersectPlane(plane, intersectPoint);
+            if (intersectPoint) mouseWorld.copy(intersectPoint);
+            else mouseWorld.set(9999, 9999, 9999);
         }
-    });
- 
-    const partyLabel = document.querySelector('.party-mode-label span:last-child');
-    if (partyLabel && t.partyMode) {
-        // The party mode label has nested spans
-        const mainSpan = partyLabel.parentElement;
-        mainSpan.childNodes[0].textContent = t.partyMode + ' ';
-    }
-    
-    // Update ad popup text if exists
-    const adHeadline = document.querySelector('.ad-popup .ad-headline');
-    if (adHeadline) adHeadline.textContent = "Download Opera GX Right NOW!";
-    const adSubtext = document.querySelector('.ad-popup .ad-subtext');
-    if (adSubtext) adSubtext.textContent = "The gaming browser for gamers. Boost your experience.";
-    
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        const btnLang = btn.getAttribute('data-lang');
-        btn.classList.toggle('active', btnLang === lang);
-    });
-    
-   
-    const settings = loadSettings();
-    settings.language = lang;
-    saveSettings(settings);
-}
+        document.addEventListener('mousemove', updateMouseWorld);
+        document.addEventListener('touchmove', (e) => {
+            if (e.touches.length) {
+                const t = e.touches[0];
+                updateMouseWorld({ clientX: t.clientX, clientY: t.clientY });
+            }
+        }, { passive: true });
 
+        window.addEventListener('resize', () => {
+            const w = window.innerWidth, h = window.innerHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+            composer.setSize(w, h);
+        });
 
-document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const lang = btn.getAttribute('data-lang');
-        if (lang && translations[lang]) {
-            applyLanguage(lang);
+        function setDensity(density) {
+            currentDensity = density;
+            const newCount = densityMap[density] || 0;
+            if (newCount !== count) {
+                count = newCount;
+                createParticles();
+                if (partyModeActive) setPartyMode(true);
+            }
+            if (snow) snow.visible = count > 0;
         }
-    });
-});
+        function setPartyMode(active) {
+            partyModeActive = active;
+            if (active) {
+                snowSpeedBoost = 4; partyColorMode = true; explosionMode = true;
+                for (let i = 0; i < count; i++) {
+                    const i3 = i*3;
+                    positions[i3] = (Math.random()-0.5)*5;
+                    positions[i3+1] = (Math.random()-0.5)*5;
+                    positions[i3+2] = (Math.random()-0.5)*5;
+                    const dx = positions[i3], dy = positions[i3+1], dz = positions[i3+2];
+                    const len = Math.sqrt(dx*dx+dy*dy+dz*dz) || 1;
+                    const speed = 0.1 + Math.random() * 0.3;
+                    velocities[i3] = (dx/len)*speed;
+                    velocities[i3+1] = (dy/len)*speed;
+                    velocities[i3+2] = (dz/len)*speed;
+                }
+            } else {
+                snowSpeedBoost = 1; partyColorMode = false; explosionMode = false;
+                material.color.setHex(0xffffff);
+                for (let i = 0; i < count; i++) {
+                    const i3 = i*3;
+                    velocities[i3] = (Math.random()-0.5)*0.02;
+                    velocities[i3+1] = -(0.01+Math.random()*0.03);
+                    velocities[i3+2] = (Math.random()-0.5)*0.02;
+                }
+            }
+        }
+        window.__snowControls = { setDensity, setPartyMode };
 
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.01;
+            if (count === 0) { composer.render(); return; }
+            const posAttr = geometry.attributes.position;
+            const arr = posAttr.array;
+            const speedFactor = snowSpeedBoost;
+            const repulse = cursorRepulsionEnabled && !partyModeActive;
 
-function initI18n() {
- 
-    document.querySelectorAll('.accordion-header .header-left span:last-child').forEach(el => {
-   
-    });
-}
+            for (let i = 0; i < count; i++) {
+                const i3 = i*3;
+                let px = arr[i3], py = arr[i3+1], pz = arr[i3+2];
+                if (explosionMode) {
+                    px += velocities[i3] * speedFactor;
+                    py += velocities[i3+1] * speedFactor;
+                    pz += velocities[i3+2] * speedFactor;
+                    const dist = Math.sqrt(px*px+py*py+pz*pz);
+                    if (dist > 30) {
+                        px = (Math.random()-0.5)*5; py = (Math.random()-0.5)*5; pz = (Math.random()-0.5)*5;
+                    }
+                } else {
+                    px += velocities[i3] * speedFactor;
+                    py += velocities[i3+1] * speedFactor;
+                    pz += velocities[i3+2] * speedFactor;
+                    if (repulse && mouseWorld.x < 9000) {
+                        const dx = px - mouseWorld.x, dy = py - mouseWorld.y, dz = pz - mouseWorld.z;
+                        const dist = Math.sqrt(dx*dx+dy*dy+dz*dz);
+                        if (dist < repulsionRadius && dist > 0.01) {
+                            const force = (repulsionRadius - dist) / repulsionRadius * repulsionStrength * 0.08;
+                            const normX = dx/dist, normY = dy/dist, normZ = dz/dist;
+                            px += normX * force; py += normY * force; pz += normZ * force;
+                            velocities[i3] += normX * force * 0.02;
+                            velocities[i3+1] += normY * force * 0.02;
+                            velocities[i3+2] += normZ * force * 0.02;
+                        }
+                    }
+                    if (py < -20) { py = 20; px = (Math.random()-0.5)*60; pz = (Math.random()-0.5)*40; }
+                    if (Math.abs(px) > 30) { px = (Math.random()-0.5)*60; py = 20; }
+                    if (Math.abs(pz) > 20) { pz = (Math.random()-0.5)*40; py = 20; }
+                }
+                arr[i3] = px; arr[i3+1] = py; arr[i3+2] = pz;
+            }
+            posAttr.needsUpdate = true;
 
-        
-        function applySettings() {
+            if (partyColorMode) {
+                colorChangeCounter++;
+                if (colorChangeCounter > 4) {
+                    colorChangeCounter = 0;
+                    colorIndex = (colorIndex + 1) % partyColors.length;
+                    material.color.setHex(partyColors[colorIndex]);
+                }
+            }
+
+            fogPlanes.forEach(fp => {
+                fp.mesh.position.x += fp.driftX;
+                fp.mesh.position.y += fp.driftY;
+                if (Math.abs(fp.mesh.position.x) > 12) fp.driftX *= -1;
+                if (Math.abs(fp.mesh.position.y) > 9) fp.driftY *= -1;
+            });
+
+            crtPass.uniforms.time.value = time;
+            composer.render();
+        }
+        animate();
+
+        setTimeout(() => { loadingScreen.classList.add('hidden'); }, 1500);
+
+        window.toggleAccordion = function(header) {
+            const section = header.parentElement;
+            if (section.classList.contains('about-expanded')) {
+                section.classList.remove('about-expanded');
+                section.classList.remove('open');
+            } else {
+                section.classList.toggle('open');
+            }
+        };
+
+        function applySettingsUI() {
             const settings = loadSettings();
-
-            // Season
             const season = settings.season || 'default';
             document.body.classList.remove('theme-spring', 'theme-summer', 'theme-autumn', 'theme-winter', 'force-dark');
             if (season !== 'default') document.body.classList.add(`theme-${season}`);
@@ -2256,316 +2586,435 @@ function initI18n() {
                 btn.classList.toggle('active', btn.dataset.season === season);
             });
 
-            // Force dark mode
             if (settings.forceDark) document.body.classList.add('force-dark');
+            else document.body.classList.remove('force-dark');
+            document.getElementById('forceDarkToggle').checked = !!settings.forceDark;
 
-            // Particle density
             const density = settings.particleDensity || 'medium';
             document.getElementById('particleDensity').value = density;
-            updateParticleDensity(density);
+            setDensity(density);
 
-            // Reduce motion
             if (settings.reduceMotion) document.body.classList.add('reduce-motion');
             else document.body.classList.remove('reduce-motion');
             document.getElementById('reduceMotionToggle').checked = !!settings.reduceMotion;
 
-            // Monospace font
             if (settings.monoFont) document.body.classList.add('mono-font');
             else document.body.classList.remove('mono-font');
             document.getElementById('monoFontToggle').checked = !!settings.monoFont;
 
-            // Accent color
             if (settings.accentColor) {
                 document.documentElement.style.setProperty('--accent', settings.accentColor);
                 document.getElementById('accentColorPicker').value = settings.accentColor;
             }
-
-            // Card opacity
             if (settings.cardOpacity) {
                 document.documentElement.style.setProperty('--card-opacity', settings.cardOpacity);
                 document.getElementById('cardOpacitySlider').value = settings.cardOpacity;
             }
 
-            // 3D tilt
             const tiltEnabled = !settings.disableTilt;
             document.getElementById('tiltToggle').checked = !tiltEnabled;
             window.tiltEnabled = tiltEnabled;
 
-            // SFX
             document.getElementById('sfxToggle').checked = !!settings.sfx;
 
-            // Disable Ads
+            cursorRepulsionEnabled = settings.cursorRepulsion !== false;
+            document.getElementById('cursorRepulsionToggle').checked = cursorRepulsionEnabled;
+
             const disableAds = settings.disableAds || false;
             document.getElementById('disableAdsToggle').checked = disableAds;
-            // Restart ad interval based on setting
             if (window.adInterval) clearInterval(window.adInterval);
-            if (!disableAds) {
-                window.adInterval = setInterval(showAdPopup, 30000); // every 30 seconds
-            } else {
-                hideAdPopup(); // ensure hidden if disabled
+            if (!disableAds) window.adInterval = setInterval(showAdPopup, 30000);
+            else hideAdPopup();
+
+            const ppBloom = settings.ppBloom !== false;
+            document.getElementById('ppBloom').checked = ppBloom;
+            bloomPass.enabled = ppBloom;
+
+            const ppChromatic = settings.ppChromatic !== false;
+            document.getElementById('ppChromatic').checked = ppChromatic;
+            chromaticPass.enabled = ppChromatic;
+
+            const ppCRT = settings.ppCRT !== false;
+            document.getElementById('ppCRT').checked = ppCRT;
+            crtPass.enabled = ppCRT;
+
+            const ppVignette = settings.ppVignette !== false;
+            document.getElementById('ppVignette').checked = ppVignette;
+            vignettePass.enabled = ppVignette;
+
+            const ppFog = settings.ppFog !== false;
+            document.getElementById('ppFog').checked = ppFog;
+            setFogEnabled(ppFog);
+
+            const bloomIntensity = settings.ppBloomIntensity || 0.6;
+            document.getElementById('ppBloomIntensity').value = bloomIntensity;
+            document.getElementById('ppBloomIntensityVal').textContent = bloomIntensity.toFixed(2);
+            bloomPass.strength = bloomIntensity;
+
+            const vigIntensity = settings.ppVignetteIntensity !== undefined ? settings.ppVignetteIntensity : 0.4;
+            document.getElementById('ppVignetteIntensity').value = vigIntensity;
+            document.getElementById('ppVignetteIntensityVal').textContent = vigIntensity.toFixed(2);
+            vignettePass.uniforms.intensity.value = vigIntensity;
+
+            const fogDensityVal = settings.ppFogDensity !== undefined ? settings.ppFogDensity : 0.3;
+            document.getElementById('ppFogDensity').value = fogDensityVal;
+            document.getElementById('ppFogDensityVal').textContent = fogDensityVal.toFixed(2);
+            setFogDensity(fogDensityVal);
+
+            const showDiscord = settings.showDiscord !== false;
+            document.getElementById('discordToggle').checked = showDiscord;
+            const discordWidget = document.getElementById('discordWidget');
+            if (discordWidget) discordWidget.style.display = showDiscord ? 'flex' : 'none';
+
+            const loadingStyle = settings.loadingStyle || 'default';
+            document.getElementById('loadingStyleSelect').value = loadingStyle;
+        }
+
+        const settingsToggle = document.getElementById('settingsToggle');
+        const settingsPanel = document.getElementById('settingsPanel');
+        settingsToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            settingsPanel.classList.toggle('open');
+        });
+        document.addEventListener('click', (e) => {
+            if (!settingsToggle.contains(e.target) && !settingsPanel.contains(e.target)) {
+                settingsPanel.classList.remove('open');
             }
-        }
-
-        // Update particle density function (accessible globally)
-        function updateParticleDensity(density) {
-            if (window.__snowControls) {
-                window.__snowControls.setDensity(density);
-            }
-        }
-
-        // Show ad popup
-        function showAdPopup() {
-            const adPopup = document.getElementById('adPopup');
-            if (adPopup && !document.body.classList.contains('party-active')) { // don't show during party mode
-                adPopup.classList.add('active');
-            }
-        }
-
-        function hideAdPopup() {
-            const adPopup = document.getElementById('adPopup');
-            if (adPopup) adPopup.classList.remove('active');
-        }
-
-        // Initialize all event listeners after DOM load
-        window.addEventListener('load', () => {
-            // Loading screen
-            setTimeout(() => {
-                document.getElementById('loading-screen').classList.add('hidden');
-            }, 800);
-
-            // Load and apply settings
-            applySettings();
-
-            // Initialize Three.js snow
-            initSnow();
-
-            // Initialize other features
-            initTilt();
-            initSettingsPanel();
-            initAccordion();
-            initClock();
-            initAudioPlayer();
-            initPartyMode();
-            initAdPopup();
         });
 
-        // Ad Popup event listeners
-        function initAdPopup() {
-            const adPopup = document.getElementById('adPopup');
-            const adCloseBtn = document.getElementById('adCloseBtn');
-            const adDeclineBtn = document.getElementById('adDeclineBtn');
-            // Download button is a link, nothing to do
-            if (adCloseBtn) adCloseBtn.addEventListener('click', hideAdPopup);
-            if (adDeclineBtn) adDeclineBtn.addEventListener('click', hideAdPopup);
-            // Click outside to close
-            adPopup.addEventListener('click', (e) => {
-                if (e.target === adPopup) hideAdPopup();
+        document.getElementById('tiltToggle').addEventListener('change', (e) => {
+            const s = loadSettings();
+            s.disableTilt = e.target.checked;
+            saveSettings(s);
+            window.tiltEnabled = !e.target.checked;
+            if (!window.tiltEnabled) { window.tiltX = 0; window.tiltY = 0; }
+        });
+
+        document.querySelectorAll('.season-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const s = loadSettings();
+                s.season = btn.dataset.season;
+                saveSettings(s);
+                applySettingsUI();
+                createParticles();
+                if (partyModeActive) setPartyMode(true);
             });
-        }
+        });
 
-        // Snow / Particle System with density control and snow emoji for winter
-        function initSnow() {
-            const container = document.getElementById('three-canvas');
-            if (typeof THREE === 'undefined') { console.error('Three.js not loaded'); return; }
+        document.getElementById('particleDensity').addEventListener('change', (e) => {
+            const s = loadSettings();
+            s.particleDensity = e.target.value;
+            saveSettings(s);
+            setDensity(e.target.value);
+        });
 
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.domElement.style.position = 'fixed';
-            renderer.domElement.style.top = '0';
-            renderer.domElement.style.left = '0';
-            renderer.domElement.style.width = '100%';
-            renderer.domElement.style.height = '100%';
-            renderer.domElement.style.pointerEvents = 'none';
-            renderer.domElement.style.zIndex = '0';
-            container.appendChild(renderer.domElement);
+        document.getElementById('cursorRepulsionToggle').addEventListener('change', (e) => {
+            cursorRepulsionEnabled = e.target.checked;
+            const s = loadSettings();
+            s.cursorRepulsion = e.target.checked;
+            saveSettings(s);
+        });
 
-            // Particle count based on density
-            let densityMap = { high: 3000, medium: 1500, low: 500, off: 0 };
-            let currentDensity = loadSettings().particleDensity || 'medium';
-            let count = densityMap[currentDensity] || 1500;
+        document.getElementById('forceDarkToggle').addEventListener('change', (e) => {
+            const s = loadSettings();
+            s.forceDark = e.target.checked;
+            saveSettings(s);
+            applySettingsUI();
+        });
 
-            // Create geometry and attributes
-            let positions, velocities;
-            let geometry, snow, material;
+        document.getElementById('reduceMotionToggle').addEventListener('change', (e) => {
+            const s = loadSettings();
+            s.reduceMotion = e.target.checked;
+            saveSettings(s);
+            applySettingsUI();
+        });
 
-            function createParticles() {
-                positions = new Float32Array(count * 3);
-                velocities = new Float32Array(count * 3);
-                for (let i = 0; i < count; i++) {
-                    const i3 = i * 3;
-                    positions[i3] = (Math.random() - 0.5) * 60;
-                    positions[i3 + 1] = (Math.random() - 0.5) * 40;
-                    positions[i3 + 2] = (Math.random() - 0.5) * 40;
-                    velocities[i3] = (Math.random() - 0.5) * 0.02;
-                    velocities[i3 + 1] = -(0.01 + Math.random() * 0.03);
-                    velocities[i3 + 2] = (Math.random() - 0.5) * 0.02;
-                }
-                geometry = new THREE.BufferGeometry();
-                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        document.getElementById('monoFontToggle').addEventListener('change', (e) => {
+            const s = loadSettings();
+            s.monoFont = e.target.checked;
+            saveSettings(s);
+            applySettingsUI();
+        });
 
-                // Texture: snowflake emoji for winter, white circle for others
-                const canvas = document.createElement('canvas');
-                canvas.width = 64; canvas.height = 64;
-                const ctx = canvas.getContext('2d');
-                const season = loadSettings().season || 'default';
-                if (season === 'winter') {
-                    ctx.font = '48px serif';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText('❄', 32, 32);
-                } else {
-                    const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-                    gradient.addColorStop(0, 'rgba(255,255,255,1)');
-                    gradient.addColorStop(0.5, 'rgba(255,255,255,0.8)');
-                    gradient.addColorStop(1, 'rgba(255,255,255,0)');
-                    ctx.fillStyle = gradient;
-                    ctx.fillRect(0, 0, 64, 64);
-                }
-                const texture = new THREE.CanvasTexture(canvas);
-                material = new THREE.PointsMaterial({
-                    color: 0xffffff, size: 0.3, transparent: true, opacity: 0.8,
-                    map: texture, blending: THREE.AdditiveBlending, depthWrite: false,
-                });
-                snow = new THREE.Points(geometry, material);
-                scene.add(snow);
-            }
+        document.getElementById('sfxToggle').addEventListener('change', (e) => {
+            const s = loadSettings();
+            s.sfx = e.target.checked;
+            saveSettings(s);
+        });
 
+        document.getElementById('accentColorPicker').addEventListener('input', (e) => {
+            const s = loadSettings();
+            s.accentColor = e.target.value;
+            saveSettings(s);
+            document.documentElement.style.setProperty('--accent', e.target.value);
+        });
+
+        document.getElementById('cardOpacitySlider').addEventListener('input', (e) => {
+            const s = loadSettings();
+            s.cardOpacity = e.target.value;
+            saveSettings(s);
+            document.documentElement.style.setProperty('--card-opacity', e.target.value);
+        });
+
+        document.getElementById('disableAdsToggle').addEventListener('change', (e) => {
+            const s = loadSettings();
+            s.disableAds = e.target.checked;
+            saveSettings(s);
+            if (window.adInterval) clearInterval(window.adInterval);
+            if (e.target.checked) hideAdPopup();
+            else window.adInterval = setInterval(showAdPopup, 30000);
+        });
+
+        document.getElementById('discordToggle').addEventListener('change', (e) => {
+            const s = loadSettings();
+            s.showDiscord = e.target.checked;
+            saveSettings(s);
+            location.reload();
+        });
+
+        document.getElementById('loadingStyleSelect').addEventListener('change', (e) => {
+            const s = loadSettings();
+            s.loadingStyle = e.target.value;
+            saveSettings(s);
+            location.reload();
+        });
+
+        document.getElementById('ppBloom').addEventListener('change', (e) => {
+            const s = loadSettings();
+            s.ppBloom = e.target.checked;
+            saveSettings(s);
+            bloomPass.enabled = e.target.checked;
+        });
+        document.getElementById('ppChromatic').addEventListener('change', (e) => {
+            const s = loadSettings();
+            s.ppChromatic = e.target.checked;
+            saveSettings(s);
+            chromaticPass.enabled = e.target.checked;
+        });
+        document.getElementById('ppCRT').addEventListener('change', (e) => {
+            const s = loadSettings();
+            s.ppCRT = e.target.checked;
+            saveSettings(s);
+            crtPass.enabled = e.target.checked;
+        });
+        document.getElementById('ppVignette').addEventListener('change', (e) => {
+            const s = loadSettings();
+            s.ppVignette = e.target.checked;
+            saveSettings(s);
+            vignettePass.enabled = e.target.checked;
+        });
+        document.getElementById('ppFog').addEventListener('change', (e) => {
+            const s = loadSettings();
+            s.ppFog = e.target.checked;
+            saveSettings(s);
+            setFogEnabled(e.target.checked);
+        });
+        document.getElementById('ppBloomIntensity').addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            document.getElementById('ppBloomIntensityVal').textContent = val.toFixed(2);
+            bloomPass.strength = val;
+            const s = loadSettings();
+            s.ppBloomIntensity = val;
+            saveSettings(s);
+        });
+        document.getElementById('ppVignetteIntensity').addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            document.getElementById('ppVignetteIntensityVal').textContent = val.toFixed(2);
+            vignettePass.uniforms.intensity.value = val;
+            const s = loadSettings();
+            s.ppVignetteIntensity = val;
+            saveSettings(s);
+        });
+        document.getElementById('ppFogDensity').addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            document.getElementById('ppFogDensityVal').textContent = val.toFixed(2);
+            setFogDensity(val);
+            const s = loadSettings();
+            s.ppFogDensity = val;
+            saveSettings(s);
+        });
+
+        document.getElementById('resetSettingsBtn').addEventListener('click', () => {
+            localStorage.removeItem('safeswing-settings');
+            applySettingsUI();
+            bloomPass.enabled = true;
+            bloomPass.strength = 0.6;
+            chromaticPass.enabled = true;
+            crtPass.enabled = true;
+            vignettePass.enabled = true;
+            vignettePass.uniforms.intensity.value = 0.4;
+            setFogEnabled(true);
+            setFogDensity(0.3);
+            document.getElementById('ppBloom').checked = true;
+            document.getElementById('ppChromatic').checked = true;
+            document.getElementById('ppCRT').checked = true;
+            document.getElementById('ppVignette').checked = true;
+            document.getElementById('ppFog').checked = true;
+            document.getElementById('ppBloomIntensity').value = 0.6;
+            document.getElementById('ppBloomIntensityVal').textContent = '0.60';
+            document.getElementById('ppVignetteIntensity').value = 0.4;
+            document.getElementById('ppVignetteIntensityVal').textContent = '0.40';
+            document.getElementById('ppFogDensity').value = 0.3;
+            document.getElementById('ppFogDensityVal').textContent = '0.30';
+            cursorRepulsionEnabled = true;
+            document.getElementById('cursorRepulsionToggle').checked = true;
             createParticles();
-            camera.position.z = 18;
+            if (partyModeActive) setPartyMode(true);
+        });
 
-            let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
-            document.addEventListener('mousemove', (e) => {
-                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-                mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-            });
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-
-            let partyModeActive = false;
-            let snowSpeedBoost = 1;
-            let partyColorMode = false;
-            let explosionMode = false;
-            const partyColors = [0xff0066, 0x00ff88, 0x0066ff, 0xffff00, 0xff00ff, 0x00ffff, 0xff6600, 0x8800ff];
-            let colorIndex = 0;
-            let colorChangeCounter = 0;
-
-            function setPartyMode(active) {
-                partyModeActive = active;
-                if (active) {
-                    snowSpeedBoost = 4;
-                    partyColorMode = true;
-                    explosionMode = true;
-                    for (let i = 0; i < count; i++) {
-                        const i3 = i * 3;
-                        positions[i3] = (Math.random() - 0.5) * 5;
-                        positions[i3 + 1] = (Math.random() - 0.5) * 5;
-                        positions[i3 + 2] = (Math.random() - 0.5) * 5;
-                        const speed = 0.1 + Math.random() * 0.3;
-                        const dx = positions[i3]; const dy = positions[i3+1]; const dz = positions[i3+2];
-                        const len = Math.sqrt(dx*dx + dy*dy + dz*dz) || 1;
-                        velocities[i3] = (dx / len) * speed;
-                        velocities[i3+1] = (dy / len) * speed;
-                        velocities[i3+2] = (dz / len) * speed;
-                    }
-                } else {
-                    snowSpeedBoost = 1;
-                    partyColorMode = false;
-                    explosionMode = false;
-                    material.color.setHex(0xffffff);
-                    for (let i = 0; i < count; i++) {
-                        const i3 = i * 3;
-                        velocities[i3] = (Math.random() - 0.5) * 0.02;
-                        velocities[i3+1] = -(0.01 + Math.random() * 0.03);
-                        velocities[i3+2] = (Math.random() - 0.5) * 0.02;
-                    }
-                }
+        function showAdPopup() {
+            const ad = document.getElementById('adPopup');
+            if (ad && !document.body.classList.contains('party-active')) {
+                ad.classList.add('active');
             }
+        }
+        function hideAdPopup() {
+            document.getElementById('adPopup')?.classList.remove('active');
+        }
+        window.showAdPopup = showAdPopup;
+        window.hideAdPopup = hideAdPopup;
+        document.getElementById('adCloseBtn')?.addEventListener('click', hideAdPopup);
+        document.getElementById('adDeclineBtn')?.addEventListener('click', hideAdPopup);
+        document.getElementById('adPopup')?.addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) hideAdPopup();
+        });
 
-            function setDensity(density) {
-                currentDensity = density;
-                const newCount = densityMap[density] || 0;
-                if (newCount !== count) {
-                    count = newCount;
-                    scene.remove(snow);
-                    createParticles();
-                    if (partyModeActive) setPartyMode(true);
-                }
-                // Update visibility
-                snow.visible = count > 0;
-            }
+        function updateClock() {
+            const el = document.getElementById('liveTime');
+            if (!el) return;
+            const now = new Date();
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const gmt5 = new Date(utc + 3600000 * 5);
+            el.textContent = [
+                String(gmt5.getHours()).padStart(2, '0'),
+                String(gmt5.getMinutes()).padStart(2, '0'),
+                String(gmt5.getSeconds()).padStart(2, '0')
+            ].join(':');
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
 
-            function animateSnow() {
-                requestAnimationFrame(animateSnow);
-                if (count === 0) { renderer.render(scene, camera); return; }
-                targetX += (mouseX - targetX) * 0.05;
-                targetY += (mouseY - targetY) * 0.05;
-                snow.rotation.x += 0.0005 + targetY * 0.0003;
-                snow.rotation.y += 0.0005 + targetX * 0.0003;
-                if (partyColorMode) {
-                    colorChangeCounter++;
-                    if (colorChangeCounter > 4) {
-                        colorChangeCounter = 0;
-                        colorIndex = (colorIndex + 1) % partyColors.length;
-                        material.color.setHex(partyColors[colorIndex]);
-                    }
-                }
-                const positionsAttr = geometry.attributes.position;
-                const posArray = positionsAttr.array;
-                const speedFactor = snowSpeedBoost;
-                for (let i = 0; i < count; i++) {
-                    const i3 = i * 3;
-                    if (explosionMode) {
-                        posArray[i3] += velocities[i3] * speedFactor;
-                        posArray[i3+1] += velocities[i3+1] * speedFactor;
-                        posArray[i3+2] += velocities[i3+2] * speedFactor;
-                        const dist = Math.sqrt(posArray[i3]**2 + posArray[i3+1]**2 + posArray[i3+2]**2);
-                        if (dist > 30) {
-                            posArray[i3] = (Math.random() - 0.5) * 5;
-                            posArray[i3+1] = (Math.random() - 0.5) * 5;
-                            posArray[i3+2] = (Math.random() - 0.5) * 5;
-                        }
-                    } else {
-                        posArray[i3] += velocities[i3] * speedFactor;
-                        posArray[i3+1] += velocities[i3+1] * speedFactor;
-                        posArray[i3+2] += velocities[i3+2] * speedFactor;
-                        if (posArray[i3+1] < -20) {
-                            posArray[i3+1] = 20;
-                            posArray[i3] = (Math.random() - 0.5) * 60;
-                            posArray[i3+2] = (Math.random() - 0.5) * 40;
-                        }
-                    }
-                }
-                positionsAttr.needsUpdate = true;
-                renderer.render(scene, camera);
-            }
-            animateSnow();
+        const audio = document.getElementById('myAudio');
+        const playBtn = document.querySelector('.music-controls .play-btn');
+        const musicBadge = document.querySelector('.music-badge');
+        const progressFill = document.querySelector('.progress-fill');
+        const progressTrack = document.querySelector('.progress-track');
+        const timeLabels = document.querySelectorAll('.music-progress .time-label');
 
-            // Expose controls globally
-            window.__snowControls = { setPartyMode, setDensity };
+        function fmtTime(sec) {
+            if (isNaN(sec)) return '0:00';
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
         }
 
-        // 3D Tilt Logic
+        if (audio && playBtn) {
+            playBtn.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play().catch(() => {});
+                    playBtn.textContent = '||';
+                    if (musicBadge) { musicBadge.textContent = 'playing'; musicBadge.style.color = '#34D399'; }
+                } else {
+                    audio.pause();
+                    playBtn.textContent = '>';
+                    if (musicBadge) { musicBadge.textContent = 'paused'; musicBadge.style.color = '#38BDF8'; }
+                }
+            });
+            audio.addEventListener('timeupdate', () => {
+                if (audio.duration) {
+                    const pct = (audio.currentTime / audio.duration) * 100;
+                    if (progressFill) progressFill.style.width = pct + '%';
+                    if (timeLabels[0]) timeLabels[0].textContent = fmtTime(audio.currentTime);
+                    if (timeLabels[1]) timeLabels[1].textContent = fmtTime(audio.duration);
+                }
+            });
+            audio.addEventListener('ended', () => {
+                playBtn.textContent = '>';
+                if (progressFill) progressFill.style.width = '0%';
+                if (musicBadge) { musicBadge.textContent = 'stopped'; musicBadge.style.color = '#38BDF8'; }
+            });
+            if (progressTrack) {
+                progressTrack.addEventListener('click', (e) => {
+                    const rect = progressTrack.getBoundingClientRect();
+                    const pct = (e.clientX - rect.left) / rect.width;
+                    if (audio.duration) audio.currentTime = pct * audio.duration;
+                });
+            }
+        }
+
+        const partyToggle = document.getElementById('partyModeToggle');
+        const partyModal = document.getElementById('partyModal');
+        const partyModalYes = document.getElementById('partyModalYes');
+        const partyModalNo = document.getElementById('partyModalNo');
+        const strobeOverlay = document.getElementById('strobeOverlay');
+        const partyIndicator = document.getElementById('partyIndicator');
+        const trailContainer = document.getElementById('cursorTrailContainer');
+        let partyActive = false;
+
+        function startPartyMode() {
+            partyActive = true;
+            partyToggle.checked = true;
+            document.body.classList.add('party-active', 'party-shake-active', 'party-layout-chaos');
+            strobeOverlay.classList.add('active');
+            partyIndicator.classList.add('active');
+            if (window.__snowControls) window.__snowControls.setPartyMode(true);
+            if (audio) { audio.play().catch(() => {}); if (playBtn) playBtn.textContent = '||'; if (musicBadge) { musicBadge.textContent = 'PARTY TIME!'; musicBadge.style.color = '#ff0080'; } }
+            document.addEventListener('mousemove', spawnTrail);
+            hideAdPopup();
+        }
+
+        function stopPartyMode() {
+            partyActive = false;
+            partyToggle.checked = false;
+            document.body.classList.remove('party-active', 'party-shake-active', 'party-layout-chaos');
+            strobeOverlay.classList.remove('active');
+            partyIndicator.classList.remove('active');
+            if (window.__snowControls) window.__snowControls.setPartyMode(false);
+            if (audio) { audio.pause(); if (playBtn) playBtn.textContent = '>'; if (musicBadge) { musicBadge.textContent = 'stopped'; musicBadge.style.color = '#38BDF8'; } }
+            document.removeEventListener('mousemove', spawnTrail);
+        }
+
+        function spawnTrail(e) {
+            if (!partyActive) return;
+            const spark = document.createElement('div');
+            spark.className = 'cursor-trail-spark';
+            spark.style.left = e.clientX + 'px';
+            spark.style.top = e.clientY + 'px';
+            const tx = (Math.random() - 0.5) * 100;
+            const ty = (Math.random() - 0.5) * 100;
+            spark.style.setProperty('--tx', tx + 'px');
+            spark.style.setProperty('--ty', ty + 'px');
+            trailContainer.appendChild(spark);
+            setTimeout(() => spark.remove(), 600);
+        }
+
+        partyToggle.addEventListener('change', (e) => {
+            if (e.target.checked) partyModal.classList.add('active');
+            else stopPartyMode();
+        });
+        partyModalNo.addEventListener('click', () => {
+            partyModal.classList.remove('active');
+            partyToggle.checked = false;
+        });
+        partyModalYes.addEventListener('click', () => {
+            partyModal.classList.remove('active');
+            startPartyMode();
+        });
+        partyIndicator.addEventListener('click', stopPartyMode);
+
         let tiltEnabled = true;
         let tiltX = 0, tiltY = 0, currentX = 0, currentY = 0;
         const card = document.getElementById('mainCard');
-        function initTilt() {
-            card.addEventListener('mousemove', (e) => {
-                if (!tiltEnabled) return;
-                const rect = card.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width;
-                const y = (e.clientY - rect.top) / rect.height;
-                tiltX = (y - 0.5) * 8;
-                tiltY = (x - 0.5) * -8;
-            });
-            card.addEventListener('mouseleave', () => { tiltX = 0; tiltY = 0; });
-            animateTilt();
-        }
+        card.addEventListener('mousemove', (e) => {
+            if (!tiltEnabled) return;
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            tiltX = (y - 0.5) * 8;
+            tiltY = (x - 0.5) * -8;
+        });
+        card.addEventListener('mouseleave', () => { tiltX = 0; tiltY = 0; });
+
         function animateTilt() {
             requestAnimationFrame(animateTilt);
             if (tiltEnabled) {
@@ -2574,295 +3023,202 @@ function initI18n() {
                 card.style.transform = `perspective(1200px) rotateX(${currentX}deg) rotateY(${currentY}deg)`;
             } else {
                 currentX = 0; currentY = 0;
-                card.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg)`;
+                card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
+            }
+        }
+        animateTilt();
+
+        window.tiltX = tiltX; window.tiltY = tiltY; window.tiltEnabled = tiltEnabled;
+
+        // Discord Lanyard Integration
+        const DISCORD_USER_ID = '1201126885384519710';
+        let discordSocket = null;
+        let discordData = null;
+        let discordReconnectAttempts = 0;
+        const MAX_RECONNECT_ATTEMPTS = 5;
+
+        function initDiscordWidget() {
+            const settings = loadSettings();
+            const showDiscord = settings.showDiscord !== false;
+            const discordWidget = document.getElementById('discordWidget');
+            if (!showDiscord) {
+                discordWidget.style.display = 'none';
+                return;
+            }
+            fetchDiscordData();
+            connectDiscordWebSocket();
+        }
+
+        async function fetchDiscordData() {
+            try {
+                const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
+                const data = await response.json();
+                if (data.success) {
+                    discordData = data.data;
+                    updateDiscordUI(data.data);
+                }
+            } catch (error) {
+                showDiscordError();
             }
         }
 
-        // Settings Panel Logic
-        function initSettingsPanel() {
-            const settingsToggle = document.getElementById('settingsToggle');
-            const settingsPanel = document.getElementById('settingsPanel');
-            settingsToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                settingsPanel.classList.toggle('open');
-            });
-            document.addEventListener('click', (e) => {
-                if (!settingsToggle.contains(e.target) && !settingsPanel.contains(e.target)) {
-                    settingsPanel.classList.remove('open');
-                }
-            });
-
-            // Individual setting handlers
-            document.getElementById('tiltToggle').addEventListener('change', (e) => {
-                const settings = loadSettings();
-                settings.disableTilt = e.target.checked;
-                saveSettings(settings);
-                tiltEnabled = !e.target.checked;
-                if (!tiltEnabled) { tiltX = 0; tiltY = 0; }
-            });
-
-            // Season buttons
-            document.querySelectorAll('.season-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const season = btn.dataset.season;
-                    const settings = loadSettings();
-                    settings.season = season;
-                    saveSettings(settings);
-                    applySettings();
-                });
-            });
-
-            // Particle density
-            document.getElementById('particleDensity').addEventListener('change', (e) => {
-                const settings = loadSettings();
-                settings.particleDensity = e.target.value;
-                saveSettings(settings);
-                updateParticleDensity(e.target.value);
-            });
-
-            // Force dark mode
-            document.getElementById('forceDarkToggle').addEventListener('change', (e) => {
-                const settings = loadSettings();
-                settings.forceDark = e.target.checked;
-                saveSettings(settings);
-                applySettings();
-            });
-
-            // Reduce motion
-            document.getElementById('reduceMotionToggle').addEventListener('change', (e) => {
-                const settings = loadSettings();
-                settings.reduceMotion = e.target.checked;
-                saveSettings(settings);
-                applySettings();
-            });
-
-            // Monospace font
-            document.getElementById('monoFontToggle').addEventListener('change', (e) => {
-                const settings = loadSettings();
-                settings.monoFont = e.target.checked;
-                saveSettings(settings);
-                applySettings();
-            });
-
-            // SFX
-            document.getElementById('sfxToggle').addEventListener('change', (e) => {
-                const settings = loadSettings();
-                settings.sfx = e.target.checked;
-                saveSettings(settings);
-                // No actual sound implementation, just saved
-            });
-
-            // Accent color
-            document.getElementById('accentColorPicker').addEventListener('input', (e) => {
-                const settings = loadSettings();
-                settings.accentColor = e.target.value;
-                saveSettings(settings);
-                document.documentElement.style.setProperty('--accent', e.target.value);
-            });
-
-            // Card opacity
-            document.getElementById('cardOpacitySlider').addEventListener('input', (e) => {
-                const settings = loadSettings();
-                settings.cardOpacity = e.target.value;
-                saveSettings(settings);
-                document.documentElement.style.setProperty('--card-opacity', e.target.value);
-            });
-
-            // Disable Ads toggle
-            document.getElementById('disableAdsToggle').addEventListener('change', (e) => {
-                const settings = loadSettings();
-                settings.disableAds = e.target.checked;
-                saveSettings(settings);
-                // Restart ad interval
-                if (window.adInterval) clearInterval(window.adInterval);
-                if (e.target.checked) {
-                    hideAdPopup();
-                } else {
-                    window.adInterval = setInterval(showAdPopup, 30000);
-                }
-            });
-
-            // Reset
-            document.getElementById('resetSettingsBtn').addEventListener('click', () => {
-                localStorage.removeItem('safeswing-settings');
-                applySettings();
-            });
-        }
-
-        // Accordion
-        function initAccordion() {
-            const headers = document.querySelectorAll('.accordion-header');
-            headers.forEach(header => {
-                header.addEventListener('click', () => {
-                    const section = header.parentElement;
-                    if (section.classList.contains('about-expanded')) {
-                        section.classList.remove('about-expanded');
-                        section.classList.remove('open');
+        function connectDiscordWebSocket() {
+            try {
+                discordSocket = new WebSocket('wss://api.lanyard.rest/socket');
+                discordSocket.onopen = () => {
+                    discordSocket.send(JSON.stringify({ op: 2, d: { subscribe_to_id: DISCORD_USER_ID } }));
+                    discordReconnectAttempts = 0;
+                };
+                discordSocket.onmessage = (event) => {
+                    const message = JSON.parse(event.data);
+                    if (message.t === 'INIT_STATE' || message.t === 'PRESENCE_UPDATE') {
+                        discordData = message.d;
+                        updateDiscordUI(message.d);
+                    }
+                };
+                discordSocket.onclose = () => {
+                    if (discordReconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+                        discordReconnectAttempts++;
+                        setTimeout(connectDiscordWebSocket, 5000);
                     } else {
-                        section.classList.toggle('open');
+                        setInterval(fetchDiscordData, 30000);
                     }
-                });
-            });
+                };
+                discordSocket.onerror = () => { discordSocket.close(); };
+            } catch (error) {
+                setInterval(fetchDiscordData, 30000);
+            }
         }
 
-        // Live clock
-        function initClock() {
-            function updateLiveClock() {
-                const clockEl = document.getElementById('liveTime');
-                if (!clockEl) return;
-                const now = new Date();
-                const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
-                const gmt5Time = new Date(utcTime + (3600000 * 5));
-                const hrs = String(gmt5Time.getHours()).padStart(2, '0');
-                const mins = String(gmt5Time.getMinutes()).padStart(2, '0');
-                const secs = String(gmt5Time.getSeconds()).padStart(2, '0');
-                clockEl.textContent = `${hrs}:${mins}:${secs}`;
-            }
-            setInterval(updateLiveClock, 1000);
-            updateLiveClock();
-        }
+        function updateDiscordUI(data) {
+            const usernameEl = document.getElementById('discordUsername');
+            const statusTextEl = document.getElementById('discordStatusText');
+            const avatarEl = document.getElementById('discordAvatar');
+            const activitiesEl = document.getElementById('discordActivities');
+            if (!usernameEl || !statusTextEl || !avatarEl || !activitiesEl) return;
 
-        // Audio Player
-        function initAudioPlayer() {
-            const audio = document.getElementById('myAudio');
-            const playBtn = document.querySelector('.music-controls .play-btn');
-            const musicBadge = document.querySelector('.music-badge');
-            const progressFill = document.querySelector('.progress-fill');
-            const progressTrack = document.querySelector('.progress-track');
-            const timeLabels = document.querySelectorAll('.music-progress .time-label');
+            const displayName = data.discord_user?.global_name || data.discord_user?.username || 'Unknown';
+            usernameEl.textContent = displayName;
 
-            function formatTime(seconds) {
-                if (isNaN(seconds)) return "0:00";
-                const m = Math.floor(seconds / 60);
-                const s = Math.floor(seconds % 60);
-                return `${m}:${s < 10 ? '0' : ''}${s}`;
+            if (data.discord_user?.avatar) {
+                const avatarUrl = `https://cdn.discordapp.com/avatars/${data.discord_user.id}/${data.discord_user.avatar}.png?size=128`;
+                avatarEl.innerHTML = `<img src="${avatarUrl}" alt="Discord Avatar">`;
+            } else {
+                avatarEl.innerHTML = `<span style="color: white; font-weight: bold; font-size: 20px;">${displayName[0]?.toUpperCase() || '?'}</span>`;
             }
 
-            if (audio && playBtn) {
-                playBtn.addEventListener('click', () => {
-                    if (audio.paused) {
-                        audio.play().catch(e => console.log("Audio playback blocked", e));
-                        playBtn.textContent = '||';
-                        if (musicBadge) { musicBadge.textContent = 'playing'; musicBadge.style.color = '#34D399'; }
-                    } else {
-                        audio.pause();
-                        playBtn.textContent = '>';
-                        if (musicBadge) { musicBadge.textContent = 'paused'; musicBadge.style.color = '#38BDF8'; }
-                    }
-                });
+            let dot = avatarEl.querySelector('.discord-status-dot');
+            if (!dot) {
+                dot = document.createElement('div');
+                dot.className = 'discord-status-dot';
+                avatarEl.appendChild(dot);
+            }
+            dot.className = 'discord-status-dot ' + (data.discord_status || 'offline');
 
-                audio.addEventListener('timeupdate', () => {
-                    if (audio.duration) {
-                        const pct = (audio.currentTime / audio.duration) * 100;
-                        if (progressFill) progressFill.style.width = pct + '%';
-                        if (timeLabels[0]) timeLabels[0].textContent = formatTime(audio.currentTime);
-                        if (timeLabels[1]) timeLabels[1].textContent = formatTime(audio.duration);
-                    }
-                });
+            const statusMap = { online: 'Online', idle: 'Idle', dnd: 'Do Not Disturb', offline: 'Offline' };
+            statusTextEl.textContent = statusMap[data.discord_status] || data.discord_status || 'Unknown';
 
-                audio.addEventListener('ended', () => {
-                    playBtn.textContent = '>';
-                    if (progressFill) progressFill.style.width = '0%';
-                    if (musicBadge) { musicBadge.textContent = 'stopped'; musicBadge.style.color = '#38BDF8'; }
+            activitiesEl.innerHTML = '';
+            if (data.activities && data.activities.length > 0) {
+                data.activities.forEach(activity => {
+                    const activityEl = document.createElement('div');
+                    activityEl.className = 'discord-activity';
+                    const activityName = activity.name || 'Activity';
+                    const details = activity.details || '';
+                    const state = activity.state || '';
+                    activityEl.innerHTML = `
+                        <span class="activity-name">${escapeHtml(activityName)}</span>
+                        ${details ? `<div class="activity-details">${escapeHtml(details)}</div>` : ''}
+                        ${state ? `<div class="activity-details">${escapeHtml(state)}</div>` : ''}
+                    `;
+                    activitiesEl.appendChild(activityEl);
                 });
-
-                if (progressTrack) {
-                    progressTrack.addEventListener('click', (e) => {
-                        const rect = progressTrack.getBoundingClientRect();
-                        const clickX = e.clientX - rect.left;
-                        const pct = clickX / rect.width;
-                        if (audio.duration) audio.currentTime = pct * audio.duration;
-                    });
+                const customStatus = data.activities.find(a => a.type === 4);
+                if (customStatus?.state) {
+                    const customEl = document.createElement('div');
+                    customEl.className = 'discord-custom-status';
+                    customEl.textContent = customStatus.state;
+                    activitiesEl.appendChild(customEl);
                 }
             }
         }
 
-        // Party Mode
-        function initPartyMode() {
-            const partyToggle = document.getElementById('partyModeToggle');
-            const partyModal = document.getElementById('partyModal');
-            const partyModalYes = document.getElementById('partyModalYes');
-            const partyModalNo = document.getElementById('partyModalNo');
-            const strobeOverlay = document.getElementById('strobeOverlay');
-            const partyIndicator = document.getElementById('partyIndicator');
-            const trailContainer = document.getElementById('cursorTrailContainer');
-            const audio = document.getElementById('myAudio');
-            const playBtn = document.querySelector('.music-controls .play-btn');
-            const musicBadge = document.querySelector('.music-badge');
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
 
-            let partyActive = false;
+        function showDiscordError() {
+            const usernameEl = document.getElementById('discordUsername');
+            const statusTextEl = document.getElementById('discordStatusText');
+            if (usernameEl) usernameEl.textContent = 'Discord Unavailable';
+            if (statusTextEl) statusTextEl.textContent = 'Failed to connect';
+        }
 
-            partyToggle.addEventListener('change', (e) => {
-                if (e.target.checked) partyModal.classList.add('active');
-                else stopPartyMode();
-            });
+        // Loading Screen Setup
+        function setupLoadingScreen() {
+            const settings = loadSettings();
+            const loadingStyle = settings.loadingStyle || 'default';
+            const loadingScreenEl = document.getElementById('loading-screen');
 
-            partyModalNo.addEventListener('click', () => {
-                partyModal.classList.remove('active');
-                partyToggle.checked = false;
-            });
-
-            partyModalYes.addEventListener('click', () => {
-                partyModal.classList.remove('active');
-                startPartyMode();
-            });
-
-            partyIndicator.addEventListener('click', stopPartyMode);
-
-            function startPartyMode() {
-                partyActive = true;
-                partyToggle.checked = true;
-                document.body.classList.add('party-active', 'party-shake-active', 'party-layout-chaos');
-                strobeOverlay.classList.add('active');
-                partyIndicator.classList.add('active');
-
-                if (window.__snowControls) window.__snowControls.setPartyMode(true);
-
-                if (audio) {
-                    audio.play().catch(() => {});
-                    if (playBtn) playBtn.textContent = '||';
-                    if (musicBadge) { musicBadge.textContent = 'PARTY TIME!'; musicBadge.style.color = '#ff0080'; }
-                }
-
-                document.addEventListener('mousemove', spawnTrail);
-                // Hide ad if visible
-                hideAdPopup();
-            }
-
-            function stopPartyMode() {
-                partyActive = false;
-                partyToggle.checked = false;
-                document.body.classList.remove('party-active', 'party-shake-active', 'party-layout-chaos');
-                strobeOverlay.classList.remove('active');
-                partyIndicator.classList.remove('active');
-
-                if (window.__snowControls) window.__snowControls.setPartyMode(false);
-
-                if (audio) {
-                    audio.pause();
-                    if (playBtn) playBtn.textContent = '>';
-                    if (musicBadge) { musicBadge.textContent = 'stopped'; musicBadge.style.color = '#38BDF8'; }
-                }
-
-                document.removeEventListener('mousemove', spawnTrail);
-            }
-
-            function spawnTrail(e) {
-                if (!partyActive) return;
-                const spark = document.createElement('div');
-                spark.className = 'cursor-trail-spark';
-                spark.style.left = e.clientX + 'px';
-                spark.style.top = e.clientY + 'px';
-
-                const tx = (Math.random() - 0.5) * 100;
-                const ty = (Math.random() - 0.5) * 100;
-                spark.style.setProperty('--tx', tx + 'px');
-                spark.style.setProperty('--ty', ty + 'px');
-
-                trailContainer.appendChild(spark);
-                setTimeout(() => spark.remove(), 600);
+            if (loadingStyle === 'win11') {
+                loadingScreenEl.innerHTML = `
+                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh;">
+                        <div class="win11-logo">
+                            <svg viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="8" y="8" width="32" height="32" fill="white"/>
+                                <rect x="48" y="8" width="32" height="32" fill="white"/>
+                                <rect x="8" y="48" width="32" height="32" fill="white"/>
+                                <rect x="48" y="48" width="32" height="32" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="win11-spinner">
+                            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                        </div>
+                    </div>
+                `;
+            } else if (loadingStyle === 'win7') {
+                loadingScreenEl.innerHTML = `
+                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh;">
+                        <div class="win7-logo" id="win7LogoContainer">
+                            <img id="win7LogoImg" src="" alt="Loading..." style="display:none;" />
+                        </div>
+                        <div class="win7-text">Starting...</div>
+                    </div>
+                `;
+                // Try to load safeswing.png, then safeswing.jpg
+                const img = document.getElementById('win7LogoImg');
+                const candidates = ['safeswing.png', 'safeswing.jpg'];
+                let loaded = false;
+                candidates.forEach(src => {
+                    const testImg = new Image();
+                    testImg.onload = () => {
+                        if (!loaded) {
+                            loaded = true;
+                            img.src = src;
+                            img.style.display = 'block';
+                        }
+                    };
+                    testImg.src = src;
+                });
+                // If none loaded, hide image and show text only (already hidden by default)
+            } else {
+                loadingScreenEl.innerHTML = `
+                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh;">
+                        <div class="loader"></div>
+                        <div class="loading-text">Loading Libraries...</div>
+                    </div>
+                `;
             }
         }
+
+        // Initialize
+        applySettingsUI();
+        setupLoadingScreen();
+        initDiscordWidget();
+
+        setTimeout(() => { loadingScreen.classList.add('hidden'); }, 1500);
     </script>
 </body>
 </html>
