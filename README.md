@@ -1,2 +1,3 @@
-aSBvd24gYSBveHlnZW4gdGFuawoKR01UKzA1LCB1c3VhbGx5IGFjdGl2ZSBpbiAxMmFtIChtb3JuaW5nKSB0byAycG0sIDVwbSB0byA3cG0sIDlwbSB0byAxMXBtIChuaWdodCkKZGV0YWlscyA=
-"https://safeswing.github.io/safeswing/" 
+Bio link for my page, if you wanna create your own. you can now head over to the Build Folder and export your own. 
+Documentation is inside it. 
+https://safeswing.github.io/safeswing/
