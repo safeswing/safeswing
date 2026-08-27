@@ -1,0 +1,2498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>profile · safeswing · builder</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+        :root {
+            --text-primary: #ffffff;
+            --text-secondary: #e2e8f0;
+            --text-tertiary: #94a3b8;
+            --bg-color: #0b0d15;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.15);
+            --section-bg: rgba(15, 18, 30, 0.5);
+            --section-border: rgba(255, 255, 255, 0.1);
+            --pill-bg: rgba(255, 255, 255, 0.06);
+            --pill-border: rgba(255, 255, 255, 0.08);
+            --pill-text: rgba(255, 255, 255, 0.85);
+            --accent: #38BDF8;
+            --accent-hover: #7dd3fc;
+            --badge-text: #ffffff;
+            --badge-bg: rgba(255, 255, 255, 0.05);
+            --badge-border: rgba(255, 255, 255, 0.1);
+            --status-text: #e2e8f0;
+            --music-text: #ffffff;
+            --music-secondary: rgba(255, 255, 255, 0.5);
+            --footer-text: rgba(255, 255, 255, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.6);
+            --text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            --card-opacity: 0.8;
+            --blur-amount: 14px;
+            --border-radius: 3.5rem 1.5rem 3.5rem 1.5rem;
+            --font-family: 'Inter', sans-serif;
+            --bg-image: none;
+            --bg-video: none;
+            --bg-opacity: 1;
+        }
+
+        body.theme-winter {
+            --text-primary: #e0e7ff;
+            --text-secondary: #b0b8d0;
+            --text-tertiary: #8890a8;
+            --bg-color: #0a0a0f;
+            --card-bg: rgba(15, 20, 30, 0.85);
+            --card-border: #2a3a50;
+            --section-bg: rgba(20, 25, 40, 0.6);
+            --section-border: rgba(100, 140, 180, 0.2);
+            --pill-bg: rgba(255, 255, 255, 0.05);
+            --pill-border: rgba(100, 140, 180, 0.2);
+            --pill-text: #c0d0e0;
+            --accent: #7db8e0;
+            --accent-hover: #a0d0f0;
+            --badge-text: #d0d8e8;
+            --badge-bg: rgba(255, 255, 255, 0.05);
+            --badge-border: rgba(100, 140, 180, 0.2);
+            --status-text: #c0d0e0;
+            --music-text: #e0e7ff;
+            --music-secondary: #8890a8;
+            --footer-text: #667080;
+            --shadow-color: rgba(0, 0, 0, 0.8);
+            --text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            --card-opacity: 0.85;
+            --blur-amount: 12px;
+        }
+
+        body.theme-spring {
+            --text-primary: #4a0e17;
+            --text-secondary: #6b1620;
+            --text-tertiary: #8b3540;
+            --bg-color: #fdf2f4;
+            --card-bg: rgba(255, 228, 240, 0.85);
+            --card-border: #ff69b4;
+            --section-bg: rgba(255, 255, 255, 0.5);
+            --section-border: rgba(255, 105, 180, 0.3);
+            --pill-bg: rgba(255, 255, 255, 0.7);
+            --pill-border: rgba(255, 105, 180, 0.3);
+            --pill-text: #4a0e17;
+            --accent: #db2777;
+            --accent-hover: #be185d;
+            --badge-text: #4a0e17;
+            --badge-bg: rgba(255, 255, 255, 0.7);
+            --badge-border: rgba(255, 105, 180, 0.3);
+            --status-text: #4a0e17;
+            --music-text: #4a0e17;
+            --music-secondary: #8b3540;
+            --footer-text: #8b3540;
+            --shadow-color: rgba(255, 105, 180, 0.2);
+            --text-shadow: none;
+            --card-opacity: 0.85;
+            --blur-amount: 12px;
+        }
+
+        body.theme-summer {
+            --text-primary: #042f2e;
+            --text-secondary: #064e3b;
+            --text-tertiary: #065f46;
+            --bg-color: #d4edda;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-border: #2e8b57;
+            --section-bg: rgba(255, 255, 255, 0.5);
+            --section-border: rgba(46, 139, 87, 0.3);
+            --pill-bg: rgba(255, 255, 255, 0.7);
+            --pill-border: rgba(46, 139, 87, 0.3);
+            --pill-text: #042f2e;
+            --accent: #059669;
+            --accent-hover: #047857;
+            --badge-text: #042f2e;
+            --badge-bg: rgba(255, 255, 255, 0.7);
+            --badge-border: rgba(46, 139, 87, 0.3);
+            --status-text: #042f2e;
+            --music-text: #042f2e;
+            --music-secondary: #065f46;
+            --footer-text: #065f46;
+            --shadow-color: rgba(46, 139, 87, 0.2);
+            --text-shadow: none;
+            --card-opacity: 0.8;
+            --blur-amount: 12px;
+        }
+
+        body.theme-autumn {
+            --text-primary: #ffffff;
+            --text-secondary: #e0d0c0;
+            --text-tertiary: #b8a898;
+            --bg-color: #2b1704;
+            --card-bg: rgba(60, 30, 10, 0.85);
+            --card-border: #d2691e;
+            --section-bg: rgba(80, 40, 15, 0.6);
+            --section-border: rgba(210, 105, 30, 0.3);
+            --pill-bg: rgba(255, 255, 255, 0.1);
+            --pill-border: rgba(210, 105, 30, 0.3);
+            --pill-text: #ffffff;
+            --accent: #fb923c;
+            --accent-hover: #fdba74;
+            --badge-text: #ffffff;
+            --badge-bg: rgba(255, 255, 255, 0.1);
+            --badge-border: rgba(210, 105, 30, 0.3);
+            --status-text: #ffffff;
+            --music-text: #ffffff;
+            --music-secondary: #e0d0c0;
+            --footer-text: #b8a898;
+            --shadow-color: rgba(0, 0, 0, 0.6);
+            --text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            --card-opacity: 0.85;
+            --blur-amount: 12px;
+        }
+
+        body.force-dark {
+            --text-primary: #ffffff;
+            --text-secondary: #e2e8f0;
+            --text-tertiary: #94a3b8;
+            --bg-color: #0b0d15;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.15);
+            --section-bg: rgba(15, 18, 30, 0.5);
+            --section-border: rgba(255, 255, 255, 0.1);
+            --pill-bg: rgba(255, 255, 255, 0.06);
+            --pill-border: rgba(255, 255, 255, 0.08);
+            --pill-text: rgba(255, 255, 255, 0.85);
+            --badge-text: #ffffff;
+            --badge-bg: rgba(255, 255, 255, 0.05);
+            --badge-border: rgba(255, 255, 255, 0.1);
+            --status-text: #e2e8f0;
+            --music-text: #ffffff;
+            --music-secondary: rgba(255, 255, 255, 0.5);
+            --footer-text: rgba(255, 255, 255, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.6);
+            --text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            --card-opacity: 0.8;
+            --blur-amount: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg-color);
+            font-family: var(--font-family);
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+            margin: 0;
+            transition: background 0.5s ease, filter 0.3s ease, font-family 0.3s ease;
+            color: var(--text-primary);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            opacity: var(--bg-opacity);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .bg-video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            opacity: var(--bg-opacity);
+        }
+
+        body.mono-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        body.reduce-motion * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+
+        body.party-active {
+            cursor: crosshair;
+        }
+
+        body.party-layout-chaos {
+            animation: layoutChaos 2.5s infinite cubic-bezier(0.5, 0, 0.5, 1);
+            transform-origin: center center;
+            will-change: transform;
+        }
+
+        @keyframes layoutChaos {
+            0% { transform: rotate(0deg) skewX(0deg) scale(1) translate(0, 0); }
+            12% { transform: rotate(4deg) skewX(2deg) scale(1.02) translate(-0.5%, 0.2%); }
+            25% { transform: rotate(-3deg) skewX(-1deg) scale(0.98) translate(0.3%, -0.4%); }
+            37% { transform: rotate(6deg) skewX(3deg) scale(1.05) translate(0.8%, 0.5%); }
+            50% { transform: rotate(-7deg) skewX(-2deg) scale(0.96) translate(-0.7%, 0.6%); }
+            62% { transform: rotate(5deg) skewX(1.5deg) scale(1.03) translate(0.4%, -0.3%); }
+            75% { transform: rotate(-4deg) skewX(-1.5deg) scale(1.0) translate(-0.2%, 0.1%); }
+            87% { transform: rotate(2deg) skewX(0.5deg) scale(0.99) translate(0.1%, -0.1%); }
+            100% { transform: rotate(0deg) skewX(0deg) scale(1) translate(0, 0); }
+        }
+
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        #three-canvas canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .itch-profile-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            font-family: inherit;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            perspective: 1200px;
+        }
+
+        .glass-panel {
+            position: relative;
+            max-width: 720px;
+            width: 100%;
+            padding: 2.8rem 2.5rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+            -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(180%);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 30px 50px var(--shadow-color), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+            transition: transform 0.1s ease, box-shadow 0.3s ease, background 0.5s ease, border-color 0.5s ease, backdrop-filter 0.5s ease;
+            overflow: visible;
+            z-index: 2;
+            transform-style: preserve-3d;
+            --mouse-x: 50%;
+            --mouse-y: 50%;
+            opacity: var(--card-opacity);
+        }
+
+        .settings-wrapper {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.8rem;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .settings-icon {
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            border-radius: 50%;
+            background: var(--pill-bg);
+            border: 1px solid var(--pill-border);
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            animation: pulse-gear 2.5s ease-in-out infinite;
+            backdrop-filter: blur(4px);
+            will-change: transform;
+            flex-shrink: 0;
+        }
+
+        .settings-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--accent);
+            transition: transform 0.3s ease;
+        }
+
+        @keyframes pulse-gear {
+            0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); transform: rotate(0deg); }
+            25% { transform: rotate(15deg); }
+            50% { box-shadow: 0 0 20px 5px rgba(56, 189, 248, 0.2); transform: rotate(0deg); }
+            75% { transform: rotate(-15deg); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); transform: rotate(0deg); }
+        }
+
+        .settings-icon:hover {
+            color: var(--text-primary);
+            background: rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.5);
+            animation: none;
+            box-shadow: 0 0 30px 10px rgba(56, 189, 248, 0.3);
+        }
+        .settings-icon:hover svg {
+            transform: rotate(90deg);
+        }
+
+        .settings-panel {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: rgba(20, 22, 36, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1.2rem 0.6rem 1.2rem 0.6rem;
+            padding: 1.2rem 1.5rem;
+            min-width: 300px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px) scale(0.95);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top right;
+            z-index: 60;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .settings-panel.open {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .settings-panel .panel-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-weight: 600;
+        }
+
+        .settings-panel .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            gap: 1.5rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+        }
+
+        .settings-panel .setting-item .setting-label {
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .select-input {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .color-input {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            background: transparent;
+        }
+        .color-input::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        .color-input::-webkit-color-swatch {
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+        }
+
+        .range-input {
+            width: 100px;
+        }
+
+        .reset-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .reset-btn:hover {
+            background: rgba(239, 68, 68, 0.4);
+            color: #fff;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 40px;
+            height: 22px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 34px;
+            transition: 0.3s;
+        }
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .toggle-switch input:checked+.toggle-slider {
+            background: #38BDF8;
+        }
+        .toggle-switch input:checked+.toggle-slider::before {
+            transform: translateX(18px);
+        }
+
+        .github-btn {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            border: 1px solid #ff3333;
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .github-btn:hover {
+            background: linear-gradient(135deg, #ff3333, #ff0000);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            transform: scale(1.05);
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: var(--border-radius);
+            padding: 2px;
+            background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(56, 189, 248, 0.35), transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+            transform: translateZ(-1px);
+        }
+
+        .glass-panel.glow-active::before {
+            opacity: 1;
+        }
+
+        .glass-panel::after {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -10%;
+            width: 70%;
+            height: 70%;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(30px);
+            transform: translateZ(-1px);
+        }
+
+        .content {
+            position: relative;
+            z-index: 3;
+            color: var(--text-primary);
+            text-shadow: var(--text-shadow);
+            transform: translateZ(20px);
+            transform-style: preserve-3d;
+            transition: color 0.5s ease, text-shadow 0.5s ease;
+        }
+
+        .accordion-section {
+            margin-bottom: 1.2rem;
+            border-radius: 1.5rem 0.8rem 1.5rem 0.8rem;
+            background: var(--section-bg);
+            border: 1px solid var(--section-border);
+            overflow: hidden;
+            transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
+            position: relative;
+            transform: translateZ(0);
+        }
+
+        .accordion-section::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 1.6rem 0.9rem 1.6rem 0.9rem;
+            background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(56, 189, 248, 0.25), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .accordion-section.glow-active::before {
+            opacity: 1;
+        }
+        .accordion-section:hover {
+            border-color: var(--accent);
+            background: var(--section-bg);
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.1rem 1.5rem;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s ease, transform 0.05s ease, color 0.3s ease;
+            gap: 1rem;
+            position: relative;
+            z-index: 2;
+            will-change: transform;
+        }
+        .accordion-header:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .accordion-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+        .accordion-header .header-left .icon {
+            font-size: 1.2rem;
+        }
+        .accordion-header .toggle-icon {
+            font-size: 1.2rem;
+            color: var(--accent);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+        .accordion-section.open .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .accordion-section.open .accordion-body {
+            max-height: 3000px;
+        }
+        .accordion-body-inner {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .accordion-section.about-expanded .accordion-body {
+            max-height: 3000px;
+        }
+        .accordion-section.about-expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .subhead-about {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 0.8rem;
+            margin-bottom: 1.2rem;
+            padding: 0 0.2rem;
+        }
+        .subhead-about span {
+            background: var(--pill-bg);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            border: 1px solid var(--pill-border);
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--pill-text);
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .live-clock {
+            background: rgba(56, 189, 248, 0.12) !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+            color: var(--accent) !important;
+            font-weight: 600;
+        }
+        .username-gold {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent !important;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border: 1px solid rgba(255, 215, 0, 0.4) !important;
+            border-radius: 40px;
+            background-color: rgba(255, 215, 0, 0.1) !important;
+        }
+        .languages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+            padding: 0 0.2rem;
+        }
+        .lang-row {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .lang-pill {
+            background: var(--pill-bg);
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            border: 1px solid var(--pill-border);
+            color: var(--pill-text);
+            display: inline-block;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .lang-pill.cpp,
+        .lang-pill.cs {
+            border-color: var(--accent);
+        }
+        .skill-level-card {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            border: 1px solid var(--badge-border);
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .skill-level-card.junior,
+        .skill-level-card.expert {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .skill-level-card.undefined {
+            border-color: var(--badge-border);
+            color: var(--text-tertiary);
+        }
+        .small-note {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-left: 0.5rem;
+            transition: color 0.3s ease;
+        }
+        .status-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            padding: 0 0.2rem;
+        }
+        .status-card {
+            display: flex;
+            align-items: center;
+            padding: 0.6rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--badge-border);
+            color: var(--status-text);
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .status-card.green {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.25);
+            color: var(--status-text);
+            font-weight: 600;
+        }
+        .status-card.red {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.25);
+            color: var(--status-text);
+            font-weight: 600;
+        }
+        .status-card.yellow {
+            background: rgba(234, 179, 8, 0.15);
+            border-color: rgba(234, 179, 8, 0.25);
+            color: var(--status-text);
+            font-weight: 600;
+        }
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-tertiary);
+            margin-bottom: 0.5rem;
+            margin-top: 1rem;
+            padding: 0 0.2rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .tools-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+            padding: 0 0.2rem;
+        }
+        .tool-card {
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--badge-border);
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.3s ease, color 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            background: rgba(56, 189, 248, 0.1);
+        }
+        .music-player {
+            background: var(--section-bg);
+            border-radius: 1.5rem 0.8rem 1.5rem 0.8rem;
+            border: 1px solid var(--section-border);
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .music-top {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .music-art {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.05));
+            border: 1px solid var(--section-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            color: var(--accent);
+        }
+        .music-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .music-info .track-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--music-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: color 0.3s ease;
+        }
+        .music-info .track-artist {
+            font-size: 0.75rem;
+            color: var(--music-secondary);
+            margin-top: 2px;
+            transition: color 0.3s ease;
+        }
+        .music-badge {
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            white-space: nowrap;
+        }
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            justify-content: center;
+        }
+        .music-controls .ctrl-btn {
+            background: var(--badge-bg);
+            border: 1px solid var(--badge-border);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .music-controls .ctrl-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--accent);
+            transform: scale(1.05);
+            color: var(--text-primary);
+        }
+        .music-controls .ctrl-btn.play-btn {
+            width: 44px;
+            height: 44px;
+            background: rgba(56, 189, 248, 0.15);
+            border-color: var(--accent);
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+        .music-controls .ctrl-btn.play-btn:hover {
+            background: rgba(56, 189, 248, 0.25);
+            border-color: var(--accent);
+            transform: scale(1.08);
+            color: var(--accent-hover);
+        }
+        .music-progress {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .music-progress .time-label {
+            font-size: 0.7rem;
+            font-variant-numeric: tabular-nums;
+            color: var(--music-secondary);
+            min-width: 32px;
+            transition: color 0.3s ease;
+        }
+        .progress-track {
+            flex: 1;
+            height: 4px;
+            border-radius: 10px;
+            background: var(--badge-bg);
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .progress-track .progress-fill {
+            width: 0%;
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #38BDF8, #34D399);
+            opacity: 0.8;
+            transition: width 0.1s linear;
+        }
+        .music-placeholder-note {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--music-secondary);
+            letter-spacing: 0.3px;
+            padding-top: 0.3rem;
+            border-top: 1px solid var(--section-border);
+            transition: color 0.3s ease;
+        }
+        .device-group {
+            margin-bottom: 0.8rem;
+            padding: 0 0.2rem;
+        }
+        .device-group-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.4rem;
+            transition: color 0.3s ease;
+        }
+        .device-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .device-spec {
+            padding: 0.4rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid var(--badge-border);
+            background: var(--badge-bg);
+            color: var(--badge-text);
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.3s ease, color 0.3s ease;
+        }
+        .device-spec:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+        .support-content {
+            background: var(--section-bg);
+            border: 1px solid var(--section-border);
+            border-radius: 1rem 0.6rem 1rem 0.6rem;
+            padding: 1.2rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .links-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+            padding: 0 0.2rem;
+        }
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--badge-bg);
+            border: 1px solid var(--badge-border);
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 500;
+            color: var(--badge-text);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+        .link-btn:hover {
+            background: var(--pill-bg);
+            border-color: var(--accent);
+            transform: scale(1.05);
+            color: var(--text-primary);
+        }
+        .link-btn.moddb {
+            border-color: rgba(255, 107, 53, 0.5);
+            color: #ff8c42;
+        }
+        .link-btn.itch {
+            border-color: rgba(250, 92, 92, 0.5);
+            color: #fa5c5c;
+        }
+        .link-btn.gitlab {
+            border-color: rgba(252, 109, 38, 0.5);
+            color: #fc6d26;
+        }
+        .footer-tag {
+            margin-top: 1.6rem;
+            font-size: 0.75rem;
+            color: var(--footer-text);
+            text-align: right;
+            border-top: 1px solid var(--section-border);
+            padding-top: 0.8rem;
+            transition: color 0.3s ease;
+        }
+        .footer-tag span {
+            background: var(--badge-bg);
+            padding: 0.2rem 1.2rem;
+            border-radius: 60px;
+        }
+
+        /* Builder styles */
+        .editable {
+            cursor: text;
+            transition: outline 0.2s, background 0.2s;
+        }
+        .editable:hover {
+            outline: 2px dashed rgba(56, 189, 248, 0.6);
+            outline-offset: 2px;
+            background: rgba(56, 189, 248, 0.05);
+        }
+        .editable:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            background: rgba(56, 189, 248, 0.1);
+        }
+        .link-editable {
+            cursor: pointer;
+        }
+        .link-editable:hover {
+            outline: 2px dashed rgba(255, 100, 150, 0.6);
+            outline-offset: 2px;
+        }
+
+        .array-item-wrap {
+            position: relative;
+            display: inline-block;
+        }
+        .array-item-remove {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            line-height: 1;
+            cursor: pointer;
+            display: none;
+            z-index: 10;
+        }
+        .array-item-wrap:hover .array-item-remove {
+            display: block;
+        }
+        .add-item-btn {
+            background: rgba(56,189,248,0.15);
+            border: 1px dashed var(--accent);
+            color: var(--accent);
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        .add-item-btn:hover {
+            background: rgba(56,189,248,0.3);
+        }
+
+        .builder-export-btn {
+            background: linear-gradient(135deg, #34D399, #059669);
+            color: white;
+            border: none;
+            border-radius: 60px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            text-align: center;
+        }
+        .builder-export-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(5, 150, 105, 0.6);
+        }
+
+        .link-editor-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 10002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        .link-editor-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .link-editor-modal {
+            background: #1a1d2e;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 1.5rem 0.5rem 1.5rem 0.5rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .link-editor-modal h3 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        .link-editor-field {
+            margin-bottom: 1.2rem;
+        }
+        .link-editor-field label {
+            display: block;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.4rem;
+        }
+        .link-editor-field input[type="text"],
+        .link-editor-field input[type="url"],
+        .link-editor-field input[type="color"] {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 0.5rem;
+            color: #fff;
+            font-size: 1rem;
+        }
+        .link-editor-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+        .link-editor-actions button {
+            padding: 0.6rem 1.4rem;
+            border-radius: 60px;
+            border: 1px solid;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .link-editor-cancel {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+            color: #fff;
+        }
+        .link-editor-save {
+            background: #38BDF8;
+            border-color: #38BDF8;
+            color: #fff;
+        }
+
+        /* Rest of original CSS omitted for brevity; include from previous full version if needed */
+    </style>
+</head>
+<body>
+
+    <div class="bg-video-container" id="bgVideoContainer" style="display:none;">
+        <video id="bgVideo" autoplay muted loop playsinline></video>
+    </div>
+
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <div class="loading-text">LOADING SYSTEM...</div>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <!-- Settings panel with Export button at top -->
+    <div class="settings-wrapper">
+        <div class="settings-icon" id="settingsToggle" title="Settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+        </div>
+        <div class="settings-panel" id="settingsPanel">
+            <div class="panel-title">Settings</div>
+
+            <button class="builder-export-btn" id="exportBtn">⬇ Export index.html</button>
+            <br><br>
+
+            <div class="setting-item">
+                <span class="setting-label">Disable 3D Tilt</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="tiltToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Season</span>
+                <div class="season-selector">
+                    <button class="season-btn active" data-season="default">Default</button>
+                    <button class="season-btn" data-season="spring">Spring</button>
+                    <button class="season-btn" data-season="summer">Summer</button>
+                    <button class="season-btn" data-season="autumn">Autumn</button>
+                    <button class="season-btn" data-season="winter">Winter</button>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Particle Effects</span>
+                <select id="particleDensity" class="select-input">
+                    <option value="high">High</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="low">Low</option>
+                    <option value="off">Off</option>
+                </select>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Cursor Repulsion</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="cursorRepulsionToggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Force Dark Mode</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="forceDarkToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Reduce Motion</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="reduceMotionToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Monospace Font</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="monoFontToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">UI Sound Effects</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="sfxToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <!-- Post-Processing -->
+            <div class="setting-item" style="flex-direction:column;align-items:stretch;gap:0.4rem;border-top:1px solid rgba(255,255,255,0.06);padding-top:0.8rem;margin-top:0.2rem;">
+                <span style="font-weight:600;font-size:0.8rem;color:var(--accent);letter-spacing:0.5px;">Post-Processing</span>
+                <div class="pp-toggle-group">
+                    <div class="pp-item"><input type="checkbox" id="ppBloom" checked><label for="ppBloom">Bloom</label></div>
+                    <div class="pp-item"><input type="checkbox" id="ppChromatic" checked><label for="ppChromatic">Chromatic Aberration</label></div>
+                    <div class="pp-item"><input type="checkbox" id="ppCRT" checked><label for="ppCRT">CRT Scanline</label></div>
+                    <div class="pp-item"><input type="checkbox" id="ppVignette" checked><label for="ppVignette">Vignette</label></div>
+                    <div class="pp-item"><input type="checkbox" id="ppFog" checked><label for="ppFog">Volumetric Fog</label></div>
+                </div>
+                <div class="pp-intensity-group">
+                    <label>Bloom Intensity</label>
+                    <input type="range" id="ppBloomIntensity" min="0.1" max="1.5" step="0.05" value="0.6">
+                    <span id="ppBloomIntensityVal">0.60</span>
+                </div>
+                <div class="pp-intensity-group">
+                    <label>Vignette Strength</label>
+                    <input type="range" id="ppVignetteIntensity" min="0" max="1" step="0.05" value="0.4">
+                    <span id="ppVignetteIntensityVal">0.40</span>
+                </div>
+                <div class="pp-intensity-group">
+                    <label>Fog Density</label>
+                    <input type="range" id="ppFogDensity" min="0" max="1" step="0.05" value="0.3">
+                    <span id="ppFogDensityVal">0.30</span>
+                </div>
+            </div>
+
+            <!-- Theme Controls -->
+            <div class="setting-item" style="flex-direction:column;align-items:stretch;gap:0.4rem;border-top:1px solid rgba(255,255,255,0.06);padding-top:0.8rem;margin-top:0.2rem;">
+                <span style="font-weight:600;font-size:0.8rem;color:var(--accent);">Theme & Layout</span>
+                <div class="pp-intensity-group">
+                    <label>Blur Intensity</label>
+                    <input type="range" id="blurAmountSlider" min="0" max="30" step="1" value="14">
+                    <span id="blurAmountVal">14px</span>
+                </div>
+                <div class="pp-intensity-group">
+                    <label>Glass Opacity</label>
+                    <input type="range" id="cardOpacitySlider" min="0.1" max="1" step="0.05" value="0.8">
+                    <span id="cardOpacityVal">0.80</span>
+                </div>
+                <div class="pp-intensity-group">
+                    <label>Border Radius</label>
+                    <input type="range" id="borderRadiusSlider" min="0" max="50" step="1" value="25">
+                    <span id="borderRadiusVal">25px</span>
+                </div>
+                <div class="pp-intensity-group">
+                    <label>Font Family</label>
+                    <select id="fontSelect" class="select-input">
+                        <option value="Inter, sans-serif">Inter</option>
+                        <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                        <option value="'Poppins', sans-serif">Poppins</option>
+                        <option value="'Roboto', sans-serif">Roboto</option>
+                    </select>
+                </div>
+                <div class="pp-intensity-group">
+                    <label>Background Type</label>
+                    <select id="bgTypeSelect" class="select-input">
+                        <option value="none">None</option>
+                        <option value="image">Image</option>
+                        <option value="video">Video</option>
+                    </select>
+                </div>
+                <div class="pp-intensity-group" id="bgUrlGroup" style="display:none;">
+                    <label>Background URL</label>
+                    <input type="text" id="bgUrlInput" placeholder="https://...">
+                </div>
+                <div class="pp-intensity-group" id="bgOpacityGroup" style="display:none;">
+                    <label>Background Opacity</label>
+                    <input type="range" id="bgOpacitySlider" min="0" max="1" step="0.05" value="0.5">
+                    <span id="bgOpacityVal">0.50</span>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Accent Color</span>
+                <input type="color" id="accentColorPicker" value="#38BDF8" class="color-input">
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Disable ADs</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="disableAdsToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Show Discord Activity</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="discordToggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <span class="setting-label">Loading Screen Style</span>
+                <select id="loadingStyleSelect" class="select-input">
+                    <option value="default">Default</option>
+                    <option value="win11">Windows 11 Style</option>
+                    <option value="win7">Windows 7 Style</option>
+                </select>
+            </div>
+
+            <div class="setting-item">
+                <button id="resetSettingsBtn" class="reset-btn">Reset to Default</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="three-canvas"></div>
+
+    <div class="itch-profile-wrapper">
+        <div class="glass-panel" id="mainCard">
+            <div class="content">
+                <!-- About Section -->
+                <div class="accordion-section about-expanded">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="header-left">
+                            <span class="icon">✦</span>
+                            <span class="editable" data-field="about_title">About Safeswing</span>
+                        </div>
+                        <span class="toggle-icon">⌄</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">
+                            <div class="subhead-about">
+                                <span>GMT +05</span>
+                                <span class="live-clock"><span id="liveTime">--:--:--</span></span>
+                                <span class="editable" data-field="country">Turkmenistan</span>
+                                <span class="editable" data-field="age">Age: 16</span>
+                                <span class="editable" data-field="height">176cm</span>
+                                <span class="editable" data-field="gender">Male</span>
+                                <span class="username-gold editable" data-field="username">@safeswing</span>
+                                <span class="editable" data-field="birth">Born: 15th February</span>
+                            </div>
+
+                            <div class="section-label">Languages</div>
+                            <div class="languages-list" id="languagesContainer">
+                                <!-- dynamic languages inserted here -->
+                            </div>
+                            <button class="add-item-btn" data-target="languagesContainer" data-template="lang">+ Add Language</button>
+
+                            <div class="section-label">Status</div>
+                            <div class="status-list" id="statusContainer">
+                                <!-- dynamic statuses inserted here -->
+                            </div>
+                            <button class="add-item-btn" data-target="statusContainer" data-template="status">+ Add Status</button>
+
+                            <div class="section-label">Discord Presence</div>
+                            <div class="discord-widget" id="discordWidget">
+                                <div class="discord-profile">
+                                    <div class="discord-avatar" id="discordAvatar">
+                                        <div class="discord-status-dot online"></div>
+                                    </div>
+                                    <div class="discord-info">
+                                        <div class="discord-username" id="discordUsername">Safeswing</div>
+                                        <div class="discord-status-text" id="discordStatusText">Online</div>
+                                    </div>
+                                </div>
+                                <div id="discordActivities"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools Section -->
+                <div class="accordion-section">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="header-left">
+                            <span class="icon">◆</span>
+                            <span class="editable" data-field="tools_title">My Tools</span>
+                        </div>
+                        <span class="toggle-icon">⌄</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">
+                            <div class="tools-grid" id="toolsContainer">
+                                <!-- dynamic tools inserted here -->
+                            </div>
+                            <button class="add-item-btn" data-target="toolsContainer" data-template="tool">+ Add Tool</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Music Section -->
+                <div class="accordion-section">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="header-left">
+                            <span class="icon">♪</span>
+                            <span class="editable" data-field="music_title">Music</span>
+                        </div>
+                        <span class="toggle-icon">⌄</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">
+                            <div class="music-player">
+                                <div class="music-top">
+                                    <div class="music-art">♪</div>
+                                    <div class="music-info">
+                                        <div class="track-name editable" data-field="track_name">Basshunter - Dota</div>
+                                        <div class="track-artist editable" data-field="track_artist">Basshunter</div>
+                                    </div>
+                                    <span class="music-badge" id="musicStatusBadge">stopped</span>
+                                </div>
+                                <div class="music-controls">
+                                    <span class="ctrl-btn" id="prevTrackBtn">|<</span>
+                                    <span class="ctrl-btn play-btn" id="playBtn">▶</span>
+                                    <span class="ctrl-btn" id="nextTrackBtn">>|</span>
+                                    <span class="ctrl-btn" id="repeatBtn">↻</span>
+                                    <span class="ctrl-btn" id="stopBtn">■</span>
+                                </div>
+                                <div class="music-progress">
+                                    <span class="time-label" id="currentTimeLabel">0:00</span>
+                                    <div class="progress-track" id="progressTrack"><div class="progress-fill" id="progressFill"></div></div>
+                                    <span class="time-label" id="durationLabel">0:00</span>
+                                </div>
+                                <audio id="myAudio" src="basshunterdota.mp3" preload="metadata"></audio>
+                                <div class="music-placeholder-note editable" data-field="music_note">press play to listen</div>
+                            </div>
+
+                            <div class="party-mode-container" id="partyModeContainer">
+                                <div class="party-mode-label">
+                                    <span class="party-icon">✦</span>
+                                    <span>
+                                        <span class="editable" data-field="party_title">Party Mode</span>
+                                        <span class="party-text editable" data-field="party_desc">strobe lights · loud audio · screen shake</span>
+                                    </span>
+                                </div>
+                                <label class="party-toggle-switch">
+                                    <input type="checkbox" id="partyModeToggle">
+                                    <span class="party-toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Devices Section -->
+                <div class="accordion-section">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="header-left">
+                            <span class="icon">▣</span>
+                            <span class="editable" data-field="devices_title">About my devices</span>
+                        </div>
+                        <span class="toggle-icon">⌄</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">
+                            <div class="device-group">
+                                <div class="device-group-label editable" data-field="laptop_label">Laptop:</div>
+                                <div class="device-specs" id="laptopSpecsContainer">
+                                    <span class="device-spec blue editable" data-field="laptop_spec1">32GB LPDDR5X</span>
+                                    <span class="device-spec purple editable" data-field="laptop_spec2">iGPU: Intel Arc v140</span>
+                                    <span class="device-spec blue editable" data-field="laptop_spec3">Intel Ultra 7 258v</span>
+                                    <span class="device-spec gray editable" data-field="laptop_spec4">1TB SSD + External 1TB SSD + External 1TB HDD</span>
+                                </div>
+                                <button class="add-item-btn" data-target="laptopSpecsContainer" data-template="device-spec">+ Add Spec</button>
+                            </div>
+                            <div class="device-group">
+                                <div class="device-group-label editable" data-field="phones_label">Phones:</div>
+                                <div class="device-specs" id="phonesSpecsContainer">
+                                    <span class="device-spec ip17 editable" data-field="phone1">IPhone 17</span>
+                                    <span class="device-spec huawei editable" data-field="phone2">Pura 70 Base</span>
+                                </div>
+                                <button class="add-item-btn" data-target="phonesSpecsContainer" data-template="device-spec">+ Add Spec</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Support Section -->
+                <div class="accordion-section">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="header-left">
+                            <span class="icon">$</span>
+                            <span class="editable" data-field="support_title">Support me / Paid Plannings</span>
+                        </div>
+                        <span class="toggle-icon">⌄</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">
+                            <div class="support-content editable" data-field="support_text">
+                                Unfortunately, I cannot receive payments through services like PayPal, Visa, or similar platforms. I also cannot publish on Steam, hire developers, or be hired for work because my country does not accept these payment methods. This situation is not permanent — I expect to be free from these limitations when I turn 20 or older. I didn't want to explain this further earlier, as it's a long-term situation. Stay tuned for more information in the future.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Links Section -->
+                <div class="accordion-section">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <div class="header-left">
+                            <span class="icon">@</span>
+                            <span class="editable" data-field="links_title">My links</span>
+                        </div>
+                        <span class="toggle-icon">⌄</span>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="accordion-body-inner">
+                            <div class="links-grid" id="linksContainer">
+                                <!-- dynamic links inserted here -->
+                            </div>
+                            <button class="add-item-btn" data-target="linksContainer" data-template="link">+ Add Link</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-tag">
+                    <span class="editable" data-field="footer_version">Version 8.27.2026</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Party Mode Modal -->
+    <div class="party-modal-overlay" id="partyModal">
+        <div class="party-modal">
+            <div class="warning-icon">!</div>
+            <div class="modal-title">PARTY MODE</div>
+            <div class="modal-text">You are about to enter <strong>Party Mode</strong>.</div>
+            <div class="modal-warning-text">Not advised for people that are easily shocked from rapid lightning, loud noises, or extreme visual stimulation.</div>
+            <div class="modal-disclaimer">
+                This mode will activate: rapid strobing lights, intense screen shaking, extremely loud audio, layout chaos, elusive buttons, cursor trails, exploding snow, bass-driven zoom, and pitch chaos. If you experience discomfort, photosensitivity, or seizures, exit immediately. Party Mode is for entertainment purposes only. We are not liable for any damage to your eyes, ears, or sanity. You have been warned.
+            </div>
+            <div class="party-modal-buttons">
+                <button class="btn-no" id="partyModalNo">No, cancel</button>
+                <button class="btn-yes" id="partyModalYes">YES, LET'S PARTY!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ad Popup -->
+    <div class="ad-popup-overlay" id="adPopup">
+        <div class="ad-popup">
+            <button class="ad-close" id="adCloseBtn">&times;</button>
+            <div class="ad-logo">OPERA GX</div>
+            <div class="ad-headline">Download Opera GX Right NOW!</div>
+            <div class="ad-subtext">The gaming browser for gamers. Boost your experience.</div>
+            <div class="ad-buttons">
+                <a href="https://www.opera.com/gx" target="_blank" rel="noopener noreferrer" class="ad-btn ad-btn-download" id="adDownloadBtn">Download</a>
+                <button class="ad-btn ad-btn-decline" id="adDeclineBtn">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="strobe-overlay" id="strobeOverlay"></div>
+    <div class="party-indicator" id="partyIndicator">PARTY MODE ACTIVE — CLICK TO STOP</div>
+    <div class="cursor-trail-container" id="cursorTrailContainer"></div>
+
+    <!-- Link Editor Modal -->
+    <div class="link-editor-overlay" id="linkEditorOverlay">
+        <div class="link-editor-modal">
+            <h3>Edit Link</h3>
+            <div class="link-editor-field">
+                <label>Text</label>
+                <input type="text" id="linkTextInput" />
+            </div>
+            <div class="link-editor-field">
+                <label>URL</label>
+                <input type="url" id="linkUrlInput" />
+            </div>
+            <div class="link-editor-field">
+                <label>Border Color</label>
+                <input type="color" id="linkBorderColor" value="#ffffff" />
+            </div>
+            <div class="link-editor-field">
+                <label>Background Color</label>
+                <input type="color" id="linkBgColor" value="#000000" />
+            </div>
+            <div class="link-editor-field">
+                <label>Icon (symbol)</label>
+                <input type="text" id="linkIcon" placeholder="🔗" />
+            </div>
+            <div class="link-editor-actions">
+                <button class="link-editor-cancel" id="linkCancelBtn">Cancel</button>
+                <button class="link-editor-save" id="linkSaveBtn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application Script (module) -->
+    <script type="module">
+        import * as THREE from 'three';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+        import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+
+        const container = document.getElementById('three-canvas');
+        const loadingScreen = document.getElementById('loading-screen');
+
+        function loadSettings() {
+            try { return JSON.parse(localStorage.getItem('safeswing-settings')) || {}; } catch { return {}; }
+        }
+        function saveSettings(s) { localStorage.setItem('safeswing-settings', JSON.stringify(s)); }
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 18;
+
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.domElement.style.position = 'fixed';
+        renderer.domElement.style.top = '0';
+        renderer.domElement.style.left = '0';
+        renderer.domElement.style.width = '100%';
+        renderer.domElement.style.height = '100%';
+        renderer.domElement.style.pointerEvents = 'none';
+        renderer.domElement.style.zIndex = '0';
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.0;
+        container.appendChild(renderer.domElement);
+
+        const composer = new EffectComposer(renderer);
+        const renderPass = new RenderPass(scene, camera);
+        composer.addPass(renderPass);
+
+        const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.6, 0.4, 0.2);
+        composer.addPass(bloomPass);
+
+        const chromaticShader = {
+            uniforms: { tDiffuse: { value: null }, amount: { value: 0.004 } },
+            vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+            fragmentShader: `uniform sampler2D tDiffuse; uniform float amount; varying vec2 vUv;
+                void main() {
+                    vec2 offset = amount * vec2(1.0, 0.0);
+                    float r = texture2D(tDiffuse, vUv + offset).r;
+                    float g = texture2D(tDiffuse, vUv).g;
+                    float b = texture2D(tDiffuse, vUv - offset).b;
+                    gl_FragColor = vec4(r, g, b, 1.0);
+                }`
+        };
+        const chromaticPass = new ShaderPass(chromaticShader);
+        composer.addPass(chromaticPass);
+
+        const crtShader = {
+            uniforms: { tDiffuse: { value: null }, time: { value: 0 }, intensity: { value: 0.15 } },
+            vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+            fragmentShader: `uniform sampler2D tDiffuse; uniform float time; uniform float intensity; varying vec2 vUv;
+                void main() {
+                    vec4 color = texture2D(tDiffuse, vUv);
+                    float scanline = sin(vUv.y * 800.0 + time * 2.0) * 0.5 + 0.5;
+                    scanline = 1.0 - intensity * scanline;
+                    float vignette = 1.0 - 0.3 * length(vUv - 0.5);
+                    gl_FragColor = vec4(color.rgb * scanline * vignette, color.a);
+                }`
+        };
+        const crtPass = new ShaderPass(crtShader);
+        composer.addPass(crtPass);
+
+        const vignetteShader = {
+            uniforms: { tDiffuse: { value: null }, intensity: { value: 0.4 } },
+            vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+            fragmentShader: `uniform sampler2D tDiffuse; uniform float intensity; varying vec2 vUv;
+                void main() {
+                    vec4 color = texture2D(tDiffuse, vUv);
+                    float dist = length(vUv - 0.5);
+                    float vig = 1.0 - intensity * dist * dist * 2.5;
+                    vig = clamp(vig, 0.0, 1.0);
+                    gl_FragColor = vec4(color.rgb * vig, color.a);
+                }`
+        };
+        const vignettePass = new ShaderPass(vignetteShader);
+        composer.addPass(vignettePass);
+
+        const densityMap = { high: 3000, medium: 1500, low: 500, off: 0 };
+        let currentDensity = loadSettings().particleDensity || 'medium';
+        let count = densityMap[currentDensity] || 1500;
+        let positions, velocities, geometry, material, snow;
+
+        const mouse = new THREE.Vector2(9999, 9999);
+        const mouseWorld = new THREE.Vector3();
+        const raycaster = new THREE.Raycaster();
+        const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+        let cursorRepulsionEnabled = true;
+        const repulsionStrength = 0.8;
+        const repulsionRadius = 6.0;
+
+        let partyModeActive = false;
+        let snowSpeedBoost = 1;
+        let partyColorMode = false;
+        let explosionMode = false;
+        const partyColors = [0xff0066, 0x00ff88, 0x0066ff, 0xffff00, 0xff00ff, 0x00ffff, 0xff6600, 0x8800ff];
+        let colorIndex = 0;
+        let colorChangeCounter = 0;
+
+        function createParticles() {
+            if (geometry) geometry.dispose();
+            if (material) material.dispose();
+            if (snow) scene.remove(snow);
+
+            positions = new Float32Array(count * 3);
+            velocities = new Float32Array(count * 3);
+            for (let i = 0; i < count; i++) {
+                const i3 = i * 3;
+                positions[i3] = (Math.random() - 0.5) * 60;
+                positions[i3 + 1] = (Math.random() - 0.5) * 40;
+                positions[i3 + 2] = (Math.random() - 0.5) * 40;
+                velocities[i3] = (Math.random() - 0.5) * 0.02;
+                velocities[i3 + 1] = -(0.01 + Math.random() * 0.03);
+                velocities[i3 + 2] = (Math.random() - 0.5) * 0.02;
+            }
+            geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const canvas = document.createElement('canvas');
+            canvas.width = 64;
+            canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            const season = loadSettings().season || 'default';
+            if (season === 'winter') {
+                ctx.font = '48px serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('❄', 32, 32);
+            } else {
+                const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+                grad.addColorStop(0, 'rgba(255,255,255,1)');
+                grad.addColorStop(0.5, 'rgba(255,255,255,0.8)');
+                grad.addColorStop(1, 'rgba(255,255,255,0)');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, 64, 64);
+            }
+            const texture = new THREE.CanvasTexture(canvas);
+            material = new THREE.PointsMaterial({
+                color: 0xffffff, size: 0.35, transparent: true, opacity: 0.85,
+                map: texture, blending: THREE.AdditiveBlending, depthWrite: false
+            });
+            snow = new THREE.Points(geometry, material);
+            scene.add(snow);
+        }
+        createParticles();
+
+        const fogGroup = new THREE.Group();
+        scene.add(fogGroup);
+        const fogPlanes = [];
+        let fogDensity = 0.3;
+
+        function createFogTexture() {
+            const c = document.createElement('canvas');
+            c.width = 256; c.height = 256;
+            const ctx = c.getContext('2d');
+            ctx.clearRect(0, 0, 256, 256);
+            for (let i = 0; i < 35; i++) {
+                const cx = Math.random() * 256, cy = Math.random() * 256;
+                const r = 20 + Math.random() * 70;
+                const alpha = 0.03 + Math.random() * 0.08;
+                const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+                grad.addColorStop(0, `rgba(255,255,255,${alpha})`);
+                grad.addColorStop(1, 'rgba(255,255,255,0)');
+                ctx.fillStyle = grad;
+                ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+            }
+            return new THREE.CanvasTexture(c);
+        }
+
+        function createFogPlanes() {
+            while (fogGroup.children.length) fogGroup.remove(fogGroup.children[0]);
+            fogPlanes.length = 0;
+            const tex = createFogTexture();
+            const zPositions = [12, 8, 4, 0, -4, -10, -16];
+            const sizes = [[70,45],[80,50],[75,48],[85,55],[70,42],[90,55],[80,48]];
+            for (let i = 0; i < zPositions.length; i++) {
+                const geo = new THREE.PlaneGeometry(sizes[i][0], sizes[i][1]);
+                const mat = new THREE.MeshBasicMaterial({
+                    map: tex, transparent: true, opacity: fogDensity * (0.5 + Math.random() * 0.5),
+                    blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide,
+                });
+                const mesh = new THREE.Mesh(geo, mat);
+                mesh.position.set((Math.random()-0.5)*8, (Math.random()-0.5)*6, zPositions[i]);
+                mesh.rotation.z = (Math.random()-0.5)*0.15;
+                fogGroup.add(mesh);
+                fogPlanes.push({ mesh, driftX: (Math.random()-0.5)*0.006, driftY: (Math.random()-0.5)*0.004 });
+            }
+        }
+        function setFogDensity(val) {
+            fogDensity = val;
+            fogPlanes.forEach((fp, i) => { fp.mesh.material.opacity = val * (0.4 + (i / fogPlanes.length) * 0.6); });
+        }
+        createFogPlanes();
+        setFogDensity(fogDensity);
+
+        function updateMouseWorld(event) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+            mouse.set(x, y);
+            raycaster.setFromCamera(mouse, camera);
+            const intersectPoint = new THREE.Vector3();
+            raycaster.ray.intersectPlane(plane, intersectPoint);
+            if (intersectPoint) mouseWorld.copy(intersectPoint);
+            else mouseWorld.set(9999, 9999, 9999);
+        }
+        document.addEventListener('mousemove', updateMouseWorld);
+        document.addEventListener('touchmove', (e) => {
+            if (e.touches.length) {
+                const t = e.touches[0];
+                updateMouseWorld({ clientX: t.clientX, clientY: t.clientY });
+            }
+        }, { passive: true });
+
+        window.addEventListener('resize', () => {
+            const w = window.innerWidth, h = window.innerHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+            composer.setSize(w, h);
+        });
+
+        function setDensity(density) {
+            currentDensity = density;
+            const newCount = densityMap[density] || 0;
+            if (newCount !== count) {
+                count = newCount;
+                createParticles();
+                if (partyModeActive) setPartyMode(true);
+            }
+            if (snow) snow.visible = count > 0;
+        }
+
+        function setPartyMode(active) {
+            partyModeActive = active;
+            if (active) {
+                snowSpeedBoost = 4; partyColorMode = true; explosionMode = true;
+                for (let i = 0; i < count; i++) {
+                    const i3 = i * 3;
+                    positions[i3] = (Math.random() - 0.5) * 5;
+                    positions[i3 + 1] = (Math.random() - 0.5) * 5;
+                    positions[i3 + 2] = (Math.random() - 0.5) * 5;
+                    const dx = positions[i3], dy = positions[i3 + 1], dz = positions[i3 + 2];
+                    const len = Math.sqrt(dx * dx + dy * dy + dz * dz) || 1;
+                    const speed = 0.1 + Math.random() * 0.3;
+                    velocities[i3] = (dx / len) * speed;
+                    velocities[i3 + 1] = (dy / len) * speed;
+                    velocities[i3 + 2] = (dz / len) * speed;
+                }
+            } else {
+                snowSpeedBoost = 1; partyColorMode = false; explosionMode = false;
+                if (material) material.color.setHex(0xffffff);
+                for (let i = 0; i < count; i++) {
+                    const i3 = i * 3;
+                    velocities[i3] = (Math.random() - 0.5) * 0.02;
+                    velocities[i3 + 1] = -(0.01 + Math.random() * 0.03);
+                    velocities[i3 + 2] = (Math.random() - 0.5) * 0.02;
+                }
+            }
+        }
+
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.01;
+
+            if (snow && count > 0) {
+                const posArr = geometry.attributes.position.array;
+                for (let i = 0; i < count; i++) {
+                    const i3 = i * 3;
+                    posArr[i3] += velocities[i3] * snowSpeedBoost;
+                    posArr[i3 + 1] += velocities[i3 + 1] * snowSpeedBoost;
+                    posArr[i3 + 2] += velocities[i3 + 2] * snowSpeedBoost;
+
+                    if (cursorRepulsionEnabled && !explosionMode) {
+                        const dx = posArr[i3] - mouseWorld.x;
+                        const dy = posArr[i3 + 1] - mouseWorld.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < repulsionRadius && dist > 0.001) {
+                            const force = (1 - dist / repulsionRadius) * repulsionStrength;
+                            posArr[i3] += (dx / dist) * force;
+                            posArr[i3 + 1] += (dy / dist) * force;
+                        }
+                    }
+
+                    if (posArr[i3 + 1] < -25) posArr[i3 + 1] = 25;
+                    if (posArr[i3] < -35) posArr[i3] = 35;
+                    if (posArr[i3] > 35) posArr[i3] = -35;
+                }
+                geometry.attributes.position.needsUpdate = true;
+            }
+
+            fogPlanes.forEach(fp => {
+                fp.mesh.position.x += fp.driftX;
+                fp.mesh.position.y += fp.driftY;
+                if (Math.abs(fp.mesh.position.x) > 15) fp.driftX *= -1;
+                if (Math.abs(fp.mesh.position.y) > 10) fp.driftY *= -1;
+            });
+
+            if (partyColorMode && material) {
+                colorChangeCounter++;
+                if (colorChangeCounter % 10 === 0) {
+                    colorIndex = (colorIndex + 1) % partyColors.length;
+                    material.color.setHex(partyColors[colorIndex]);
+                }
+            }
+
+            crtPass.uniforms.time.value = time;
+            composer.render();
+        }
+        animate();
+
+        // Clock update
+        window.toggleAccordion = function(header) {
+            const section = header.parentElement;
+            section.classList.toggle('open');
+        };
+
+        function updateClock() {
+            const now = new Date();
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const gmt5 = new Date(utc + (3600000 * 5));
+            const hrs = String(gmt5.getHours()).padStart(2, '0');
+            const mins = String(gmt5.getMinutes()).padStart(2, '0');
+            const secs = String(gmt5.getSeconds()).padStart(2, '0');
+            const el = document.getElementById('liveTime');
+            if (el) el.textContent = `${hrs}:${mins}:${secs}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Music player
+        const audio = document.getElementById('myAudio');
+        const playBtn = document.getElementById('playBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const progressFill = document.getElementById('progressFill');
+        const progressTrack = document.getElementById('progressTrack');
+        const currentTimeLabel = document.getElementById('currentTimeLabel');
+        const durationLabel = document.getElementById('durationLabel');
+        const musicBadge = document.getElementById('musicStatusBadge');
+
+        function formatTime(s) {
+            const mins = Math.floor(s / 60) || 0;
+            const secs = Math.floor(s % 60) || 0;
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        if (playBtn && audio) {
+            playBtn.addEventListener('click', () => {
+                if (audio.paused) {
+                    audio.play();
+                    playBtn.textContent = '⏸';
+                    if (musicBadge) musicBadge.textContent = 'playing';
+                } else {
+                    audio.pause();
+                    playBtn.textContent = '▶';
+                    if (musicBadge) musicBadge.textContent = 'paused';
+                }
+            });
+        }
+
+        if (stopBtn && audio) {
+            stopBtn.addEventListener('click', () => {
+                audio.pause();
+                audio.currentTime = 0;
+                if (playBtn) playBtn.textContent = '▶';
+                if (musicBadge) musicBadge.textContent = 'stopped';
+            });
+        }
+
+        if (audio) {
+            audio.addEventListener('timeupdate', () => {
+                if (audio.duration) {
+                    const pct = (audio.currentTime / audio.duration) * 100;
+                    if (progressFill) progressFill.style.width = pct + '%';
+                    if (currentTimeLabel) currentTimeLabel.textContent = formatTime(audio.currentTime);
+                    if (durationLabel) durationLabel.textContent = formatTime(audio.duration);
+                }
+            });
+        }
+
+        if (progressTrack && audio) {
+            progressTrack.addEventListener('click', (e) => {
+                const rect = progressTrack.getBoundingClientRect();
+                const pos = (e.clientX - rect.left) / rect.width;
+                if (audio.duration) audio.currentTime = pos * audio.duration;
+            });
+        }
+
+        // Settings toggle
+        const settingsToggle = document.getElementById('settingsToggle');
+        const settingsPanel = document.getElementById('settingsPanel');
+        if (settingsToggle && settingsPanel) {
+            settingsToggle.addEventListener('click', () => {
+                settingsPanel.classList.toggle('open');
+            });
+        }
+
+        // Party Mode
+        const partyToggle = document.getElementById('partyModeToggle');
+        const partyModal = document.getElementById('partyModal');
+        const partyYes = document.getElementById('partyModalYes');
+        const partyNo = document.getElementById('partyModalNo');
+        const strobeOverlay = document.getElementById('strobeOverlay');
+        const partyIndicator = document.getElementById('partyIndicator');
+
+        function stopParty() {
+            setPartyMode(false);
+            if (partyToggle) partyToggle.checked = false;
+            if (strobeOverlay) strobeOverlay.classList.remove('active');
+            if (partyIndicator) partyIndicator.classList.remove('active');
+            document.body.classList.remove('party-active', 'party-layout-chaos', 'party-shake-active');
+        }
+
+        if (partyToggle && partyModal) {
+            partyToggle.addEventListener('change', () => {
+                if (partyToggle.checked) {
+                    partyModal.classList.add('active');
+                } else {
+                    stopParty();
+                }
+            });
+        }
+
+        if (partyNo && partyModal && partyToggle) {
+            partyNo.addEventListener('click', () => {
+                partyModal.classList.remove('active');
+                partyToggle.checked = false;
+            });
+        }
+
+        if (partyYes && partyModal) {
+            partyYes.addEventListener('click', () => {
+                partyModal.classList.remove('active');
+                setPartyMode(true);
+                if (strobeOverlay) strobeOverlay.classList.add('active');
+                if (partyIndicator) partyIndicator.classList.add('active');
+                document.body.classList.add('party-active', 'party-layout-chaos', 'party-shake-active');
+            });
+        }
+
+        if (partyIndicator) partyIndicator.addEventListener('click', stopParty);
+
+        // Loading screen
+        setTimeout(() => {
+            if (loadingScreen) loadingScreen.classList.add('hidden');
+        }, 800);
+
+        // Theme sliders and background handlers
+        const blurSlider = document.getElementById('blurAmountSlider');
+        const cardOpacitySlider = document.getElementById('cardOpacitySlider');
+        const borderRadiusSlider = document.getElementById('borderRadiusSlider');
+        const fontSelect = document.getElementById('fontSelect');
+        const bgTypeSelect = document.getElementById('bgTypeSelect');
+        const bgUrlInput = document.getElementById('bgUrlInput');
+        const bgOpacitySlider = document.getElementById('bgOpacitySlider');
+        const bgUrlGroup = document.getElementById('bgUrlGroup');
+        const bgOpacityGroup = document.getElementById('bgOpacityGroup');
+        const bgVideoContainer = document.getElementById('bgVideoContainer');
+        const bgVideo = document.getElementById('bgVideo');
+
+        // Live theme updates
+        blurSlider?.addEventListener('input', e => {
+            document.documentElement.style.setProperty('--blur-amount', e.target.value + 'px');
+            document.getElementById('blurAmountVal').textContent = e.target.value + 'px';
+        });
+
+        cardOpacitySlider?.addEventListener('input', e => {
+            document.documentElement.style.setProperty('--card-opacity', e.target.value);
+            document.getElementById('cardOpacityVal').textContent = e.target.value;
+        });
+
+        borderRadiusSlider?.addEventListener('input', e => {
+            const val = e.target.value + 'px';
+            document.documentElement.style.setProperty('--border-radius', val + ' ' + val + ' ' + val + ' ' + val);
+            document.getElementById('borderRadiusVal').textContent = val;
+        });
+
+        fontSelect?.addEventListener('change', e => {
+            document.documentElement.style.setProperty('--font-family', e.target.value);
+            document.body.style.fontFamily = e.target.value;
+        });
+
+        // Background type change
+        bgTypeSelect?.addEventListener('change', () => {
+            const type = bgTypeSelect.value;
+            if (type === 'none') {
+                bgUrlGroup.style.display = 'none';
+                bgOpacityGroup.style.display = 'none';
+                document.body.style.setProperty('--bg-image', 'none');
+                document.body.style.setProperty('--bg-opacity', '1');
+                bgVideoContainer.style.display = 'none';
+                bgVideo.src = '';
+            } else {
+                bgUrlGroup.style.display = 'flex';
+                bgOpacityGroup.style.display = 'flex';
+            }
+        });
+
+        // Background URL input
+        bgUrlInput?.addEventListener('input', () => {
+            const type = bgTypeSelect.value;
+            const url = bgUrlInput.value;
+            if (type === 'image') {
+                document.body.style.setProperty('--bg-image', `url('${url}')`);
+                bgVideoContainer.style.display = 'none';
+                bgVideo.src = '';
+            } else if (type === 'video') {
+                document.body.style.setProperty('--bg-image', 'none');
+                bgVideo.src = url;
+                bgVideoContainer.style.display = 'block';
+            }
+        });
+
+        // Background opacity
+        bgOpacitySlider?.addEventListener('input', e => {
+            document.body.style.setProperty('--bg-opacity', e.target.value);
+            document.getElementById('bgOpacityVal').textContent = e.target.value;
+        });
+
+        // Accent color
+        const accentColorPicker = document.getElementById('accentColorPicker');
+        accentColorPicker?.addEventListener('input', e => {
+            document.documentElement.style.setProperty('--accent', e.target.value);
+        });
+
+        // Other settings (season, particle density, cursor repulsion, toggles)
+        document.querySelectorAll('.season-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.season-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const season = btn.dataset.season;
+                document.body.classList.remove('theme-spring', 'theme-summer', 'theme-autumn', 'theme-winter');
+                if (season !== 'default') document.body.classList.add(`theme-${season}`);
+            });
+        });
+
+        const particleDensitySelect = document.getElementById('particleDensity');
+        particleDensitySelect?.addEventListener('change', e => setDensity(e.target.value));
+
+        const cursorRepulsionToggle = document.getElementById('cursorRepulsionToggle');
+        cursorRepulsionToggle?.addEventListener('change', e => { cursorRepulsionEnabled = e.target.checked; });
+
+        // Reset button
+        const resetBtn = document.getElementById('resetSettingsBtn');
+        resetBtn?.addEventListener('click', () => {
+            localStorage.removeItem('safeswing-settings');
+            location.reload();
+        });
+
+        // Discord widget placeholder (static)
+    </script>
+
+    <!-- Builder script (non-module) -->
+    <script>
+        (function() {
+            const templates = {
+                tool: `<span class="tool-card array-item-wrap">
+                    <span class="editable" data-field="tool_${Date.now()}">New Tool</span>
+                    <button class="array-item-remove">×</button>
+                </span>`,
+                lang: `<div class="lang-row array-item-wrap">
+                    <span class="lang-pill editable" data-field="lang_name_${Date.now()}">Language</span>
+                    <span class="skill-level-card editable" data-field="lang_level_${Date.now()}">Level</span>
+                    <button class="array-item-remove">×</button>
+                </div>`,
+                status: `<div class="status-card green array-item-wrap">
+                    <span class="editable" data-field="status_${Date.now()}">New Status</span>
+                    <button class="array-item-remove">×</button>
+                </div>`,
+                link: `<a href="#" target="_blank" class="link-btn link-editable array-item-wrap" data-field="link_${Date.now()}">
+                    <span class="link-icon">🔗</span> <span class="link-text">New Link</span>
+                    <button class="array-item-remove">×</button>
+                </a>`,
+                'device-spec': `<span class="device-spec array-item-wrap">
+                    <span class="editable" data-field="spec_${Date.now()}">New Spec</span>
+                    <button class="array-item-remove">×</button>
+                </span>`
+            };
+
+            const initialData = {
+                languagesContainer: [
+                    { name: 'C++', level: 'Junior' },
+                    { name: 'C#', level: 'Undefined' },
+                    { name: 'HTML/CSS', level: 'Expert', note: 'i know HTML is not a coding language' },
+                    { name: 'Three.js Java', level: 'Undefined' }
+                ],
+                statusContainer: [
+                    { text: 'Currently development of Unity Game (HDRP)', color: 'green' },
+                    { text: 'Frozen Development for XM3.', color: 'red' },
+                    { text: 'Frozen/Slow development for Blitz3D 2028 Overhaul.', color: 'red' },
+                    { text: 'Planning on Unity URP project in 2028.', color: 'yellow' }
+                ],
+                toolsContainer: [
+                    'Android Studio', 'Xcode', 'Visual Studio 2026 Community', 'VS Code',
+                    'Adobe Photoshop 2026', 'Adobe Premiere Pro 2024'
+                ],
+                linksContainer: [
+                    { text: 'TikTok', url: 'https://www.tiktok.com/@safeswing5', icon: '◈', border: '', bg: '' },
+                    { text: 'ModDB', url: 'https://www.moddb.com/members/safeswing', icon: '⬡', border: '', bg: '' },
+                    { text: 'Itch.io', url: 'https://safeswing.itch.io/', icon: '▣', border: '', bg: '' },
+                    { text: 'GitHub', url: 'https://github.com/safeswing', icon: '⌘', border: '', bg: '' },
+                    { text: 'GitLab', url: 'https://gitlab.com/safe22183', icon: '⌘', border: '', bg: '' }
+                ],
+                laptopSpecsContainer: [
+                    '32GB LPDDR5X', 'iGPU: Intel Arc v140', 'Intel Ultra 7 258v',
+                    '1TB SSD + External 1TB SSD + External 1TB HDD'
+                ],
+                phonesSpecsContainer: [
+                    'IPhone 17', 'Pura 70 Base'
+                ]
+            };
+
+            function populateInitial() {
+                const langContainer = document.getElementById('languagesContainer');
+                initialData.languagesContainer.forEach(lang => {
+                    const div = document.createElement('div');
+                    div.className = 'lang-row array-item-wrap';
+                    div.innerHTML = `
+                        <span class="lang-pill editable" data-field="lang_name_${Date.now()}">${lang.name}</span>
+                        <span class="skill-level-card ${lang.name === 'C++' ? 'junior' : 'undefined'} editable" data-field="lang_level_${Date.now()}">${lang.level}</span>
+                        ${lang.note ? `<span class="small-note editable" data-field="lang_note_${Date.now()}">${lang.note}</span>` : ''}
+                        <button class="array-item-remove">×</button>
+                    `;
+                    langContainer.appendChild(div);
+                });
+
+                const statusContainer = document.getElementById('statusContainer');
+                initialData.statusContainer.forEach(status => {
+                    const div = document.createElement('div');
+                    div.className = `status-card ${status.color} array-item-wrap`;
+                    div.innerHTML = `
+                        <span class="editable" data-field="status_${Date.now()}">${status.text}</span>
+                        <button class="array-item-remove">×</button>
+                    `;
+                    statusContainer.appendChild(div);
+                });
+
+                const toolsContainer = document.getElementById('toolsContainer');
+                initialData.toolsContainer.forEach(tool => {
+                    const span = document.createElement('span');
+                    span.className = 'tool-card array-item-wrap';
+                    span.innerHTML = `
+                        <span class="editable" data-field="tool_${Date.now()}">${tool}</span>
+                        <button class="array-item-remove">×</button>
+                    `;
+                    toolsContainer.appendChild(span);
+                });
+
+                const linksContainer = document.getElementById('linksContainer');
+                initialData.linksContainer.forEach(link => {
+                    const a = document.createElement('a');
+                    a.href = link.url;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    a.className = 'link-btn link-editable array-item-wrap';
+                    a.dataset.field = `link_${Date.now()}`;
+                    a.style.borderColor = link.border || '';
+                    a.style.backgroundColor = link.bg || '';
+                    a.innerHTML = `
+                        <span class="link-icon">${link.icon}</span>
+                        <span class="link-text">${link.text}</span>
+                        <button class="array-item-remove">×</button>
+                    `;
+                    linksContainer.appendChild(a);
+                });
+
+                const laptopContainer = document.getElementById('laptopSpecsContainer');
+                initialData.laptopSpecsContainer.forEach(spec => {
+                    const span = document.createElement('span');
+                    span.className = 'device-spec array-item-wrap';
+                    span.innerHTML = `
+                        <span class="editable" data-field="spec_${Date.now()}">${spec}</span>
+                        <button class="array-item-remove">×</button>
+                    `;
+                    laptopContainer.appendChild(span);
+                });
+
+                const phonesContainer = document.getElementById('phonesSpecsContainer');
+                initialData.phonesSpecsContainer.forEach(spec => {
+                    const span = document.createElement('span');
+                    span.className = 'device-spec array-item-wrap';
+                    span.innerHTML = `
+                        <span class="editable" data-field="spec_${Date.now()}">${spec}</span>
+                        <button class="array-item-remove">×</button>
+                    `;
+                    phonesContainer.appendChild(span);
+                });
+            }
+
+            populateInitial();
+
+            document.querySelectorAll('.add-item-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const target = document.getElementById(btn.dataset.target);
+                    const template = templates[btn.dataset.template];
+                    const wrapper = document.createElement('div');
+                    wrapper.innerHTML = template.trim();
+                    const newItem = wrapper.firstChild;
+                    target.appendChild(newItem);
+                    attachRemoveHandler(newItem);
+                    if (btn.dataset.template === 'link') {
+                        attachLinkEditor(newItem);
+                    }
+                    makeEditable(newItem);
+                });
+            });
+
+            function attachRemoveHandler(item) {
+                const removeBtn = item.querySelector('.array-item-remove');
+                if (removeBtn) {
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        item.remove();
+                    });
+                }
+            }
+
+            function makeEditable(container) {
+                container.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
+            }
+
+            document.querySelectorAll('.array-item-wrap').forEach(attachRemoveHandler);
+            document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
+
+            const linkOverlay = document.getElementById('linkEditorOverlay');
+            const linkTextInput = document.getElementById('linkTextInput');
+            const linkUrlInput = document.getElementById('linkUrlInput');
+            const linkBorderColor = document.getElementById('linkBorderColor');
+            const linkBgColor = document.getElementById('linkBgColor');
+            const linkIcon = document.getElementById('linkIcon');
+            let currentlyEditingLink = null;
+
+            function attachLinkEditor(link) {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    currentlyEditingLink = link;
+                    linkTextInput.value = link.querySelector('.link-text')?.textContent || link.textContent.trim();
+                    linkUrlInput.value = link.getAttribute('href');
+                    linkBorderColor.value = link.style.borderColor || '#ffffff';
+                    linkBgColor.value = link.style.backgroundColor || '#000000';
+                    linkIcon.value = link.querySelector('.link-icon')?.textContent || '🔗';
+                    linkOverlay.classList.add('active');
+                });
+            }
+
+            document.querySelectorAll('.link-editable').forEach(attachLinkEditor);
+
+            document.getElementById('linkCancelBtn').addEventListener('click', () => linkOverlay.classList.remove('active'));
+            document.getElementById('linkSaveBtn').addEventListener('click', () => {
+                if (currentlyEditingLink) {
+                    const text = linkTextInput.value.trim();
+                    const url = linkUrlInput.value.trim();
+                    const borderColor = linkBorderColor.value;
+                    const bgColor = linkBgColor.value;
+                    const icon = linkIcon.value;
+                    if (text) currentlyEditingLink.querySelector('.link-text').textContent = text;
+                    if (url) currentlyEditingLink.setAttribute('href', url);
+                    if (borderColor) currentlyEditingLink.style.borderColor = borderColor;
+                    if (bgColor) currentlyEditingLink.style.backgroundColor = bgColor;
+                    if (icon) currentlyEditingLink.querySelector('.link-icon').textContent = icon;
+                    linkOverlay.classList.remove('active');
+                }
+            });
+
+            document.getElementById('exportBtn').addEventListener('click', () => {
+                const clone = document.documentElement.cloneNode(true);
+                clone.querySelector('.builder-export-btn')?.remove();
+                clone.querySelector('.link-editor-overlay')?.remove();
+                clone.querySelectorAll('.array-item-remove').forEach(el => el.remove());
+                clone.querySelectorAll('.add-item-btn').forEach(el => el.remove());
+                clone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+                clone.querySelectorAll('.editable, .link-editable').forEach(el => el.classList.remove('editable', 'link-editable'));
+                clone.querySelectorAll('script').forEach(script => {
+                    if (script.textContent.includes('Builder script')) script.remove();
+                });
+                clone.querySelectorAll('input[disabled], select[disabled], button[disabled]').forEach(el => el.removeAttribute('disabled'));
+                const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+                const blob = new Blob([html], { type: 'text/html' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'index.html';
+                a.click();
+                URL.revokeObjectURL(a.href);
+            });
+        })();
+    </script>
+</body>
+</html>
